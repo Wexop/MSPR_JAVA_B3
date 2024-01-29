@@ -1,9 +1,6 @@
 package fr.mspr_java_b3.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Plante {
@@ -14,18 +11,24 @@ public class Plante {
     private String espece;
     private String image_url;
 
+    @ManyToOne
+    @JoinColumn(name = "utilisateur_id")
+    Utilisateur utilisateur;
+
     public Plante() {
     }
 
-    public Plante(String espece, String image_url) {
+    public Plante(String espece, String image_url, Utilisateur utilisateur) {
         this.espece = espece;
         this.image_url = image_url;
+        this.utilisateur = utilisateur;
     }
 
-    public Plante(int id, String espece, String image_url) {
+    public Plante(int id, String espece, String image_url, Utilisateur utilisateur) {
         this.id = id;
         this.espece = espece;
         this.image_url = image_url;
+        this.utilisateur = utilisateur;
     }
 
     public String getEspece() {
@@ -43,5 +46,5 @@ public class Plante {
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
-    
+
 }
