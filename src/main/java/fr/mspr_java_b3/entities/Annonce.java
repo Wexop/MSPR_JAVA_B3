@@ -34,6 +34,9 @@ public class Annonce {
     @OneToMany(mappedBy = "annonce")
     Set<AnnonceMessage> annonceMessages;
 
+    @OneToMany(mappedBy = "annonce")
+    Set<Proposition> propositions;
+
     public Annonce() {
     }
 

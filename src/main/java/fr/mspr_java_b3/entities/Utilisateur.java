@@ -34,6 +34,9 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateur")
     Set<AnnonceMessage> annonceMessages;
 
+    @OneToMany(mappedBy = "utilisateur")
+    Set<Proposition> propositions;
+
     public int getAdresse_id() {
         return adresse_id;
     }

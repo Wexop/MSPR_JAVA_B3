@@ -10,50 +10,39 @@ public class Proposition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Integer annonce_id;
-
-    private Integer utilisateur_id;
-
     private LocalDateTime date;
 
     private String message;
 
     private EtatEnum etat;
 
-    public Proposition(int id, Integer annonce_id, Integer utilisateur_id, LocalDateTime date, String message, EtatEnum etat) {
-        this.id = id;
-        this.annonce_id = annonce_id;
-        this.utilisateur_id = utilisateur_id;
-        this.date = date;
-        this.message = message;
-        this.etat = etat;
-    }
+    @ManyToOne
+    @JoinColumn(name = "annonce_id")
+    Annonce annonce;
 
-    public Proposition(Integer annonce_id, Integer utilisateur_id, LocalDateTime date, String message, EtatEnum etat) {
-        this.annonce_id = annonce_id;
-        this.utilisateur_id = utilisateur_id;
-        this.date = date;
-        this.message = message;
-        this.etat = etat;
-    }
+    @ManyToOne
+    @JoinColumn(name = "utilisateur_id")
+    Utilisateur utilisateur;
+
 
     public Proposition() {
     }
 
-    public Integer getAnnonce_id() {
-        return annonce_id;
+    public Proposition(LocalDateTime date, String message, EtatEnum etat, Annonce annonce, Utilisateur utilisateur) {
+        this.date = date;
+        this.message = message;
+        this.etat = etat;
+        this.annonce = annonce;
+        this.utilisateur = utilisateur;
     }
 
-    public void setAnnonce_id(Integer annonce_id) {
-        this.annonce_id = annonce_id;
-    }
-
-    public Integer getUtilisateur_id() {
-        return utilisateur_id;
-    }
-
-    public void setUtilisateur_id(Integer utilisateur_id) {
-        this.utilisateur_id = utilisateur_id;
+    public Proposition(int id, LocalDateTime date, String message, EtatEnum etat, Annonce annonce, Utilisateur utilisateur) {
+        this.id = id;
+        this.date = date;
+        this.message = message;
+        this.etat = etat;
+        this.annonce = annonce;
+        this.utilisateur = utilisateur;
     }
 
     public LocalDateTime getDate() {

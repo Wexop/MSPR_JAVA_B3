@@ -43,7 +43,7 @@ public class AnnonceMessage {
         this.utilisateur = utilisateur;
         this.annonce = annonce;
     }
-    
+
 
     public String getImage_url() {
         return image_url;
