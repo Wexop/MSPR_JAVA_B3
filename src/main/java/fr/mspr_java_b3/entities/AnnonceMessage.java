@@ -44,6 +44,13 @@ public class AnnonceMessage {
         this.annonce = annonce;
     }
 
+    public Annonce getAnnonce() {
+        return annonce;
+    }
+
+    public void setAnnonce(Annonce annonce) {
+        this.annonce = annonce;
+    }
 
     public String getImage_url() {
         return image_url;
