@@ -1,9 +1,6 @@
 package fr.mspr_java_b3.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Adresse {
@@ -14,24 +11,27 @@ public class Adresse {
     private String adresse;
     private String latitude;
     private String longitude;
-    private Integer utilisateur_id;
+
+    @OneToOne
+    @JoinColumn(name = "utilisateur_id")
+    Utilisateur utilisateur;
 
     public Adresse() {
     }
 
-    public Adresse(String adresse, String latitude, String longitude, Integer utilisateur_id) {
+    public Adresse(String adresse, String latitude, String longitude, Utilisateur utilisateur) {
         this.adresse = adresse;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.utilisateur_id = utilisateur_id;
+        this.utilisateur = utilisateur;
     }
 
-    public Adresse(int id, String adresse, String latitude, String longitude, Integer utilisateur_id) {
+    public Adresse(int id, String adresse, String latitude, String longitude, Utilisateur utilisateur) {
         this.id = id;
         this.adresse = adresse;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.utilisateur_id = utilisateur_id;
+        this.utilisateur = utilisateur;
     }
 
     public String getAdresse() {
@@ -58,11 +58,5 @@ public class Adresse {
         this.longitude = longitude;
     }
 
-    public Integer getUtilisateur_id() {
-        return utilisateur_id;
-    }
 
-    public void setUtilisateur_id(Integer utilisateur_id) {
-        this.utilisateur_id = utilisateur_id;
-    }
 }
