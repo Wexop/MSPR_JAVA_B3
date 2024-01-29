@@ -1,11 +1,11 @@
 package fr.mspr_java_b3.repository;
 
-import fr.mspr_java_b3.entities.Topic;
+import fr.mspr_java_b3.entities.Bibliotheque;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource(path = "topic")
+@RepositoryRestResource(path = "bibliotheque")
 
-public interface TopicRepository extends JpaRepository<Topic, Integer> {
+public interface BibliothequeRepository extends JpaRepository<Bibliotheque, Integer> {
 
 }
