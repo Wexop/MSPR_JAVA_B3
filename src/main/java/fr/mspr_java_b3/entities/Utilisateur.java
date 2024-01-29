@@ -37,6 +37,12 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateur")
     Set<Proposition> propositions;
 
+    @OneToMany(mappedBy = "utilisateur")
+    Set<Article> articles;
+
+    @OneToMany(mappedBy = "utilisateur")
+    Set<Commentaire> commentaires;
+
     @OneToOne(mappedBy = "utilisateur")
     Adresse adresse;
 

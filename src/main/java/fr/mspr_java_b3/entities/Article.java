@@ -1,9 +1,8 @@
 package fr.mspr_java_b3.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class Article {
@@ -11,36 +10,33 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Integer utilisateur_id;
-
     private String titre;
     private String message;
     private String image_url;
 
+    @ManyToOne
+    @JoinColumn(name = "utilisateur_id")
+    Utilisateur utilisateur;
+
+    @OneToMany(mappedBy = "article")
+    Set<Commentaire> commentaires;
+
     public Article() {
     }
 
-    public Article(Integer user_id, String titre, String message, String image_url) {
-        this.utilisateur_id = user_id;
+    public Article(String titre, String message, String image_url, Utilisateur utilisateur) {
         this.titre = titre;
         this.message = message;
         this.image_url = image_url;
+        this.utilisateur = utilisateur;
     }
 
-    public Article(int id, Integer user_id, String titre, String message, String image_url) {
+    public Article(int id, String titre, String message, String image_url, Utilisateur utilisateur) {
         this.id = id;
-        this.utilisateur_id = user_id;
         this.titre = titre;
         this.message = message;
         this.image_url = image_url;
-    }
-
-    public Integer getUtilisateur_id() {
-        return utilisateur_id;
-    }
-
-    public void setUtilisateur_id(Integer utilisateur_id) {
-        this.utilisateur_id = utilisateur_id;
+        this.utilisateur = utilisateur;
     }
 
     public String getTitre() {
