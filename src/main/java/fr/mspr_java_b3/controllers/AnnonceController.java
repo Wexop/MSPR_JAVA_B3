@@ -21,6 +21,11 @@ public class AnnonceController {
         return repository.findAll().stream().filter(annonce -> annonce.getEtat() == AnnonceEnum.en_attente).toList();
     }
 
+    @GetMapping("/annonce_aide")
+    List<Annonce> getAnnonceAide() {
+        return repository.findAll().stream().filter(annonce -> annonce.getBesoin_aide() && annonce.getEtat() == AnnonceEnum.en_attente).toList();
+    }
+
     @GetMapping("/annonce/{id}")
     Annonce one(@PathVariable int id) {
 
