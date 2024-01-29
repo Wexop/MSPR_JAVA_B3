@@ -2,6 +2,7 @@ package fr.mspr_java_b3.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -11,8 +12,10 @@ public class Article {
     private int id;
 
     private String titre;
-    private String message;
+    private String contenu;
     private String image_url;
+
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "utilisateur_id")
@@ -24,19 +27,19 @@ public class Article {
     public Article() {
     }
 
-    public Article(String titre, String message, String image_url, Utilisateur utilisateur) {
-        this.titre = titre;
-        this.message = message;
-        this.image_url = image_url;
-        this.utilisateur = utilisateur;
-    }
-
-    public Article(int id, String titre, String message, String image_url, Utilisateur utilisateur) {
+    public Article(int id, String titre, String contenu, String image_url, LocalDateTime date) {
         this.id = id;
         this.titre = titre;
-        this.message = message;
+        this.contenu = contenu;
         this.image_url = image_url;
-        this.utilisateur = utilisateur;
+        this.date = date;
+    }
+
+    public Article(String titre, String contenu, String image_url, LocalDateTime date) {
+        this.titre = titre;
+        this.contenu = contenu;
+        this.image_url = image_url;
+        this.date = date;
     }
 
     public String getTitre() {
@@ -47,12 +50,12 @@ public class Article {
         this.titre = titre;
     }
 
-    public String getMessage() {
-        return message;
+    public String getContenu() {
+        return contenu;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setContenu(String contenu) {
+        this.contenu = contenu;
     }
 
     public String getImage_url() {
@@ -61,5 +64,13 @@ public class Article {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 }
