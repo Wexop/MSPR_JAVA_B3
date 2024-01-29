@@ -25,6 +25,9 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateur")
     Set<Plante> plantes;
 
+    @OneToOne(mappedBy = "utilisateur")
+    Bibliotheque bibliotheque;
+
     public int getAdresse_id() {
         return adresse_id;
     }

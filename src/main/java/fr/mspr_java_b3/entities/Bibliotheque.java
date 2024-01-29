@@ -11,24 +11,26 @@ public class Bibliotheque {
 
     private String image_url;
 
-    private Integer utilisateur_id;
-
     private String titre;
 
-    public Bibliotheque(int id, String image_url, Integer utilisateur_id, String titre) {
-        this.id = id;
-        this.image_url = image_url;
-        this.utilisateur_id = utilisateur_id;
-        this.titre = titre;
-    }
-
-    public Bibliotheque(String image_url, Integer utilisateur_id, String titre) {
-        this.image_url = image_url;
-        this.utilisateur_id = utilisateur_id;
-        this.titre = titre;
-    }
+    @OneToOne
+    @JoinColumn(name = "utilisateur_id")
+    Utilisateur utilisateur;
 
     public Bibliotheque() {
+    }
+
+    public Bibliotheque(String image_url, String titre, Utilisateur utilisateur) {
+        this.image_url = image_url;
+        this.titre = titre;
+        this.utilisateur = utilisateur;
+    }
+
+    public Bibliotheque(int id, String image_url, String titre, Utilisateur utilisateur) {
+        this.id = id;
+        this.image_url = image_url;
+        this.titre = titre;
+        this.utilisateur = utilisateur;
     }
 
     public String getImage_url() {
@@ -37,14 +39,6 @@ public class Bibliotheque {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
-    }
-
-    public Integer getUtilisateur_id() {
-        return utilisateur_id;
-    }
-
-    public void setUtilisateur_id(Integer utilisateur_id) {
-        this.utilisateur_id = utilisateur_id;
     }
 
     public String getTitre() {
