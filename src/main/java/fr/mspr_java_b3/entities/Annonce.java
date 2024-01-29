@@ -11,8 +11,6 @@ public class Annonce {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Integer plante_id;
-
     private String titre;
 
     private String description;
@@ -37,11 +35,14 @@ public class Annonce {
     @OneToMany(mappedBy = "annonce")
     Set<Proposition> propositions;
 
+    @ManyToOne
+    @JoinColumn(name = "plante_id")
+    Plante plante;
+
     public Annonce() {
     }
 
-    public Annonce(Integer plante_id, String titre, String description, LocalDateTime date_creation, AnnonceEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur) {
-        this.plante_id = plante_id;
+    public Annonce(String titre, String description, LocalDateTime date_creation, AnnonceEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur, Set<AnnonceMessage> annonceMessages, Set<Proposition> propositions, Plante plante) {
         this.titre = titre;
         this.description = description;
         this.date_creation = date_creation;
@@ -50,11 +51,13 @@ public class Annonce {
         this.date_fin = date_fin;
         this.besoin_aide = besoin_aide;
         this.utilisateur = utilisateur;
+        this.annonceMessages = annonceMessages;
+        this.propositions = propositions;
+        this.plante = plante;
     }
 
-    public Annonce(int id, Integer plante_id, String titre, String description, LocalDateTime date_creation, AnnonceEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur) {
+    public Annonce(int id, String titre, String description, LocalDateTime date_creation, AnnonceEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur, Set<AnnonceMessage> annonceMessages, Set<Proposition> propositions, Plante plante) {
         this.id = id;
-        this.plante_id = plante_id;
         this.titre = titre;
         this.description = description;
         this.date_creation = date_creation;
@@ -63,15 +66,9 @@ public class Annonce {
         this.date_fin = date_fin;
         this.besoin_aide = besoin_aide;
         this.utilisateur = utilisateur;
-    }
-
-
-    public Integer getPlante_id() {
-        return plante_id;
-    }
-
-    public void setPlante_id(Integer plante_id) {
-        this.plante_id = plante_id;
+        this.annonceMessages = annonceMessages;
+        this.propositions = propositions;
+        this.plante = plante;
     }
 
     public String getTitre() {

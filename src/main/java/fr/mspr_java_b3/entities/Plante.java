@@ -2,6 +2,8 @@ package fr.mspr_java_b3.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Plante {
     @Id
@@ -14,6 +16,9 @@ public class Plante {
     @ManyToOne
     @JoinColumn(name = "utilisateur_id")
     Utilisateur utilisateur;
+
+    @OneToMany(mappedBy = "plante")
+    Set<Annonce> annonces;
 
     public Plante() {
     }
