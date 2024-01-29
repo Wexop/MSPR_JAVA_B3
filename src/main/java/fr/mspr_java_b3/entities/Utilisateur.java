@@ -1,8 +1,9 @@
 package fr.mspr_java_b3.entities;
 
-import jakarta.persistence.*;
-
-import java.util.Set;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Utilisateur {
@@ -21,9 +22,6 @@ public class Utilisateur {
     private Boolean botaniste;
 
     private int adresse_id;
-
-    @OneToMany(mappedBy = "gardien")
-    Set<Garde> gardes;
 
     public int getAdresse_id() {
         return adresse_id;
