@@ -3,9 +3,7 @@ package fr.mspr_java_b3.controllers;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +26,11 @@ public class AnnonceController {
 
         return repository.findById(id)
                 .orElseThrow(() -> new Error("Aucun utilisateur avec l'id " + id));
+    }
+
+    @PostMapping("/annonce")
+    Annonce postAnnonce(@RequestBody Annonce body) {
+        return repository.save(body);
     }
 
 }
