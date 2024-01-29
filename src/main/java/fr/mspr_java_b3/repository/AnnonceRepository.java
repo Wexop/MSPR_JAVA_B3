@@ -18,4 +18,10 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
     @Query("SELECT a FROM Annonce a WHERE a.etat = ?1 and a.besoin_aide = true")
     List<Annonce> findNeedHelp(AnnonceEnum etat);
 
+    @Query("SELECT a FROM Annonce a WHERE a.utilisateur.id = ?1")
+    List<Annonce> findByUser(int id);
+
+    @Query("SELECT a FROM Annonce a JOIN Proposition p on p.annonce.id = a.id WHERE a.utilisateur.id = ?1 and p.etat = 'valide'")
+    List<Annonce> findUtilisateurGarde(int id);
+
 }
