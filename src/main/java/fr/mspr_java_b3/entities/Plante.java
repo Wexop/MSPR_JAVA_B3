@@ -13,22 +13,19 @@ public class Plante {
 
     private String espece;
     private String image_url;
-    private Integer adresse_id;
 
     public Plante() {
     }
 
-    public Plante(String espece, String image_url, Integer adresse_id) {
+    public Plante(String espece, String image_url) {
         this.espece = espece;
         this.image_url = image_url;
-        this.adresse_id = adresse_id;
     }
 
-    public Plante(int id, String espece, String image_url, Integer adresse_id) {
+    public Plante(int id, String espece, String image_url) {
         this.id = id;
         this.espece = espece;
         this.image_url = image_url;
-        this.adresse_id = adresse_id;
     }
 
     public String getEspece() {
@@ -46,12 +43,5 @@ public class Plante {
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
-
-    public Integer getAdresse_id() {
-        return adresse_id;
-    }
-
-    public void setAdresse_id(Integer adresse_id) {
-        this.adresse_id = adresse_id;
-    }
+    
 }
