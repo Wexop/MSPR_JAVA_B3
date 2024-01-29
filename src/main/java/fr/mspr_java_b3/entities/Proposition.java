@@ -14,7 +14,7 @@ public class Proposition {
 
     private String message;
 
-    private EtatEnum etat;
+    private PropositionEnum etat;
 
     @ManyToOne
     @JoinColumn(name = "annonce_id")
@@ -28,7 +28,7 @@ public class Proposition {
     public Proposition() {
     }
 
-    public Proposition(LocalDateTime date, String message, EtatEnum etat, Annonce annonce, Utilisateur utilisateur) {
+    public Proposition(LocalDateTime date, String message, PropositionEnum etat, Annonce annonce, Utilisateur utilisateur) {
         this.date = date;
         this.message = message;
         this.etat = etat;
@@ -36,7 +36,7 @@ public class Proposition {
         this.utilisateur = utilisateur;
     }
 
-    public Proposition(int id, LocalDateTime date, String message, EtatEnum etat, Annonce annonce, Utilisateur utilisateur) {
+    public Proposition(int id, LocalDateTime date, String message, PropositionEnum etat, Annonce annonce, Utilisateur utilisateur) {
         this.id = id;
         this.date = date;
         this.message = message;
@@ -61,11 +61,11 @@ public class Proposition {
         this.message = message;
     }
 
-    public EtatEnum getEtat() {
+    public PropositionEnum getEtat() {
         return etat;
     }
 
-    public void setEtat(EtatEnum etat) {
+    public void setEtat(PropositionEnum etat) {
         this.etat = etat;
     }
 }

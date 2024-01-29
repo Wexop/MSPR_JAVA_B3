@@ -19,7 +19,7 @@ public class Annonce {
 
     private LocalDateTime date_creation;
 
-    private EtatEnum etat;
+    private AnnonceEnum etat;
 
     private LocalDateTime date_debut;
 
@@ -40,7 +40,7 @@ public class Annonce {
     public Annonce() {
     }
 
-    public Annonce(Integer plante_id, String titre, String description, LocalDateTime date_creation, EtatEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur) {
+    public Annonce(Integer plante_id, String titre, String description, LocalDateTime date_creation, AnnonceEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur) {
         this.plante_id = plante_id;
         this.titre = titre;
         this.description = description;
@@ -52,7 +52,7 @@ public class Annonce {
         this.utilisateur = utilisateur;
     }
 
-    public Annonce(int id, Integer plante_id, String titre, String description, LocalDateTime date_creation, EtatEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur) {
+    public Annonce(int id, Integer plante_id, String titre, String description, LocalDateTime date_creation, AnnonceEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur) {
         this.id = id;
         this.plante_id = plante_id;
         this.titre = titre;
@@ -98,11 +98,11 @@ public class Annonce {
         this.date_creation = date_creation;
     }
 
-    public EtatEnum getEtat() {
+    public AnnonceEnum getEtat() {
         return etat;
     }
 
-    public void setEtat(EtatEnum etat) {
+    public void setEtat(AnnonceEnum etat) {
         this.etat = etat;
     }
 
