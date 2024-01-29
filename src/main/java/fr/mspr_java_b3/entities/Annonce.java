@@ -3,15 +3,13 @@ package fr.mspr_java_b3.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Annonce {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private Integer utilisateur_id;
 
     private Integer plante_id;
 
@@ -29,41 +27,41 @@ public class Annonce {
 
     private Boolean besoin_aide;
 
-    public Annonce(int id, Integer utilisateur_id, Integer plante_id, String titre, String description, LocalDateTime date_creation, EtatEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide) {
-        this.id = id;
-        this.utilisateur_id = utilisateur_id;
-        this.plante_id = plante_id;
-        this.titre = titre;
-        this.description = description;
-        this.date_creation = date_creation;
-        this.etat = etat;
-        this.date_debut = date_debut;
-        this.date_fin = date_fin;
-        this.besoin_aide = besoin_aide;
-    }
+    @ManyToOne
+    @JoinColumn(name = "utilisateur_id")
+    Utilisateur utilisateur;
 
-    public Annonce(Integer utilisateur_id, Integer plante_id, String titre, String description, LocalDateTime date_creation, EtatEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide) {
-        this.utilisateur_id = utilisateur_id;
-        this.plante_id = plante_id;
-        this.titre = titre;
-        this.description = description;
-        this.date_creation = date_creation;
-        this.etat = etat;
-        this.date_debut = date_debut;
-        this.date_fin = date_fin;
-        this.besoin_aide = besoin_aide;
-    }
+    @OneToMany(mappedBy = "annonce")
+    Set<AnnonceMessage> annonceMessages;
 
     public Annonce() {
     }
 
-    public Integer getUtilisateur_id() {
-        return utilisateur_id;
+    public Annonce(Integer plante_id, String titre, String description, LocalDateTime date_creation, EtatEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur) {
+        this.plante_id = plante_id;
+        this.titre = titre;
+        this.description = description;
+        this.date_creation = date_creation;
+        this.etat = etat;
+        this.date_debut = date_debut;
+        this.date_fin = date_fin;
+        this.besoin_aide = besoin_aide;
+        this.utilisateur = utilisateur;
     }
 
-    public void setUtilisateur_id(Integer utilisateur_id) {
-        this.utilisateur_id = utilisateur_id;
+    public Annonce(int id, Integer plante_id, String titre, String description, LocalDateTime date_creation, EtatEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur) {
+        this.id = id;
+        this.plante_id = plante_id;
+        this.titre = titre;
+        this.description = description;
+        this.date_creation = date_creation;
+        this.etat = etat;
+        this.date_debut = date_debut;
+        this.date_fin = date_fin;
+        this.besoin_aide = besoin_aide;
+        this.utilisateur = utilisateur;
     }
+
 
     public Integer getPlante_id() {
         return plante_id;

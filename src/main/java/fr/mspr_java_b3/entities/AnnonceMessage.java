@@ -10,43 +10,40 @@ public class AnnonceMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Integer annonce_id;
-
     private String image_url;
 
     private String message;
 
-    private Integer personne_id;
-
     private LocalDateTime date;
 
-    public AnnonceMessage(int id, Integer annonce_id, String image_url, String message, Integer personne_id, LocalDateTime date) {
-        this.id = id;
-        this.annonce_id = annonce_id;
-        this.image_url = image_url;
-        this.message = message;
-        this.personne_id = personne_id;
-        this.date = date;
-    }
+    @ManyToOne
+    @JoinColumn(name = "utilisateur_id")
+    Utilisateur utilisateur;
 
-    public AnnonceMessage(Integer annonce_id, String image_url, String message, Integer personne_id, LocalDateTime date) {
-        this.annonce_id = annonce_id;
-        this.image_url = image_url;
-        this.message = message;
-        this.personne_id = personne_id;
-        this.date = date;
-    }
+    @ManyToOne
+    @JoinColumn(name = "annonce_id")
+    Annonce annonce;
 
     public AnnonceMessage() {
     }
 
-    public Integer getAnnonce_id() {
-        return annonce_id;
+    public AnnonceMessage(String image_url, String message, LocalDateTime date, Utilisateur utilisateur, Annonce annonce) {
+        this.image_url = image_url;
+        this.message = message;
+        this.date = date;
+        this.utilisateur = utilisateur;
+        this.annonce = annonce;
     }
 
-    public void setAnnonce_id(Integer annonce_id) {
-        this.annonce_id = annonce_id;
+    public AnnonceMessage(int id, String image_url, String message, LocalDateTime date, Utilisateur utilisateur, Annonce annonce) {
+        this.id = id;
+        this.image_url = image_url;
+        this.message = message;
+        this.date = date;
+        this.utilisateur = utilisateur;
+        this.annonce = annonce;
     }
+    
 
     public String getImage_url() {
         return image_url;
@@ -56,14 +53,19 @@ public class AnnonceMessage {
         this.image_url = image_url;
     }
 
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
+    public String getMessage() {
+        return message;
+    }
 
-    public Integer getPersonne_id() { return personne_id; }
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-    public void setPersonne_id(Integer personne_id) { this.personne_id = personne_id; }
+    public LocalDateTime getDate() {
+        return date;
+    }
 
-    public LocalDateTime getDate() { return date; }
-
-    public void setDate(LocalDateTime date) { this.date = date; }
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 }
