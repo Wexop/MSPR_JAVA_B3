@@ -18,12 +18,12 @@ public class AnnonceController {
 
     @GetMapping("/annonce")
     List<Annonce> getAnnonce() {
-        return repository.findAll().stream().filter(annonce -> annonce.getEtat() == AnnonceEnum.en_attente).toList();
+        return repository.findByEtat(AnnonceEnum.en_cours);
     }
 
     @GetMapping("/annonce_aide")
     List<Annonce> getAnnonceAide() {
-        return repository.findAll().stream().filter(annonce -> annonce.getBesoin_aide() && annonce.getEtat() == AnnonceEnum.en_attente).toList();
+        return repository.findNeedHelp(AnnonceEnum.en_cours);
     }
 
     @GetMapping("/annonce/{id}")
