@@ -20,7 +20,6 @@ public class Utilisateur {
 
     private Boolean botaniste;
 
-    private int adresse_id;
 
     @OneToMany(mappedBy = "utilisateur")
     Set<Plante> plantes;
@@ -46,35 +45,24 @@ public class Utilisateur {
     @OneToOne(mappedBy = "utilisateur")
     Adresse adresse;
 
-    public int getAdresse_id() {
-        return adresse_id;
-    }
-
-    public void setAdresse_id(int adresse_id) {
-        this.adresse_id = adresse_id;
-    }
-
-
     public Utilisateur() {
     }
 
-    public Utilisateur(String mail, String mdp, String nom, String image_url, Boolean botaniste, int adresse_id) {
+    public Utilisateur(String mail, String mdp, String nom, String image_url, Boolean botaniste) {
         this.mail = mail;
         this.mdp = mdp;
         this.nom = nom;
         this.image_url = image_url;
         this.botaniste = botaniste;
-        this.adresse_id = adresse_id;
     }
 
-    public Utilisateur(int id, String mail, String mdp, String nom, String image_url, Boolean botaniste, int adresse_id) {
+    public Utilisateur(int id, String mail, String mdp, String nom, String image_url, Boolean botaniste) {
         this.id = id;
         this.mail = mail;
         this.mdp = mdp;
         this.nom = nom;
         this.image_url = image_url;
         this.botaniste = botaniste;
-        this.adresse_id = adresse_id;
     }
 
     public String getMail() {
