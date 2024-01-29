@@ -40,6 +40,11 @@ public class AnnonceController {
         return repository.findByUser(id);
     }
 
+    @GetMapping("/mes_gardes/{id}")
+    List<Annonce> mesGardes(@PathVariable int id) {
+        return repository.findUtilisateurGarde(id);
+    }
+
     @PostMapping("/annonce")
     Annonce postAnnonce(@RequestBody Annonce body) {
         return repository.save(body);
