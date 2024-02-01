@@ -36,6 +36,10 @@ public class Plante {
         this.utilisateur = utilisateur;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getEspece() {
         return espece;
     }

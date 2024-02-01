@@ -45,6 +45,10 @@ public class Proposition {
         this.utilisateur = utilisateur;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public LocalDateTime getDate() {
         return date;
     }

@@ -42,6 +42,10 @@ public class Article {
         this.date = date;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getTitre() {
         return titre;
     }

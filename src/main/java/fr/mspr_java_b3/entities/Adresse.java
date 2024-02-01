@@ -8,6 +8,7 @@ public class Adresse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+
     private String adresse;
     private String latitude;
     private String longitude;
@@ -32,6 +33,10 @@ public class Adresse {
         this.latitude = latitude;
         this.longitude = longitude;
         this.utilisateur = utilisateur;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getAdresse() {

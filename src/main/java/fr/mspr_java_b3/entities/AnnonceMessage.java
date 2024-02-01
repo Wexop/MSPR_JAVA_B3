@@ -48,6 +48,10 @@ public class AnnonceMessage {
         return annonce;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setAnnonce(Annonce annonce) {
         this.annonce = annonce;
     }

@@ -33,6 +33,10 @@ public class Bibliotheque {
         this.utilisateur = utilisateur;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getImage_url() {
         return image_url;
     }

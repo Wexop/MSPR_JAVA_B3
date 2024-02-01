@@ -65,6 +65,10 @@ public class Utilisateur {
         this.botaniste = botaniste;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getMail() {
         return mail;
     }
