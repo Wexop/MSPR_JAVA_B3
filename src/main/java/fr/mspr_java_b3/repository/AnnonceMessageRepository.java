@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface AnnonceMessageRepository extends JpaRepository<AnnonceMessage, Integer> {
 
-    @Query("SELECT am FROM AnnonceMessage am WHERE am.id = ?1")
+    @Query("SELECT am FROM AnnonceMessage am WHERE am.annonce.id = ?1")
     List<AnnonceMessage> findByAnnonce(int id);
 
 }
