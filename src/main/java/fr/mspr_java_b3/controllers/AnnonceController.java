@@ -16,9 +16,9 @@ public class AnnonceController {
         this.repository = repository;
     }
 
-    @GetMapping("/annonce")
+    @GetMapping("/annonce_attente")
     List<Annonce> getAnnonce() {
-        return repository.findByEtat(AnnonceEnum.en_cours);
+        return repository.findByEtat(AnnonceEnum.en_attente);
     }
 
     @GetMapping("/annonce_aide")
@@ -45,7 +45,7 @@ public class AnnonceController {
         return repository.findUtilisateurGarde(id);
     }
 
-    @PostMapping("/annonce")
+    @PostMapping("/annonce/one")
     Annonce postAnnonce(@RequestBody Annonce body) {
         return repository.save(body);
     }
