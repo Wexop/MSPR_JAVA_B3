@@ -20,17 +20,8 @@ public class PlanteController {
         this.utilisateurRepository = utilisateurRepository;
     }
 
-    @GetMapping("/mes_plantes")
-    List<Plante> getAllPlantesByIdUtilisateur(@RequestBody Integer utilisateur_id) {
+    @GetMapping("/mes_plantes/{utilisateur_id}")
+    List<Plante> getAllPlantesByIdUtilisateur(@PathVariable Integer utilisateur_id) {
         return repository.findByUtilisateur(utilisateur_id);
-    }
-
-    @PostMapping("/mes_plantes/{id}")
-    Plante insertPlante(@PathVariable int id, @RequestBody Plante plante) { // id utilisateur NE SERA PAS dans le path mais en TOKEN
-        var utilisateurFound = utilisateurRepository.findById(id).orElseThrow(() -> new Error("Aucun utilisateur avec l'id " + id));
-        if (utilisateurFound != null) {
-            plante.setUtilisateur(utilisateurFound);
-        }
-        return repository.save(plante);
     }
 }

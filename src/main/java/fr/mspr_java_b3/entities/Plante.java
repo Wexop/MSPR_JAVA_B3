@@ -1,5 +1,6 @@
 package fr.mspr_java_b3.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -23,18 +24,19 @@ public class Plante {
     public Plante() {
     }
 
-    public Plante(String espece, String image_url, Utilisateur utilisateur) {
+    public Plante(String espece, String image_url) {
         this.espece = espece;
         this.image_url = image_url;
-        this.utilisateur = utilisateur;
+
     }
 
-    public Plante(int id, String espece, String image_url, Utilisateur utilisateur) {
+    public Plante(int id, String espece, String image_url) {
         this.id = id;
         this.espece = espece;
         this.image_url = image_url;
-        this.utilisateur = utilisateur;
     }
+
+
 
     public int getId() {
         return id;
@@ -55,7 +57,7 @@ public class Plante {
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
-
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Utilisateur getUtilisateur() {
         return utilisateur;
     }

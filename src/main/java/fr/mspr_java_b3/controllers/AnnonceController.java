@@ -3,6 +3,10 @@ package fr.mspr_java_b3.controllers;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
+import io.swagger.v3.oas.annotations.headers.Header;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.annotation.ServletSecurity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +30,7 @@ public class AnnonceController {
         return repository.findNeedHelp(AnnonceEnum.en_cours);
     }
 
-    @GetMapping("/annonce/{id}")
+    @GetMapping("/annonce_by_id/{id}")
     Annonce one(@PathVariable int id) {
 
         return repository.findById(id)
@@ -46,7 +50,7 @@ public class AnnonceController {
     }
 
     @PostMapping("/annonce/one")
-    Annonce postAnnonce(@RequestBody Annonce body) {
+    Annonce postAnnonce(@RequestBody Annonce body ) {
         return repository.save(body);
     }
 

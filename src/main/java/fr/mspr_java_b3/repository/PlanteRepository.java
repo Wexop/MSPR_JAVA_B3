@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface PlanteRepository extends JpaRepository<Plante, Integer> {
 
-    @Query("SELECT p FROM Plante p WHERE p.utilisateur.id = ?1")
+    @Query("SELECT p FROM Plante p JOIN FETCH Utilisateur u on u.id = p.utilisateur.id WHERE p.utilisateur.id = ?1")
     List<Plante> findByUtilisateur(int id);
 }

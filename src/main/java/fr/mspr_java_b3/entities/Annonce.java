@@ -1,5 +1,7 @@
 package fr.mspr_java_b3.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -73,6 +75,14 @@ public class Annonce {
 
     public int getId() {
         return id;
+    }
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Plante getPlante() {
+        return plante;
+    }
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 
     public String getTitre() {
