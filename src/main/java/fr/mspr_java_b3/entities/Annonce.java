@@ -44,7 +44,7 @@ public class Annonce {
     public Annonce() {
     }
 
-    public Annonce(String titre, String description, LocalDateTime date_creation, AnnonceEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur, Set<AnnonceMessage> annonceMessages, Set<Proposition> propositions, Plante plante) {
+    public Annonce(String titre, String description, LocalDateTime date_creation, AnnonceEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide) {
         this.titre = titre;
         this.description = description;
         this.date_creation = date_creation;
@@ -52,13 +52,9 @@ public class Annonce {
         this.date_debut = date_debut;
         this.date_fin = date_fin;
         this.besoin_aide = besoin_aide;
-        this.utilisateur = utilisateur;
-        this.annonceMessages = annonceMessages;
-        this.propositions = propositions;
-        this.plante = plante;
     }
 
-    public Annonce(int id, String titre, String description, LocalDateTime date_creation, AnnonceEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide, Utilisateur utilisateur, Set<AnnonceMessage> annonceMessages, Set<Proposition> propositions, Plante plante) {
+    public Annonce(int id, String titre, String description, LocalDateTime date_creation, AnnonceEnum etat, LocalDateTime date_debut, LocalDateTime date_fin, Boolean besoin_aide) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -67,10 +63,6 @@ public class Annonce {
         this.date_debut = date_debut;
         this.date_fin = date_fin;
         this.besoin_aide = besoin_aide;
-        this.utilisateur = utilisateur;
-        this.annonceMessages = annonceMessages;
-        this.propositions = propositions;
-        this.plante = plante;
     }
 
     public int getId() {
