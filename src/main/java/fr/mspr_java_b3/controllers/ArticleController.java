@@ -16,18 +16,18 @@ public class ArticleController {
         this.repository = repository;
     }
 
-    @GetMapping("/article")
+    @GetMapping("/article/all")
     List<Article> getAllArticle() {
-        return repository.findAll().stream().toList();
+        return repository.findAll();
     }
 
-    @GetMapping("/article/{article_id}")
-    Article getOneArticle(@PathVariable("article_id") Integer articleId) {
+    @GetMapping("/article_by_id/{id}")
+    Article getOneArticle(@PathVariable("id") int articleId) {
         return repository.findById(articleId)
-                .orElseThrow(() -> new Error("Aucun utilisateur avec l'id " + articleId));
+                .orElseThrow(() -> new Error("Aucun article avec l'id " + articleId));
     }
 
-    @PostMapping("/article")
+    @PostMapping("/article/one")
     Article insertArticle(@RequestBody Article article) {
         return repository.save(article);
     }
