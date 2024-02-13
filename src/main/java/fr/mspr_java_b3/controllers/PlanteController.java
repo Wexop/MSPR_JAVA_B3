@@ -1,9 +1,9 @@
 package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.entities.Plante;
-import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.PlanteRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +20,9 @@ public class PlanteController {
         this.utilisateurRepository = utilisateurRepository;
     }
 
-    @GetMapping("/mes_plantes/{utilisateur_id}")
-    List<Plante> getAllPlantesByIdUtilisateur(@PathVariable Integer utilisateur_id) {
-        return repository.findByUtilisateur(utilisateur_id);
+    @GetMapping("/mes_plantes")
+    List<Plante> getAllPlantesByIdUtilisateur(@RequestHeader(value = "Utilisateur_id") String authorizationHeader) {
+        return repository.findByUtilisateur(Integer.parseInt(authorizationHeader));
     }
 
     @PostMapping("/plante/one")
