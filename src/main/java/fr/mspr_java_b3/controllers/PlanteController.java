@@ -24,4 +24,9 @@ public class PlanteController {
     List<Plante> getAllPlantesByIdUtilisateur(@PathVariable Integer utilisateur_id) {
         return repository.findByUtilisateur(utilisateur_id);
     }
+
+    @PostMapping("/plante/one")
+    Plante postPlante(@RequestBody Plante plante) {
+        return repository.save(plante);
+    }
 }

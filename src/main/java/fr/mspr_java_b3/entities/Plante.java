@@ -61,8 +61,4 @@ public class Plante {
     public Utilisateur getUtilisateur() {
         return utilisateur;
     }
-
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
 }
