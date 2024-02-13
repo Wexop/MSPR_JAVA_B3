@@ -28,7 +28,15 @@ public class ArticleController {
     }
 
     @PostMapping("/article/one")
-    Article insertArticle(@RequestBody Article article) {
+    Article postArticle(@RequestBody Article article) {
+        return repository.save(article);
+    }
+
+    @PatchMapping("/article_by_id/{id}")
+    Article patchArticle(@RequestBody Article article, @PathVariable int id) {
+
+        Article articleFound = repository.findById(id).orElseThrow(() -> new Error("Aucun article avec l'id " + id));
+
         return repository.save(article);
     }
 }
