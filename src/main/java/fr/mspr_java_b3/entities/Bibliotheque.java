@@ -1,5 +1,6 @@
 package fr.mspr_java_b3.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,17 +21,20 @@ public class Bibliotheque {
     public Bibliotheque() {
     }
 
-    public Bibliotheque(String image_url, String titre, Utilisateur utilisateur) {
+    public Bibliotheque(String image_url, String titre) {
         this.image_url = image_url;
         this.titre = titre;
-        this.utilisateur = utilisateur;
     }
 
-    public Bibliotheque(int id, String image_url, String titre, Utilisateur utilisateur) {
+    public Bibliotheque(int id, String image_url, String titre) {
         this.id = id;
         this.image_url = image_url;
         this.titre = titre;
-        this.utilisateur = utilisateur;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 
     public int getId() {

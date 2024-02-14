@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @RestController
 public class ImageController {
-    
+
 
     @PostMapping(value = "/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     String postImage(@RequestParam(name = "image") MultipartFile file) throws IOException, InterruptedException, UnirestException {
