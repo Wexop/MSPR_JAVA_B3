@@ -11,6 +11,7 @@ public class RestConfig implements RepositoryRestConfigurer {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
+        config.setExposeRepositoryMethodsByDefault(false);
         config.exposeIdsFor(Utilisateur.class, Adresse.class, Article.class, Annonce.class, AnnonceMessage.class, Bibliotheque.class, Commentaire.class, Proposition.class, Plante.class);
     }
 }
