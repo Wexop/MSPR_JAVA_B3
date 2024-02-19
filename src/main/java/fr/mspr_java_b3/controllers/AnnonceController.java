@@ -34,16 +34,16 @@ public class AnnonceController {
                 .orElseThrow(() -> new Error("Aucun utilisateur avec l'id " + id));
     }
 
-    @GetMapping("/mes_annonces/{id}")
-    List<Annonce> mesAnnonce(@PathVariable int id) {
+    @GetMapping("/mes_annonces")
+    List<Annonce> mesAnnonce(@RequestHeader(value = "Utilisateur_id") String authorizationValue) {
 
 
-        return repository.findByUser(id);
+        return repository.findByUser(Integer.parseInt(authorizationValue));
     }
 
-    @GetMapping("/mes_gardes/{id}")
-    List<Annonce> mesGardes(@PathVariable int id) {
-        return repository.findUtilisateurGarde(id);
+    @GetMapping("/mes_gardes")
+    List<Annonce> mesGardes(@RequestHeader(value = "Authorization") String authorizationValue) {
+        return repository.findUtilisateurGarde(Integer.parseInt(authorizationValue));
     }
 
     @PostMapping("/annonce/one")
