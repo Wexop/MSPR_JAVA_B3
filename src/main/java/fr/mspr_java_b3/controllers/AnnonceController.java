@@ -32,7 +32,7 @@ public class AnnonceController {
     Annonce one(@PathVariable int id) {
 
         return repository.findById(id)
-                .orElseThrow(() -> new Error("Aucun utilisateur avec l'id " + id));
+                .orElseThrow(() -> new Error("Aucune annonce avec l'id " + id));
     }
 
     @GetMapping("/mes_annonces")
