@@ -29,4 +29,23 @@ public class PlanteController {
     Plante postPlante(@RequestBody Plante plante) {
         return repository.save(plante);
     }
+
+    @PutMapping("/plante/{id}")
+    Plante putPlante(@RequestBody Plante plante, @RequestParam(name = "id") Integer id) {
+
+        plante.setId(id);
+
+        return repository.saveAndFlush(plante);
+    }
+
+    @DeleteMapping("/plante/{id}")
+    boolean deletePlante(@RequestParam(name = "id") Integer id) {
+
+        try {
+            repository.deleteById(id);
+            return true;
+        } catch (Error error) {
+            return false;
+        }
+    }
 }

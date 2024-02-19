@@ -36,7 +36,9 @@ public class Plante {
         this.image_url = image_url;
     }
 
-
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -57,6 +59,7 @@ public class Plante {
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Utilisateur getUtilisateur() {
         return utilisateur;
