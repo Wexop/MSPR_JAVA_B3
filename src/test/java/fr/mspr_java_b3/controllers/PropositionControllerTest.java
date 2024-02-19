@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 
 import java.util.Optional;
 
@@ -45,7 +46,9 @@ class PropositionControllerTest {
     @Test
     void postProposition() throws Exception {
         Proposition proposition = new Proposition();
-        Mockito.when(repository.save(proposition)).thenReturn(proposition);
+        proposition.setId(1);
+
+        Mockito.when(repository.save(any(Proposition.class))).thenReturn(proposition);
 
         this.mvc.perform(post("/proposition")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -57,7 +60,9 @@ class PropositionControllerTest {
     @Test
     void patchProposition() throws Exception {
         Proposition proposition = new Proposition();
-        Mockito.when(repository.save(proposition)).thenReturn(proposition);
+        proposition.setId(1);
+
+        Mockito.when(repository.save(any(Proposition.class))).thenReturn(proposition);
 
         this.mvc.perform(patch("/proposition")
                 .contentType(MediaType.APPLICATION_JSON)
