@@ -14,7 +14,7 @@ public class Bibliotheque {
 
     private String titre;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "utilisateur_id")
     Utilisateur utilisateur;
 
@@ -35,6 +35,10 @@ public class Bibliotheque {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Utilisateur getUtilisateur() {
         return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
     public int getId() {

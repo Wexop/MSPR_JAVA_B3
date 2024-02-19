@@ -27,8 +27,8 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateur")
     Set<Annonce> annonces;
 
-    @OneToOne(mappedBy = "utilisateur")
-    Bibliotheque bibliotheque;
+    @OneToMany(mappedBy = "utilisateur")
+    Set<Bibliotheque> bibliotheques;
 
     @OneToMany(mappedBy = "utilisateur")
     Set<AnnonceMessage> annonceMessages;

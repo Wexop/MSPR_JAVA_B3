@@ -1,19 +1,21 @@
 package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.entities.Bibliotheque;
+import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.BibliothequeRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import fr.mspr_java_b3.repository.UtilisateurRepository;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class BibliothequeController {
     private final BibliothequeRepository repository;
+    private final UtilisateurRepository utilisateurRepository;
 
-    BibliothequeController(BibliothequeRepository repository) {
+    BibliothequeController(BibliothequeRepository repository, UtilisateurRepository utilisateurRepository) {
         this.repository = repository;
+        this.utilisateurRepository = utilisateurRepository;
     }
 
     @GetMapping("/bibliotheque/me")
@@ -22,5 +24,17 @@ public class BibliothequeController {
         return this.repository.getBibliothequeByUtilisateur(Integer.parseInt(authorizationHeader));
 
     }
+
+    @PostMapping("/bibliotheque/one")
+    Bibliotheque postArticle(@RequestBody Bibliotheque bibliotheque, @RequestHeader(value = "Utilisateur_id") String authorizationHeader) {
+
+        Utilisateur utilisateur = utilisateurRepository.findById(Integer.parseInt(authorizationHeader))
+                .orElseThrow(() -> new Error("Aucun utilisateur avec l'id " + authorizationHeader));
+
+        bibliotheque.setUtilisateur(utilisateur);
+
+        return repository.save(bibliotheque);
+    }
+
 
 }
