@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
-    @Query("SELECT a FROM Article a JOIN FETCH Utilisateur u on u.id = a.utilisateur.id")
+    @Query("SELECT a FROM Article a")
     List<Article> findAll();
 
     @Query("SELECT a FROM Article a JOIN FETCH Utilisateur u on u.id = a.utilisateur.id WHERE a.id = ?1")

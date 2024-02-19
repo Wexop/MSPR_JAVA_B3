@@ -21,8 +21,8 @@ public class ArticleController {
     }
 
     @GetMapping("/article_by_id/{id}")
-    Article getOneArticle(@PathVariable("id") int articleId) {
-        return repository.findById(articleId)
+    Article getOneArticle(@PathVariable("id") String articleId) {
+        return repository.findById(Integer.parseInt(articleId))
                 .orElseThrow(() -> new Error("Aucun article avec l'id " + articleId));
     }
 

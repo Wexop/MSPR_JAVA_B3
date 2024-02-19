@@ -43,6 +43,10 @@ public class Article {
         this.date = date;
     }
 
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
     public int getId() {
         return id;
     }

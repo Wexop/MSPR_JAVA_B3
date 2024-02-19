@@ -35,7 +35,7 @@ public class PlanteController {
 
         plante.setId(id);
 
-        return repository.saveAndFlush(plante);
+        return repository.save(plante);
     }
 
     @DeleteMapping("/plante/{id}")
