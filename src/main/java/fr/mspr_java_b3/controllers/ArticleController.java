@@ -1,6 +1,7 @@
 package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.entities.Article;
+import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.ArticleRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,13 @@ public class ArticleController {
     }
 
     @PostMapping("/article/one")
-    Article postArticle(@RequestBody Article article) {
+    Article postArticle(@RequestBody Article article, @RequestHeader(value = "Utilisateur_id") String authorizationHeader) {
+
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setId(Integer.parseInt(authorizationHeader));
+
+        article.setUtilisateur(utilisateur);
+
         return repository.save(article);
     }
 
