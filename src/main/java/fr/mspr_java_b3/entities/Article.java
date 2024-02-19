@@ -12,6 +12,7 @@ public class Article {
     private int id;
 
     private String titre;
+    @Column(length = 10000)
     private String contenu;
     private String image_url;
 
