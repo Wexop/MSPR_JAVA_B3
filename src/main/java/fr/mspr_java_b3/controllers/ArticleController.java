@@ -2,12 +2,11 @@ package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.entities.Article;
 import fr.mspr_java_b3.repository.ArticleRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+@CrossOrigin(origins = "localhost:3000")
 @RestController
 public class ArticleController {
     private final ArticleRepository repository;

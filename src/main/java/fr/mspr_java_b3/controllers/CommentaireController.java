@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "localhost:3000")
 @RestController
 public class CommentaireController {
     private final CommentaireRepository repository;

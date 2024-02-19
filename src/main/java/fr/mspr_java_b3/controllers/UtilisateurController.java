@@ -3,6 +3,7 @@ package fr.mspr_java_b3.controllers;
 import fr.mspr_java_b3.controllers.requests_body.LoginUserRequest;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
 import java.util.Optional;
 
+@CrossOrigin(origins = "localhost:3000")
 @RestController
 public class UtilisateurController {
     private final UtilisateurRepository repository;

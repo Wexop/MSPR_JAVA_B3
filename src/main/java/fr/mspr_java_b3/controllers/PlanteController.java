@@ -3,11 +3,11 @@ package fr.mspr_java_b3.controllers;
 import fr.mspr_java_b3.entities.Plante;
 import fr.mspr_java_b3.repository.PlanteRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "localhost:3000")
 @RestController
 public class PlanteController {
 
