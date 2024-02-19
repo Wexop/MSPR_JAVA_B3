@@ -28,21 +28,19 @@ public class Proposition {
     public Proposition() {
     }
 
-    public Proposition(LocalDateTime date, String message, PropositionEnum etat, Annonce annonce, Utilisateur utilisateur) {
+    public Proposition(LocalDateTime date, String message, PropositionEnum etat, Annonce annonce) {
         this.date = date;
         this.message = message;
         this.etat = etat;
         this.annonce = annonce;
-        this.utilisateur = utilisateur;
     }
 
-    public Proposition(int id, LocalDateTime date, String message, PropositionEnum etat, Annonce annonce, Utilisateur utilisateur) {
+    public Proposition(int id, LocalDateTime date, String message, PropositionEnum etat, Annonce annonce) {
         this.id = id;
         this.date = date;
         this.message = message;
         this.etat = etat;
         this.annonce = annonce;
-        this.utilisateur = utilisateur;
     }
 
     public int getId() {

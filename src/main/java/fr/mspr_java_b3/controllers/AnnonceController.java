@@ -5,6 +5,7 @@ import fr.mspr_java_b3.entities.AnnonceEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -38,7 +39,7 @@ public class AnnonceController {
     List<Annonce> mesAnnonce(@RequestHeader(value = "Utilisateur_id") String authorizationValue) {
 
 
-        return repository.findByUser(Integer.parseInt(authorizationValue));
+        return repository.findByUtilisateur(Integer.parseInt(authorizationValue));
     }
 
     @GetMapping("/mes_gardes")
@@ -48,7 +49,12 @@ public class AnnonceController {
 
     @PostMapping("/annonce/one")
     Annonce postAnnonce(@RequestBody Annonce body) {
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+        body.setDate_creation(localDateTime);
+
         return repository.save(body);
     }
+
 
 }

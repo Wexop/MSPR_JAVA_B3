@@ -31,7 +31,7 @@ public class PlanteController {
     }
 
     @PutMapping("/plante/{id}")
-    Plante putPlante(@RequestBody Plante plante, @RequestParam(name = "id") Integer id) {
+    Plante putPlante(@RequestBody Plante plante, @PathVariable(name = "id") Integer id) {
 
         plante.setId(id);
 
@@ -39,7 +39,7 @@ public class PlanteController {
     }
 
     @DeleteMapping("/plante/{id}")
-    boolean deletePlante(@RequestParam(name = "id") Integer id) {
+    boolean deletePlante(@PathVariable(name = "id") Integer id) {
 
         try {
             repository.deleteById(id);
