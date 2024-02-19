@@ -4,7 +4,7 @@ import fr.mspr_java_b3.entities.Proposition;
 import fr.mspr_java_b3.repository.PropositionRepository;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class PropositionController {
 
