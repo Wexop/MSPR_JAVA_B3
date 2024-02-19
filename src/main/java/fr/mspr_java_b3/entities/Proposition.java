@@ -48,6 +48,7 @@ public class Proposition {
     public int getId() {
         return id;
     }
+    public void setId(int id) { this.id = id; }
 
     public LocalDateTime getDate() {
         return date;
