@@ -68,6 +68,7 @@ public class Annonce {
     public int getId() {
         return id;
     }
+    public void setId(int id) { this.id = id; }
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Plante getPlante() {
         return plante;
