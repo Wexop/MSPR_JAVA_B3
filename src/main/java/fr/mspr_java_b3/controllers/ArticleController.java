@@ -38,4 +38,15 @@ public class ArticleController {
 
         return repository.save(article);
     }
+
+    @DeleteMapping("/article/{id}")
+    boolean delete(@PathVariable(name = "id") Integer id) {
+
+        try {
+            repository.deleteById(id);
+            return true;
+        } catch (Error error) {
+            return false;
+        }
+    }
 }

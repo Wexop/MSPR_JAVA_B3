@@ -56,5 +56,16 @@ public class AnnonceController {
         return repository.save(body);
     }
 
+    @DeleteMapping("/annonce/{id}")
+    boolean delete(@PathVariable(name = "id") Integer id) {
+
+        try {
+            repository.deleteById(id);
+            return true;
+        } catch (Error error) {
+            return false;
+        }
+    }
+
 
 }

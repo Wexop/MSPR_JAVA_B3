@@ -25,4 +25,15 @@ public class CommentaireController {
         return repository.findById(id_article).stream().toList();
 
     }
+
+    @DeleteMapping("/message/{id}")
+    boolean delete(@PathVariable(name = "id") Integer id) {
+
+        try {
+            repository.deleteById(id);
+            return true;
+        } catch (Error error) {
+            return false;
+        }
+    }
 }
