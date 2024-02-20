@@ -42,7 +42,8 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateur")
     Set<Commentaire> commentaires;
 
-    @OneToOne(mappedBy = "utilisateur")
+    @OneToOne
+    @JoinColumn(name = "adresse_id")
     Adresse adresse;
 
     public Utilisateur() {
@@ -63,6 +64,14 @@ public class Utilisateur {
         this.nom = nom;
         this.image_url = image_url;
         this.botaniste = botaniste;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+
+    public Adresse getAdresse() {
+        return adresse;
     }
 
     public void setId(int id) {

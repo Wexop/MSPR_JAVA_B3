@@ -13,8 +13,7 @@ public class Adresse {
     private String latitude;
     private String longitude;
 
-    @OneToOne
-    @JoinColumn(name = "utilisateur_id")
+    @OneToOne(mappedBy = "adresse")
     Utilisateur utilisateur;
 
     public Adresse() {
