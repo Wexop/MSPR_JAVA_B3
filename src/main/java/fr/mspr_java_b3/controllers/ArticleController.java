@@ -1,5 +1,6 @@
 package fr.mspr_java_b3.controllers;
 
+import fr.mspr_java_b3.controllers.requests_body.PutArticleRequest;
 import fr.mspr_java_b3.entities.Article;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.ArticleRepository;
@@ -56,4 +57,17 @@ public class ArticleController {
             return false;
         }
     }
+
+    @PutMapping("/article/{id}")
+    Article putAnnonce(@RequestBody PutArticleRequest entity, @PathVariable(name = "id") Integer id) {
+
+        Article initialEntity = repository.getReferenceById(id);
+
+        initialEntity.setTitre(entity.titre);
+        initialEntity.setContenu(entity.contenu);
+
+        return repository.save(initialEntity);
+
+    }
+
 }

@@ -1,5 +1,6 @@
 package fr.mspr_java_b3.controllers;
 
+import fr.mspr_java_b3.controllers.requests_body.PutAnnonceRequest;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
@@ -65,6 +66,20 @@ public class AnnonceController {
         } catch (Error error) {
             return false;
         }
+    }
+
+    @PutMapping("/annonce/{id}")
+    Annonce putAnnonce(@RequestBody PutAnnonceRequest entity, @PathVariable(name = "id") Integer id) {
+
+        Annonce initialEntity = repository.getReferenceById(id);
+
+        initialEntity.setBesoin_aide(entity.besoin_aide);
+        initialEntity.setEtat(entity.etat);
+        initialEntity.setTitre(entity.titre);
+        initialEntity.setDescription(entity.description);
+
+        return repository.save(initialEntity);
+
     }
 
 
