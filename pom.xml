@@ -63,6 +63,13 @@
             <version>3.0.0</version> <!-- Vérifiez la dernière version sur le dépôt Maven -->
         </dependency>
 
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
