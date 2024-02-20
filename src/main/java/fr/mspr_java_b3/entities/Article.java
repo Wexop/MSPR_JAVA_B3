@@ -1,6 +1,5 @@
 package fr.mspr_java_b3.entities;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -13,6 +12,7 @@ public class Article {
     private int id;
 
     private String titre;
+    @Column(length = 10000)
     private String contenu;
     private String image_url;
 
@@ -43,9 +43,8 @@ public class Article {
         this.date = date;
     }
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
     public int getId() {

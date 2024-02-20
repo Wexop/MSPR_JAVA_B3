@@ -20,7 +20,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
     List<Annonce> findNeedHelp(AnnonceEnum etat);
 
     @Query("SELECT a FROM Annonce a WHERE a.utilisateur.id = ?1")
-    List<Annonce> findByUser(int id);
+    List<Annonce> findByUtilisateur(int id);
 
     @Query("SELECT a FROM Annonce a JOIN FETCH Proposition p on p.annonce.id = a.id WHERE a.utilisateur.id = ?1")
     List<Annonce> findUtilisateurGarde(int id);

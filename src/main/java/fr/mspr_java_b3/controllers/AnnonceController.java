@@ -1,10 +1,12 @@
 package fr.mspr_java_b3.controllers;
 
+import fr.mspr_java_b3.controllers.requests_body.PutAnnonceRequest;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -31,14 +33,14 @@ public class AnnonceController {
     Annonce one(@PathVariable int id) {
 
         return repository.findById(id)
-                .orElseThrow(() -> new Error("Aucun utilisateur avec l'id " + id));
+                .orElseThrow(() -> new Error("Aucune annonce avec l'id " + id));
     }
 
     @GetMapping("/mes_annonces")
     List<Annonce> mesAnnonce(@RequestHeader(value = "Utilisateur_id") String authorizationValue) {
 
 
-        return repository.findByUser(Integer.parseInt(authorizationValue));
+        return repository.findByUtilisateur(Integer.parseInt(authorizationValue));
     }
 
     @GetMapping("/mes_gardes")
@@ -48,7 +50,37 @@ public class AnnonceController {
 
     @PostMapping("/annonce/one")
     Annonce postAnnonce(@RequestBody Annonce body) {
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+        body.setDate_creation(localDateTime);
+
         return repository.save(body);
     }
+
+    @DeleteMapping("/annonce/{id}")
+    boolean delete(@PathVariable(name = "id") Integer id) {
+
+        try {
+            repository.deleteById(id);
+            return true;
+        } catch (Error error) {
+            return false;
+        }
+    }
+
+    @PutMapping("/annonce/{id}")
+    Annonce putAnnonce(@RequestBody PutAnnonceRequest entity, @PathVariable(name = "id") Integer id) {
+
+        Annonce initialEntity = repository.getReferenceById(id);
+
+        initialEntity.setBesoin_aide(entity.besoin_aide);
+        initialEntity.setEtat(entity.etat);
+        initialEntity.setTitre(entity.titre);
+        initialEntity.setDescription(entity.description);
+
+        return repository.save(initialEntity);
+
+    }
+
 
 }

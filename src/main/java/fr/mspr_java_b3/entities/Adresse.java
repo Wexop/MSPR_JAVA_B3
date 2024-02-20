@@ -20,19 +20,17 @@ public class Adresse {
     public Adresse() {
     }
 
-    public Adresse(String adresse, String latitude, String longitude, Utilisateur utilisateur) {
+    public Adresse(String adresse, String latitude, String longitude) {
         this.adresse = adresse;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.utilisateur = utilisateur;
     }
 
-    public Adresse(int id, String adresse, String latitude, String longitude, Utilisateur utilisateur) {
+    public Adresse(int id, String adresse, String latitude, String longitude) {
         this.id = id;
         this.adresse = adresse;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.utilisateur = utilisateur;
     }
 
     public int getId() {

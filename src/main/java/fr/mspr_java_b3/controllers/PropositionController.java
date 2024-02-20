@@ -29,4 +29,15 @@ public class PropositionController {
         return repository.save(proposition);
     }
 
+    @DeleteMapping("/proposition/{id}")
+    boolean delete(@PathVariable(name = "id") Integer id) {
+
+        try {
+            repository.deleteById(id);
+            return true;
+        } catch (Error error) {
+            return false;
+        }
+    }
+
 }
