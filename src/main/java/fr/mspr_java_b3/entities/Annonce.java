@@ -86,6 +86,10 @@ public class Annonce {
         return plante;
     }
 
+    public void setPlante(Plante plante) {
+        this.plante = plante;
+    }
+
     public String getTitre() {
         return titre;
     }
