@@ -1,6 +1,7 @@
 package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.controllers.requests_body.LoginUserRequest;
+import fr.mspr_java_b3.controllers.responses.UtilisateurResponse;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AdresseRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
@@ -21,7 +22,7 @@ public class UtilisateurController {
     }
 
     @PostMapping("/login")
-    Utilisateur loginUser(@RequestBody LoginUserRequest request) {
+    UtilisateurResponse loginUser(@RequestBody LoginUserRequest request) {
 
         Utilisateur utilisateur = this.repository.getUtilisateurByMail(request.getMail())
                 .orElseThrow(() -> new Error("Aucun utilisateur trouvé avec le mail " + request.getMail()));
@@ -30,11 +31,14 @@ public class UtilisateurController {
             throw new Error("Mot de passe incorrect");
         }
 
-        return utilisateur;
+        UtilisateurResponse response = new UtilisateurResponse();
+        response.fromUser(utilisateur);
+
+        return response;
     }
 
     @PostMapping("/register")
-    Utilisateur loginUser(@RequestBody Utilisateur request) throws Exception {
+    UtilisateurResponse loginUser(@RequestBody Utilisateur request) throws Exception {
 
         Optional<Utilisateur> utilisateur = this.repository.getUtilisateurByMail(request.getMail());
 
@@ -48,13 +52,23 @@ public class UtilisateurController {
 
         this.adresseRepository.save(request.getAdresse());
 
-        return this.repository.save(request);
+        Utilisateur saved = this.repository.save(request);
+        UtilisateurResponse response = new UtilisateurResponse();
+        response.fromUser(saved);
+
+        return response;
+
     }
 
     @GetMapping("/utilisateur/me")
-    Utilisateur getMe(@RequestHeader(value = "Utilisateur_id") String authorizationHeader) throws Exception {
-        return this.repository.findById(Integer.parseInt(authorizationHeader))
+    UtilisateurResponse getMe(@RequestHeader(value = "Utilisateur_id") String authorizationHeader) throws Exception {
+        Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
                 .orElseThrow(() -> new Exception("Utilisteur introuvable"));
+
+        UtilisateurResponse response = new UtilisateurResponse();
+        response.fromUser(utilisateur);
+
+        return response;
     }
 
 
