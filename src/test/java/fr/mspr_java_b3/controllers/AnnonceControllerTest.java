@@ -1,6 +1,7 @@
 package fr.mspr_java_b3.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.mspr_java_b3.controllers.requests_body.PutAnnonceRequest;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
@@ -15,6 +16,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.is;
@@ -104,7 +107,7 @@ class AnnonceControllerTest {
     }
 
     @Test
-    void postAnnonce() throws  Exception {
+    void postAnnonce() throws Exception {
         final Annonce annonce = new Annonce();
         annonce.setEtat(AnnonceEnum.en_attente);
 
@@ -117,11 +120,59 @@ class AnnonceControllerTest {
                 .andExpect(jsonPath("$.etat", is(annonce.getEtat().toString())));
     }
 
+    @Test
+    void putAnnonce() throws Exception {
+        int annonceId = 1;
+        Annonce existingAnnonce = new Annonce();
+        existingAnnonce.setId(annonceId);
+        existingAnnonce.setTitre("Old titre");
+
+        PutAnnonceRequest putAnnonceRequest = new PutAnnonceRequest();
+        putAnnonceRequest.setTitre("New titre");
+
+        Mockito.when(repository.getReferenceById(annonceId)).thenReturn(existingAnnonce);
+        Mockito.when(repository.save(any(Annonce.class))).thenAnswer(e -> e.getArgument(0));
+
+        this.mvc.perform(put("/annonce/{id}", annonceId)
+                .content(asJsonString(putAnnonceRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(annonceId))
+                .andExpect(jsonPath("$.titre").value(putAnnonceRequest.getTitre()));
+
+        verify(repository).getReferenceById(annonceId);
+        verify(repository).save(existingAnnonce);
+    }
+
+    @Test
+    void deleteAnnonce() throws Exception {
+        int annonceId = 1;
+        doNothing().when(repository).deleteById(annonceId);
+
+        this.mvc.perform(delete("/annonce/{id}", annonceId))
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+
+        verify(repository).deleteById(annonceId);
+    }
+
     private static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    static class PutAnnonceRequest {
+        private String titre;
+
+        public String getTitre() {
+            return titre;
+        }
+
+        public void setTitre(String titre) {
+            this.titre = titre;
         }
     }
 }
