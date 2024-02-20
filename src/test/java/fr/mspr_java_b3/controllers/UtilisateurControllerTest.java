@@ -2,7 +2,9 @@ package fr.mspr_java_b3.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.mspr_java_b3.controllers.requests_body.LoginUserRequest;
+import fr.mspr_java_b3.entities.Adresse;
 import fr.mspr_java_b3.entities.Utilisateur;
+import fr.mspr_java_b3.repository.AdresseRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,10 +19,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UtilisateurController.class)
@@ -31,6 +33,26 @@ class UtilisateurControllerTest {
 
     @MockBean
     private UtilisateurRepository repository;
+
+    @MockBean
+    private AdresseRepository adresseRepository;
+
+    @Test
+    void getUtilisateur() throws Exception {
+        int utilisateurId = 1;
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setId(utilisateurId);
+
+        Mockito.when(repository.findById(utilisateurId)).thenReturn(Optional.of(utilisateur));
+
+        this.mvc.perform(get("/utilisateur/me")
+                .header("Utilisateur_id", String.valueOf(utilisateurId)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(utilisateurId));
+
+        verify(repository).findById(utilisateurId);
+    }
 
     @Test
     void postLogin() throws Exception {
@@ -53,19 +75,26 @@ class UtilisateurControllerTest {
 
     @Test
     void postRegister() throws Exception {
+        Adresse adresse = new Adresse();
         String email = "test15@test.com";
         String mdp = "mdp22";
-        Utilisateur utilisateur = new Utilisateur(email, mdp, "test", "test", false);
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setMail(email);
+        utilisateur.setMdp(mdp);
+        utilisateur.setAdresse(adresse);
 
         Mockito.when(repository.getUtilisateurByMail(email)).thenReturn(Optional.empty());
 
-        Mockito.when(repository.save(utilisateur)).thenReturn(utilisateur);
+        Mockito.when(repository.save(any(Utilisateur.class))).thenReturn(utilisateur);
 
         this.mvc.perform(post("/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(utilisateur)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(utilisateur)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.mail", is(utilisateur.getMail())));
+                .andExpect(jsonPath("$.mail").value(utilisateur.getMail()));
+
+        verify(repository).getUtilisateurByMail(email);
+        verify(repository).save(any(Utilisateur.class));
 
     }
 
