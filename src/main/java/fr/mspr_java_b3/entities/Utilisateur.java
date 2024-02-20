@@ -2,6 +2,7 @@ package fr.mspr_java_b3.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -90,9 +91,6 @@ public class Utilisateur {
         this.mail = mail;
     }
 
-    public String getMdp() {
-        return mdp;
-    }
 
     public void setMdp(String mdp) {
         this.mdp = mdp;
@@ -120,5 +118,9 @@ public class Utilisateur {
 
     public void setBotaniste(Boolean botaniste) {
         this.botaniste = botaniste;
+    }
+
+    public boolean checkMdp(String password) {
+        return Objects.equals(this.mdp, password);
     }
 }

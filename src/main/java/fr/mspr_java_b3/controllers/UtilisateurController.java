@@ -1,13 +1,11 @@
 package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.controllers.requests_body.LoginUserRequest;
-import fr.mspr_java_b3.controllers.responses.UtilisateurResponse;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AdresseRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -22,23 +20,20 @@ public class UtilisateurController {
     }
 
     @PostMapping("/login")
-    UtilisateurResponse loginUser(@RequestBody LoginUserRequest request) {
+    Utilisateur loginUser(@RequestBody LoginUserRequest request) {
 
         Utilisateur utilisateur = this.repository.getUtilisateurByMail(request.getMail())
                 .orElseThrow(() -> new Error("Aucun utilisateur trouvé avec le mail " + request.getMail()));
 
-        if (!Objects.equals(utilisateur.getMdp(), request.getMdp())) {
+        if (!utilisateur.checkMdp(request.getMdp())) {
             throw new Error("Mot de passe incorrect");
         }
 
-        UtilisateurResponse response = new UtilisateurResponse();
-        response.fromUser(utilisateur);
-
-        return response;
+        return utilisateur;
     }
 
     @PostMapping("/register")
-    UtilisateurResponse loginUser(@RequestBody Utilisateur request) throws Exception {
+    Utilisateur loginUser(@RequestBody Utilisateur request) throws Exception {
 
         Optional<Utilisateur> utilisateur = this.repository.getUtilisateurByMail(request.getMail());
 
@@ -52,23 +47,13 @@ public class UtilisateurController {
 
         this.adresseRepository.save(request.getAdresse());
 
-        Utilisateur saved = this.repository.save(request);
-        UtilisateurResponse response = new UtilisateurResponse();
-        response.fromUser(saved);
-
-        return response;
-
+        return this.repository.save(request);
     }
 
     @GetMapping("/utilisateur/me")
-    UtilisateurResponse getMe(@RequestHeader(value = "Utilisateur_id") String authorizationHeader) throws Exception {
-        Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
+    Utilisateur getMe(@RequestHeader(value = "Utilisateur_id") String authorizationHeader) throws Exception {
+        return this.repository.findById(Integer.parseInt(authorizationHeader))
                 .orElseThrow(() -> new Exception("Utilisteur introuvable"));
-
-        UtilisateurResponse response = new UtilisateurResponse();
-        response.fromUser(utilisateur);
-
-        return response;
     }
 
 
