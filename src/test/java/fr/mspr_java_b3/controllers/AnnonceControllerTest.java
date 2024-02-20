@@ -82,7 +82,7 @@ class AnnonceControllerTest {
         int utilisateurId = 1;
         List<Annonce> annonces = Arrays.asList(new Annonce(), new Annonce());
 
-        Mockito.when(repository.findByUser(utilisateurId)).thenReturn(annonces);
+        Mockito.when(repository.findByUtilisateur(utilisateurId)).thenReturn(annonces);
 
         this.mvc.perform(get("/mes_annonces")
                 .header("Utilisateur_id", String.valueOf(utilisateurId)))
