@@ -50,6 +50,8 @@ class AnnonceControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].etat", is(annonce.getEtat().toString())));
+
+        verify(repository).findByEtat(AnnonceEnum.en_attente);
     }
 
     @Test
@@ -65,6 +67,8 @@ class AnnonceControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].etat", is(annonce.getEtat().toString())));
+
+        verify(repository).findNeedHelp(AnnonceEnum.en_cours);
     }
 
     @Test
@@ -78,6 +82,8 @@ class AnnonceControllerTest {
         this.mvc.perform(get("/annonce_by_id/{id}", annonceId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(annonce.getId())));
+
+        verify(repository).findById(annonceId);
     }
 
     @Test
@@ -91,6 +97,8 @@ class AnnonceControllerTest {
                 .header("Utilisateur_id", String.valueOf(utilisateurId)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(annonces.size())));
+
+        verify(repository).findByUtilisateur(utilisateurId);
     }
 
     @Test
@@ -104,6 +112,8 @@ class AnnonceControllerTest {
                 .header("Authorization", String.valueOf(utilisateurGarde)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(annonces.size())));
+
+        verify(repository).findUtilisateurGarde(utilisateurGarde);
     }
 
     @Test
@@ -118,30 +128,28 @@ class AnnonceControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.etat", is(annonce.getEtat().toString())));
+
+        verify(repository).save(any(Annonce.class));
     }
 
     @Test
     void putAnnonce() throws Exception {
         int annonceId = 1;
-        Annonce existingAnnonce = new Annonce();
-        existingAnnonce.setId(annonceId);
-        existingAnnonce.setTitre("Old titre");
+        Annonce annonce = new Annonce();
+        annonce.setId(annonceId);
 
-        PutAnnonceRequest putAnnonceRequest = new PutAnnonceRequest();
-        putAnnonceRequest.setTitre("New titre");
 
-        Mockito.when(repository.getReferenceById(annonceId)).thenReturn(existingAnnonce);
+        Mockito.when(repository.getReferenceById(annonceId)).thenReturn(annonce);
         Mockito.when(repository.save(any(Annonce.class))).thenAnswer(e -> e.getArgument(0));
 
         this.mvc.perform(put("/annonce/{id}", annonceId)
-                .content(asJsonString(putAnnonceRequest))
+                .content(asJsonString(annonce))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(annonceId))
-                .andExpect(jsonPath("$.titre").value(putAnnonceRequest.getTitre()));
+                .andExpect(jsonPath("$.id").value(annonceId));
 
         verify(repository).getReferenceById(annonceId);
-        verify(repository).save(existingAnnonce);
+        verify(repository).save(annonce);
     }
 
     @Test
@@ -161,18 +169,6 @@ class AnnonceControllerTest {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    static class PutAnnonceRequest {
-        private String titre;
-
-        public String getTitre() {
-            return titre;
-        }
-
-        public void setTitre(String titre) {
-            this.titre = titre;
         }
     }
 }

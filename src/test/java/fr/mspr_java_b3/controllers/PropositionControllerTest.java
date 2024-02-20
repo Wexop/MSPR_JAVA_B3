@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.is;
@@ -41,6 +42,8 @@ class PropositionControllerTest {
         this.mvc.perform(get("/proposition/{id}", propositionId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(proposition.getId())));
+
+        verify(repository).findById(propositionId);
     }
 
     @Test
@@ -55,6 +58,8 @@ class PropositionControllerTest {
                 .content(asJsonString(proposition)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists());
+
+        verify(repository).save(any(Proposition.class));
     }
 
     @Test
@@ -69,6 +74,8 @@ class PropositionControllerTest {
                 .content(asJsonString(proposition)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists());
+
+        verify(repository).save(any(Proposition.class));
     }
 
     private static String asJsonString(final Object obj) {

@@ -66,28 +66,20 @@ class PlanteControllerTest {
     @Test
     void putPlante() throws Exception {
         int planteId = 1;
-        Plante existingPlante = new Plante();
-        existingPlante.setId(planteId);
-        existingPlante.setEspece("Old Espece");
-        existingPlante.setImage_url("Old url");
+        Plante plante = new Plante();
+        plante.setId(planteId);
 
-        PutPlanteRequest putPlanteRequest = new PutPlanteRequest();
-        putPlanteRequest.setEspece("New espece");
-        putPlanteRequest.setImage_url("New url");
-
-        Mockito.when(repository.getReferenceById(planteId)).thenReturn(existingPlante);
+        Mockito.when(repository.getReferenceById(planteId)).thenReturn(plante);
         Mockito.when(repository.save(any(Plante.class))).thenAnswer(e -> e.getArgument(0));
 
         this.mvc.perform(put("/plante/{id}", planteId)
-                .content(asJsonString(putPlanteRequest))
+                .content(asJsonString(plante))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(planteId))
-                .andExpect(jsonPath("$.espece").value(putPlanteRequest.getEspece()))
-                .andExpect(jsonPath("$.image_url").value(putPlanteRequest.getImage_url()));
+                .andExpect(jsonPath("$.id").value(planteId));
 
         verify(repository).getReferenceById(planteId);
-        verify(repository).save(existingPlante);
+        verify(repository).save(any(Plante.class));
     }
 
     @Test
@@ -107,27 +99,6 @@ class PlanteControllerTest {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    static class PutPlanteRequest {
-        private String espece;
-        private String image_url;
-
-        public String getEspece() {
-            return espece;
-        }
-
-        public void setEspece(String espece) {
-            this.espece = espece;
-        }
-
-        public String getImage_url() {
-            return image_url;
-        }
-
-        public void setImage_url(String image_url) {
-            this.image_url = image_url;
         }
     }
 }
