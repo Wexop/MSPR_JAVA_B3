@@ -2,6 +2,7 @@ package fr.mspr_java_b3.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -42,7 +43,8 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateur")
     Set<Commentaire> commentaires;
 
-    @OneToOne(mappedBy = "utilisateur")
+    @OneToOne
+    @JoinColumn(name = "adresse_id")
     Adresse adresse;
 
     public Utilisateur() {
@@ -65,6 +67,14 @@ public class Utilisateur {
         this.botaniste = botaniste;
     }
 
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -81,9 +91,6 @@ public class Utilisateur {
         this.mail = mail;
     }
 
-    public String getMdp() {
-        return mdp;
-    }
 
     public void setMdp(String mdp) {
         this.mdp = mdp;
@@ -111,5 +118,9 @@ public class Utilisateur {
 
     public void setBotaniste(Boolean botaniste) {
         this.botaniste = botaniste;
+    }
+
+    public boolean checkMdp(String password) {
+        return Objects.equals(this.mdp, password);
     }
 }

@@ -65,6 +65,10 @@ public class Annonce {
         this.besoin_aide = besoin_aide;
     }
 
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
     }
