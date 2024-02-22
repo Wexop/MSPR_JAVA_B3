@@ -1,9 +1,14 @@
 package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.controllers.requests_body.LoginUserRequest;
+import fr.mspr_java_b3.controllers.responses.AuthResponse;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AdresseRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
+import fr.mspr_java_b3.security.JwtUtil;
+import io.jsonwebtoken.Claims;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -20,7 +25,7 @@ public class UtilisateurController {
     }
 
     @PostMapping("/login")
-    Utilisateur loginUser(@RequestBody LoginUserRequest request) {
+    AuthResponse loginUser(@RequestBody LoginUserRequest request) {
 
         Utilisateur utilisateur = this.repository.getUtilisateurByMail(request.getMail())
                 .orElseThrow(() -> new Error("Aucun utilisateur trouvé avec le mail " + request.getMail()));
@@ -29,7 +34,14 @@ public class UtilisateurController {
             throw new Error("Mot de passe incorrect");
         }
 
-        return utilisateur;
+        JwtUtil jwtUtil = new JwtUtil();
+
+        String token = jwtUtil.createToken(utilisateur);
+
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setToken(token);
+
+        return authResponse;
     }
 
     @PostMapping("/register")
@@ -54,6 +66,17 @@ public class UtilisateurController {
     Utilisateur getMe(@RequestHeader(value = "Utilisateur_id") String authorizationHeader) throws Exception {
         return this.repository.findById(Integer.parseInt(authorizationHeader))
                 .orElseThrow(() -> new Exception("Utilisteur introuvable"));
+    }
+
+
+    @GetMapping("/utilisateur/truc")
+    @SecurityRequirement(name = "bearer")
+    String getTruc(HttpServletRequest authorizationHeader) throws Exception {
+
+        JwtUtil jwtUtil = new JwtUtil();
+        Claims claims = jwtUtil.resolveClaims(authorizationHeader);
+        return jwtUtil.getId(claims);
+
     }
 
 
