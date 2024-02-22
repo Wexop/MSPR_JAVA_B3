@@ -6,6 +6,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import fr.mspr_java_b3.controllers.responses.ImageResponse;
 import io.github.cdimascio.dotenv.Dotenv;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import java.io.IOException;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@SecurityRequirement(name = "bearer")
 public class ImageController {
 
 

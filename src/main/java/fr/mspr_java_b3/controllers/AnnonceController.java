@@ -4,6 +4,7 @@ import fr.mspr_java_b3.controllers.requests_body.PutAnnonceRequest;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@SecurityRequirement(name = "bearer")
 public class AnnonceController {
 
     private final AnnonceRepository repository;

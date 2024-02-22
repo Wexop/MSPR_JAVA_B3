@@ -3,12 +3,14 @@ package fr.mspr_java_b3.controllers;
 import fr.mspr_java_b3.entities.AnnonceMessage;
 import fr.mspr_java_b3.repository.AnnonceMessageRepository;
 import fr.mspr_java_b3.repository.AnnonceRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@SecurityRequirement(name = "bearer")
 public class AnnonceMessageController {
 
     private final AnnonceMessageRepository repository;

@@ -4,12 +4,14 @@ import fr.mspr_java_b3.entities.Bibliotheque;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.BibliothequeRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@SecurityRequirement(name = "bearer")
 public class BibliothequeController {
     private final BibliothequeRepository repository;
     private final UtilisateurRepository utilisateurRepository;

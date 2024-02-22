@@ -4,12 +4,14 @@ import fr.mspr_java_b3.controllers.requests_body.PutArticleRequest;
 import fr.mspr_java_b3.entities.Article;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.ArticleRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@SecurityRequirement(name = "bearer")
 public class ArticleController {
     private final ArticleRepository repository;
 

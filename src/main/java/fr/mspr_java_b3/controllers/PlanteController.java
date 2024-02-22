@@ -4,12 +4,14 @@ import fr.mspr_java_b3.controllers.requests_body.PutPlanteRequest;
 import fr.mspr_java_b3.entities.Plante;
 import fr.mspr_java_b3.repository.PlanteRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@SecurityRequirement(name = "bearer")
 public class PlanteController {
 
     private final PlanteRepository repository;

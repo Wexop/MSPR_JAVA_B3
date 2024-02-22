@@ -63,6 +63,7 @@ public class UtilisateurController {
     }
 
     @GetMapping("/utilisateur/me")
+    @SecurityRequirement(name = "bearer")
     Utilisateur getMe(@RequestHeader(value = "Utilisateur_id") String authorizationHeader) throws Exception {
         return this.repository.findById(Integer.parseInt(authorizationHeader))
                 .orElseThrow(() -> new Exception("Utilisteur introuvable"));
