@@ -1,8 +1,8 @@
 package fr.mspr_java_b3.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -61,7 +61,7 @@ public class Utilisateur {
     public Utilisateur(int id, String mail, String mdp, String nom, String image_url, Boolean botaniste) {
         this.id = id;
         this.mail = mail;
-        this.mdp = mdp;
+        this.mdp = hashMdp(mdp);
         this.nom = nom;
         this.image_url = image_url;
         this.botaniste = botaniste;
@@ -93,7 +93,7 @@ public class Utilisateur {
 
 
     public void setMdp(String mdp) {
-        this.mdp = mdp;
+        this.mdp = hashMdp(mdp);
     }
 
     public String getNom() {
@@ -121,6 +121,13 @@ public class Utilisateur {
     }
 
     public boolean checkMdp(String password) {
-        return Objects.equals(this.mdp, password);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(password, this.mdp);
+    }
+
+    public String hashMdp(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.mdp = passwordEncoder.encode(password);
+        return this.mdp;
     }
 }
