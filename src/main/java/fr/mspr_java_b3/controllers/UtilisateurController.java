@@ -6,9 +6,7 @@ import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AdresseRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
 import fr.mspr_java_b3.security.JwtUtil;
-import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -45,7 +43,7 @@ public class UtilisateurController {
     }
 
     @PostMapping("/register")
-    Utilisateur loginUser(@RequestBody Utilisateur request) throws Exception {
+    AuthResponse loginUser(@RequestBody Utilisateur request) throws Exception {
 
         Optional<Utilisateur> utilisateur = this.repository.getUtilisateurByMail(request.getMail());
 
@@ -59,25 +57,35 @@ public class UtilisateurController {
 
         this.adresseRepository.save(request.getAdresse());
 
-        return this.repository.save(request);
+        JwtUtil jwtUtil = new JwtUtil();
+
+        Utilisateur createdUser = this.repository.save(request);
+
+        String token = jwtUtil.createToken(createdUser);
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setToken(token);
+
+
+        return authResponse;
     }
 
     @GetMapping("/utilisateur/me")
     @SecurityRequirement(name = "bearer")
-    Utilisateur getMe(@RequestHeader(value = "Utilisateur_id") String authorizationHeader) throws Exception {
+    Utilisateur getMe(@RequestAttribute(value = "Utilisateur_id") String authorizationHeader) throws Exception {
         return this.repository.findById(Integer.parseInt(authorizationHeader))
                 .orElseThrow(() -> new Exception("Utilisteur introuvable"));
     }
 
-
-    @GetMapping("/utilisateur/truc")
+    @DeleteMapping("/utilisateur/me")
     @SecurityRequirement(name = "bearer")
-    String getTruc(HttpServletRequest authorizationHeader) throws Exception {
+    Boolean deleteUser(@RequestAttribute(value = "Utilisateur_id") String authorizationHeader) throws Exception {
 
-        JwtUtil jwtUtil = new JwtUtil();
-        Claims claims = jwtUtil.resolveClaims(authorizationHeader);
-        return jwtUtil.getId(claims);
-
+        try {
+            this.repository.deleteById(Integer.parseInt(authorizationHeader));
+            return true;
+        } catch (Error e) {
+            return false;
+        }
     }
 
 

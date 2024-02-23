@@ -22,14 +22,14 @@ public class BibliothequeController {
     }
 
     @GetMapping("/bibliotheque/me")
-    List<Bibliotheque> getBibliotheque(@RequestHeader(value = "Utilisateur_id") String authorizationHeader) {
+    List<Bibliotheque> getBibliotheque(@RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
         return this.repository.getBibliothequeByUtilisateur(Integer.parseInt(authorizationHeader));
 
     }
 
     @PostMapping("/bibliotheque/one")
-    Bibliotheque postArticle(@RequestBody Bibliotheque bibliotheque, @RequestHeader(value = "Utilisateur_id") String authorizationHeader) {
+    Bibliotheque postArticle(@RequestBody Bibliotheque bibliotheque, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
         Utilisateur utilisateur = utilisateurRepository.findById(Integer.parseInt(authorizationHeader))
                 .orElseThrow(() -> new Error("Aucun utilisateur avec l'id " + authorizationHeader));

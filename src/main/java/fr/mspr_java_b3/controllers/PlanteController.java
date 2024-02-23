@@ -24,7 +24,7 @@ public class PlanteController {
     }
 
     @GetMapping("/mes_plantes")
-    List<Plante> getAllPlantesByIdUtilisateur(@RequestHeader(value = "Utilisateur_id") String authorizationHeader) {
+    List<Plante> getAllPlantesByIdUtilisateur(@RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
         return repository.findByUtilisateur(Integer.parseInt(authorizationHeader));
     }
 

@@ -39,14 +39,14 @@ public class AnnonceController {
     }
 
     @GetMapping("/mes_annonces")
-    List<Annonce> mesAnnonce(@RequestHeader(value = "Utilisateur_id") String authorizationValue) {
+    List<Annonce> mesAnnonce(@RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
 
 
         return repository.findByUtilisateur(Integer.parseInt(authorizationValue));
     }
 
     @GetMapping("/mes_gardes")
-    List<Annonce> mesGardes(@RequestHeader(value = "Authorization") String authorizationValue) {
+    List<Annonce> mesGardes(@RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
         return repository.findUtilisateurGarde(Integer.parseInt(authorizationValue));
     }
 

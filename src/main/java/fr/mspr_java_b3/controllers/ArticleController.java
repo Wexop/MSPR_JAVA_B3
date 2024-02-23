@@ -31,7 +31,7 @@ public class ArticleController {
     }
 
     @PostMapping("/article/one")
-    Article postArticle(@RequestBody Article article, @RequestHeader(value = "Utilisateur_id") String authorizationHeader) {
+    Article postArticle(@RequestBody Article article, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setId(Integer.parseInt(authorizationHeader));
