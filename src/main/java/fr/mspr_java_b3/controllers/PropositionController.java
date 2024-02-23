@@ -3,7 +3,9 @@ package fr.mspr_java_b3.controllers;
 import fr.mspr_java_b3.entities.Proposition;
 import fr.mspr_java_b3.repository.PropositionRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -18,7 +20,7 @@ public class PropositionController {
 
     @GetMapping("/proposition/{id}")
     Proposition getProposition(@PathVariable int id) {
-        return repository.findById(id).orElseThrow(() -> new Error("Pas de proposition avec l'id " + id));
+        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pas de proposition avec l'id " + id));
     }
 
     @PostMapping("/proposition")

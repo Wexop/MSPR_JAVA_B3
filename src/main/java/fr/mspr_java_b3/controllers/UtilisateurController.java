@@ -7,7 +7,10 @@ import fr.mspr_java_b3.repository.AdresseRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
 import fr.mspr_java_b3.security.JwtUtil;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -43,16 +46,16 @@ public class UtilisateurController {
     }
 
     @PostMapping("/register")
-    AuthResponse loginUser(@RequestBody Utilisateur request) throws Exception {
+    AuthResponse loginUser(@RequestBody Utilisateur request, HttpServletResponse response) throws Exception {
 
         Optional<Utilisateur> utilisateur = this.repository.getUtilisateurByMail(request.getMail());
 
         if (utilisateur.isPresent()) {
-            throw new Exception("Email déjà utilisé");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email déjà utilisé");
         }
 
         if (request.getAdresse() == null) {
-            throw new Exception("Adresse invalide");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Adresse invalide");
         }
 
         this.adresseRepository.save(request.getAdresse());

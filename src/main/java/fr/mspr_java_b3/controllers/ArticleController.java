@@ -5,7 +5,9 @@ import fr.mspr_java_b3.entities.Article;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.ArticleRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class ArticleController {
     @PatchMapping("/article_by_id/{id}")
     Article patchArticle(@RequestBody Article article, @PathVariable int id) {
 
-        Article articleFound = repository.findById(id).orElseThrow(() -> new Error("Aucun article avec l'id " + id));
+        Article articleFound = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pas d'article avec l'id " + id));
 
         return repository.save(article);
     }

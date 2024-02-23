@@ -5,7 +5,9 @@ import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.BibliothequeRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class BibliothequeController {
     Bibliotheque postArticle(@RequestBody Bibliotheque bibliotheque, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
         Utilisateur utilisateur = utilisateurRepository.findById(Integer.parseInt(authorizationHeader))
-                .orElseThrow(() -> new Error("Aucun utilisateur avec l'id " + authorizationHeader));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pas de d'utilisateur avec l'id " + authorizationHeader));
 
         bibliotheque.setUtilisateur(utilisateur);
 

@@ -4,7 +4,9 @@ import fr.mspr_java_b3.entities.AnnonceMessage;
 import fr.mspr_java_b3.repository.AnnonceMessageRepository;
 import fr.mspr_java_b3.repository.AnnonceRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class AnnonceMessageController {
 
     @PostMapping("/message/annonce/{id}")
     AnnonceMessage postMessageAnnonce(@PathVariable int id, @RequestBody AnnonceMessage annonce) {
-        var annonceFound = annonceRepository.findById(id).orElseThrow(() -> new Error("Aucune annonce avec l'id " + id));
+        var annonceFound = annonceRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pas d'annonce avec l'id " + id));
         if (annonceFound != null) {
             annonce.setAnnonce(annonceFound);
         }
