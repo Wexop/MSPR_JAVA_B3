@@ -36,7 +36,7 @@ public class HeaderFilter extends OncePerRequestFilter {
 
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            response.sendError(401, "Token invalid");
         }
     }
 }
