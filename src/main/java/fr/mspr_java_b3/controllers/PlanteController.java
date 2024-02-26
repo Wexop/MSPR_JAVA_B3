@@ -2,10 +2,13 @@ package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.controllers.requests_body.PutPlanteRequest;
 import fr.mspr_java_b3.entities.Plante;
+import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.PlanteRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -29,7 +32,11 @@ public class PlanteController {
     }
 
     @PostMapping("/plante/one")
-    Plante postPlante(@RequestBody Plante plante) {
+    Plante postPlante(@RequestBody Plante plante, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
+
+        Utilisateur utilisateur = utilisateurRepository.findById(Integer.parseInt(authorizationHeader)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvale"));
+        plante.setUtilisateur(utilisateur);
+
         return repository.save(plante);
     }
 
