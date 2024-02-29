@@ -19,7 +19,7 @@ public class HeaderFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        if ("/login".equals(path) || "/register".equals(path) || path.contains("swagger") || path.equals("/v3/api-docs")) {
+        if ("/login".equals(path) || "/register".equals(path) || path.contains("swagger") || path.equals("/v3/api-docs") || path.equals("/ping")) {
             filterChain.doFilter(request, response);
             return;
         }

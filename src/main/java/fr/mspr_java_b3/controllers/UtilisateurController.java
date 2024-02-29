@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class UtilisateurController {
     private final UtilisateurRepository repository;
@@ -43,6 +42,11 @@ public class UtilisateurController {
         authResponse.setToken(token);
 
         return authResponse;
+    }
+
+    @GetMapping("/ping")
+    String ping() {
+        return "pong";
     }
 
     @PostMapping("/register")

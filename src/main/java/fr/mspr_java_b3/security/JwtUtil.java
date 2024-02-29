@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.naming.AuthenticationException;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -18,7 +19,7 @@ public class JwtUtil {
 
     private final JwtParser jwtParser;
 
-    private final String TOKEN_HEADER = "bearer";
+    private final String TOKEN_HEADER = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
 
     public JwtUtil() {
@@ -58,8 +59,17 @@ public class JwtUtil {
     }
 
     public String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(TOKEN_HEADER);
 
-        String bearerToken = String.format("Bearer %s", request.getHeader(TOKEN_HEADER));
+        Enumeration<String> headerNames = request.getHeaderNames();
+
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            System.out.println("Header Name: " + headerName + ", Value: " + request.getHeader(headerName));
+        }
+
+        System.out.println("Bearer Token: " + bearerToken);
+
         if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
             return bearerToken.substring(TOKEN_PREFIX.length());
         }

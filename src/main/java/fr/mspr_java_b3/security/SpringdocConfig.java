@@ -8,8 +8,8 @@ import org.springframework.http.HttpHeaders;
 
 @Configuration
 @SecurityScheme(
-        type = SecuritySchemeType.APIKEY,
+        type = SecuritySchemeType.HTTP,
         name = "bearer",
-        scheme = "bearer", in = SecuritySchemeIn.HEADER)
+        scheme = "bearer")
 public class SpringdocConfig {
 }
