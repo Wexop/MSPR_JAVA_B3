@@ -18,7 +18,7 @@ public class JwtUtil {
 
     private final JwtParser jwtParser;
 
-    private final String TOKEN_HEADER = "Token";
+    private final String TOKEN_HEADER = "bearer";
     private final String TOKEN_PREFIX = "Bearer ";
 
     public JwtUtil() {
@@ -59,7 +59,7 @@ public class JwtUtil {
 
     public String resolveToken(HttpServletRequest request) {
 
-        String bearerToken = request.getHeader(TOKEN_HEADER);
+        String bearerToken = String.format("Bearer %s", request.getHeader(TOKEN_HEADER));
         if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
             return bearerToken.substring(TOKEN_PREFIX.length());
         }
