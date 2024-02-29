@@ -44,11 +44,6 @@ public class UtilisateurController {
         return authResponse;
     }
 
-    @GetMapping("/ping")
-    String ping() {
-        return "pong";
-    }
-
     @PostMapping("/register")
     AuthResponse loginUser(@RequestBody Utilisateur request, HttpServletResponse response) throws Exception {
 
