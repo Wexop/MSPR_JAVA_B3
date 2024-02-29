@@ -61,8 +61,8 @@ public class ArticleController {
 
         Article initialEntity = repository.getReferenceById(id);
 
-        initialEntity.setTitre(entity.titre);
-        initialEntity.setContenu(entity.contenu);
+        if(entity.titre != null) initialEntity.setTitre(entity.titre);
+        if(entity.contenu != null) initialEntity.setContenu(entity.contenu);
 
         return repository.save(initialEntity);
 

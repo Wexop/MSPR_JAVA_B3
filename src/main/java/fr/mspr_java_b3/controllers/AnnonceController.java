@@ -74,10 +74,10 @@ public class AnnonceController {
 
         Annonce initialEntity = repository.getReferenceById(id);
 
-        initialEntity.setBesoin_aide(entity.besoin_aide);
-        initialEntity.setEtat(entity.etat);
-        initialEntity.setTitre(entity.titre);
-        initialEntity.setDescription(entity.description);
+        if(entity.besoin_aide != initialEntity.getBesoin_aide()) initialEntity.setBesoin_aide(entity.besoin_aide);
+        if(entity.etat != null) initialEntity.setEtat(entity.etat);
+        if(entity.titre != null) initialEntity.setTitre(entity.titre);
+        if(entity.description != null) initialEntity.setDescription(entity.description);
 
         return repository.save(initialEntity);
 
