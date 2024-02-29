@@ -44,8 +44,8 @@ public class PlanteController {
 
         Plante initialEntity = repository.getReferenceById(id);
 
-        initialEntity.setEspece(entity.espece);
-        initialEntity.setImage_url(entity.image_url);
+        if(entity.espece != null) initialEntity.setEspece(entity.espece);
+        if(entity.image_url != null) initialEntity.setImage_url(entity.image_url);
 
         return repository.save(initialEntity);
 
