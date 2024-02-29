@@ -12,7 +12,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@SecurityRequirement(name = "bearer")
 public class ArticleController {
     private final ArticleRepository repository;
 
@@ -20,6 +19,7 @@ public class ArticleController {
         this.repository = repository;
     }
 
+    @SecurityRequirement(name = "")
     @GetMapping("/article/all")
     List<Article> getAllArticle() {
         return repository.findAll();
@@ -31,6 +31,7 @@ public class ArticleController {
                 .orElseThrow(() -> new Error("Aucun article avec l'id " + articleId));
     }
 
+    @SecurityRequirement(name = "bearer")
     @PostMapping("/article/one")
     Article postArticle(@RequestBody Article article, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
@@ -42,14 +43,7 @@ public class ArticleController {
         return repository.save(article);
     }
 
-    @PatchMapping("/article_by_id/{id}")
-    Article patchArticle(@RequestBody Article article, @PathVariable int id) {
-
-        Article articleFound = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pas d'article avec l'id " + id));
-
-        return repository.save(article);
-    }
-
+    @SecurityRequirement(name = "bearer")
     @DeleteMapping("/article/{id}")
     boolean delete(@PathVariable(name = "id") Integer id) {
 
@@ -61,6 +55,7 @@ public class ArticleController {
         }
     }
 
+    @SecurityRequirement(name = "bearer")
     @PutMapping("/article/{id}")
     Article putAnnonce(@RequestBody PutArticleRequest entity, @PathVariable(name = "id") Integer id) {
 

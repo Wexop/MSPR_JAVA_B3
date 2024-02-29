@@ -11,6 +11,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class HeaderFilter extends OncePerRequestFilter {
@@ -19,7 +20,18 @@ public class HeaderFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        if ("/login".equals(path) || "/register".equals(path) || path.contains("swagger") || path.equals("/v3/api-docs") || path.equals("/ping")) {
+        List<String> noAuthRequiredList = List.of("/login", "/register", "swagger", "/v3/api-docs", "/article_by_id/", "/article/all");
+
+        boolean noAuth = false;
+
+        for (String string : noAuthRequiredList) {
+            if (path.contains(string)) {
+                noAuth = true;
+                break;
+            }
+        }
+
+        if (noAuth) {
             filterChain.doFilter(request, response);
             return;
         }
