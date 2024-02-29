@@ -18,7 +18,7 @@ public class JwtUtil {
 
     private final JwtParser jwtParser;
 
-    private final String TOKEN_HEADER = "Authorization";
+    private final String TOKEN_HEADER = "Token";
     private final String TOKEN_PREFIX = "Bearer ";
 
     public JwtUtil() {
