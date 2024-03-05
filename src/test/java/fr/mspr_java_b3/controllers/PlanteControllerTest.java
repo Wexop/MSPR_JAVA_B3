@@ -2,10 +2,12 @@ package fr.mspr_java_b3.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.mspr_java_b3.entities.Plante;
+import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.PlanteRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.AdditionalAnswers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -23,6 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(PlanteController.class)
@@ -56,14 +60,21 @@ class PlanteControllerTest {
     @Test
     void postPlante() throws Exception {
         Plante plante = new Plante();
+        plante.setEspece("test-plante");
 
-        Mockito.when(repository.save(any(Plante.class))).thenReturn(plante);
+        Mockito.when(repository.save(any(Plante.class))).thenAnswer(AdditionalAnswers.returnsFirstArg());
+
+        Utilisateur user = new Utilisateur();
+        user.setId(1);
+        Mockito.when(utilisateurRepository.findById(anyInt())).thenReturn(Optional.of(user));
 
         this.mvc.perform(post("/plante/one").header("Authorization", "Bearer " + token)
                 .content(asJsonString(plante))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").exists());
+                .andExpect(jsonPath("$.id").exists());
+
+        verify(repository).save(Mockito.any(Plante.class));
     }
 
     @Test

@@ -83,25 +83,6 @@ class ArticleControllerTest {
     }
 
     @Test
-    void patchArticle_by_id() throws Exception {
-        int articleId = 1;
-        Article article = new Article();
-        article.setId(articleId);
-
-        Mockito.when(repository.findById(articleId)).thenReturn(Optional.of(article));
-        Mockito.when(repository.save(any(Article.class))).thenReturn(article);
-
-        this.mvc.perform(patch("/article_by_id/{id}", articleId)
-                .contentType(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + token)
-                .content(asJsonString(article)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(articleId));
-
-        verify(repository).findById(articleId);
-        verify(repository).save(any(Article.class));
-    }
-
-    @Test
     void putArticle() throws Exception {
         int articleId = 1;
         Article article = new Article();

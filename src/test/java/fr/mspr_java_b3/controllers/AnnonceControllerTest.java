@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static fr.mspr_java_b3.entities.AnnonceEnum.termine;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -139,7 +140,10 @@ class AnnonceControllerTest {
         int annonceId = 1;
         Annonce annonce = new Annonce();
         annonce.setId(annonceId);
-
+        annonce.setBesoin_aide(true);
+        annonce.setEtat(termine);
+        annonce.setTitre("Test");
+        annonce.setDescription("test-description");
 
         Mockito.when(repository.getReferenceById(annonceId)).thenReturn(annonce);
         Mockito.when(repository.save(any(Annonce.class))).thenAnswer(e -> e.getArgument(0));
