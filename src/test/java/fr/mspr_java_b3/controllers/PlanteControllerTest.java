@@ -37,6 +37,8 @@ class PlanteControllerTest {
     @MockBean
     private UtilisateurRepository utilisateurRepository;
 
+    String token = new JwtUtilTest().getFakeToken();
+
     @Test
     void getMes_plantes() throws Exception {
         int utilisateurId = 1;
@@ -45,7 +47,8 @@ class PlanteControllerTest {
         Mockito.when(repository.findByUtilisateur(utilisateurId)).thenReturn(plantes);
 
         this.mvc.perform(get("/mes_plantes")
-                .header("Utilisateur_id", String.valueOf(utilisateurId)))
+                .header("Utilisateur_id", String.valueOf(utilisateurId))
+                .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(plantes.size())));
     }
@@ -56,7 +59,7 @@ class PlanteControllerTest {
 
         Mockito.when(repository.save(any(Plante.class))).thenReturn(plante);
 
-        this.mvc.perform(post("/plante/one")
+        this.mvc.perform(post("/plante/one").header("Authorization", "Bearer " + token)
                 .content(asJsonString(plante))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -72,7 +75,7 @@ class PlanteControllerTest {
         Mockito.when(repository.getReferenceById(planteId)).thenReturn(plante);
         Mockito.when(repository.save(any(Plante.class))).thenAnswer(e -> e.getArgument(0));
 
-        this.mvc.perform(put("/plante/{id}", planteId)
+        this.mvc.perform(put("/plante/{id}", planteId).header("Authorization", "Bearer " + token)
                 .content(asJsonString(plante))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -87,7 +90,7 @@ class PlanteControllerTest {
         int planteId = 1;
         doNothing().when(repository).deleteById(planteId);
 
-        this.mvc.perform(delete("/plante/{id}", planteId))
+        this.mvc.perform(delete("/plante/{id}", planteId).header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
 

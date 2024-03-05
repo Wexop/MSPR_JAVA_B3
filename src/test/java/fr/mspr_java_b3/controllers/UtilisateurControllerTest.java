@@ -6,6 +6,7 @@ import fr.mspr_java_b3.entities.Adresse;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AdresseRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
+import fr.mspr_java_b3.security.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -18,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -37,22 +37,7 @@ class UtilisateurControllerTest {
     @MockBean
     private AdresseRepository adresseRepository;
 
-    @Test
-    void getUtilisateur() throws Exception {
-        int utilisateurId = 1;
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(utilisateurId);
-
-        Mockito.when(repository.findById(utilisateurId)).thenReturn(Optional.of(utilisateur));
-
-        this.mvc.perform(get("/utilisateur/me")
-                .header("Utilisateur_id", String.valueOf(utilisateurId)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(utilisateurId));
-
-        verify(repository).findById(utilisateurId);
-    }
+    String token = new JwtUtilTest().getFakeToken();
 
     @Test
     void postLogin() throws Exception {
@@ -68,7 +53,8 @@ class UtilisateurControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.mail", is(utilisateur.getMail())));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.token").exists());
 
         verify(repository).getUtilisateurByMail(email);
     }
@@ -88,14 +74,32 @@ class UtilisateurControllerTest {
         Mockito.when(repository.save(any(Utilisateur.class))).thenReturn(utilisateur);
 
         this.mvc.perform(post("/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(utilisateur)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(utilisateur)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.mail").value(utilisateur.getMail()));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         verify(repository).getUtilisateurByMail(email);
         verify(repository).save(any(Utilisateur.class));
 
+    }
+
+    @Test
+    void getUtilisateur() throws Exception {
+        int utilisateurId = 1;
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setId(utilisateurId);
+
+        Mockito.when(repository.findById(utilisateurId)).thenReturn(Optional.of(utilisateur));
+
+        this.mvc.perform(get("/utilisateur/me")
+                .header("Utilisateur_id", String.valueOf(utilisateurId))
+                .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(utilisateurId));
+
+        verify(repository).findById(utilisateurId);
     }
 
     private static String asJsonString(final Object obj) {

@@ -37,6 +37,8 @@ class BibliothequeControllerTest {
     @MockBean
     UtilisateurRepository utilisateurRepository;
 
+    String token = new JwtUtilTest().getFakeToken();
+
     @Test
     void getBibliotheque() throws Exception {
         int utilisateurId = 1;
@@ -46,7 +48,7 @@ class BibliothequeControllerTest {
         Mockito.when(repository.getBibliothequeByUtilisateur(utilisateurId)).thenReturn(bibliotheques);
 
         this.mvc.perform(get("/bibliotheque/me")
-                .header("Utilisateur_id", String.valueOf(utilisateurId)))
+                .header("Utilisateur_id", String.valueOf(utilisateurId)).header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isArray())
@@ -67,6 +69,7 @@ class BibliothequeControllerTest {
 
         this.mvc.perform(post("/bibliotheque/one")
                 .header("Utilisateur_id", String.valueOf(utilisateur_id))
+                .header("Authorization", "Bearer " + token)
                 .content(asJsonString(bibliotheque))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

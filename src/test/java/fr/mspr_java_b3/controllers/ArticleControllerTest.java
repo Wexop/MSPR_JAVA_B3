@@ -36,6 +36,8 @@ class ArticleControllerTest {
     @MockBean
     private ArticleRepository repository;
 
+    String token = new JwtUtilTest().getFakeToken();
+
     @Test
     void getArticle_by_id() throws Exception {
         int articleId = 1;
@@ -44,7 +46,7 @@ class ArticleControllerTest {
 
         Mockito.when(repository.findById(articleId)).thenReturn(Optional.of(article));
 
-        this.mvc.perform(get("/article_by_id/{id}", articleId))
+        this.mvc.perform(get("/article_by_id/{id}", articleId).header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(article.getId())));
 
@@ -57,7 +59,7 @@ class ArticleControllerTest {
 
         Mockito.when(repository.findAll()).thenReturn(articles);
 
-        this.mvc.perform(get("/article/all"))
+        this.mvc.perform(get("/article/all").header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0]").exists());
@@ -71,7 +73,7 @@ class ArticleControllerTest {
 
         Mockito.when(repository.save(any(Article.class))).thenReturn(article);
 
-        this.mvc.perform(post("/article/one")
+        this.mvc.perform(post("/article/one").header("Authorization", "Bearer " + token)
                 .content(asJsonString(article))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -90,7 +92,7 @@ class ArticleControllerTest {
         Mockito.when(repository.save(any(Article.class))).thenReturn(article);
 
         this.mvc.perform(patch("/article_by_id/{id}", articleId)
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON).header("Authorization", "Bearer " + token)
                 .content(asJsonString(article)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(articleId));
@@ -108,7 +110,7 @@ class ArticleControllerTest {
         Mockito.when(repository.getReferenceById(articleId)).thenReturn(article);
         Mockito.when(repository.save(any(Article.class))).thenAnswer(e -> e.getArgument(0));
 
-        this.mvc.perform(put("/article/{id}", articleId)
+        this.mvc.perform(put("/article/{id}", articleId).header("Authorization", "Bearer " + token)
                 .content(asJsonString(article))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -123,7 +125,7 @@ class ArticleControllerTest {
         int articleId = 1;
         doNothing().when(repository).deleteById(articleId);
 
-        this.mvc.perform(delete("/article/{id}", articleId))
+        this.mvc.perform(delete("/article/{id}", articleId).header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
 

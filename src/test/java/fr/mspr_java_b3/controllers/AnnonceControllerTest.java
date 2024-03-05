@@ -1,7 +1,6 @@
 package fr.mspr_java_b3.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.mspr_java_b3.controllers.requests_body.PutAnnonceRequest;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
@@ -37,6 +36,9 @@ class AnnonceControllerTest {
     @MockBean
     private AnnonceRepository repository;
 
+    String token = new JwtUtilTest().getFakeToken();
+
+
     @Test
     void getAnnonce_attente() throws Exception {
         final Annonce annonce = new Annonce();
@@ -46,7 +48,7 @@ class AnnonceControllerTest {
 
         Mockito.when(this.repository.findByEtat(AnnonceEnum.en_attente)).thenReturn(annonces);
 
-        this.mvc.perform(get("/annonce_attente")
+        this.mvc.perform(get("/annonce_attente").header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].etat", is(annonce.getEtat().toString())));
@@ -63,7 +65,7 @@ class AnnonceControllerTest {
 
         Mockito.when(this.repository.findNeedHelp(AnnonceEnum.en_cours)).thenReturn(annonces);
 
-        this.mvc.perform(get("/annonce_aide")
+        this.mvc.perform(get("/annonce_aide").header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].etat", is(annonce.getEtat().toString())));
@@ -79,7 +81,7 @@ class AnnonceControllerTest {
 
         Mockito.when(repository.findById(annonceId)).thenReturn(Optional.of(annonce));
 
-        this.mvc.perform(get("/annonce_by_id/{id}", annonceId))
+        this.mvc.perform(get("/annonce_by_id/{id}", annonceId).header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(annonce.getId())));
 
@@ -93,7 +95,7 @@ class AnnonceControllerTest {
 
         Mockito.when(repository.findByUtilisateur(utilisateurId)).thenReturn(annonces);
 
-        this.mvc.perform(get("/mes_annonces")
+        this.mvc.perform(get("/mes_annonces").header("Authorization", "Bearer " + token)
                 .header("Utilisateur_id", String.valueOf(utilisateurId)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(annonces.size())));
@@ -108,7 +110,7 @@ class AnnonceControllerTest {
 
         Mockito.when(repository.findUtilisateurGarde(utilisateurGarde)).thenReturn(annonces);
 
-        this.mvc.perform(get("/mes_gardes")
+        this.mvc.perform(get("/mes_gardes").header("Authorization", "Bearer " + token)
                 .header("Authorization", String.valueOf(utilisateurGarde)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(annonces.size())));
@@ -123,7 +125,7 @@ class AnnonceControllerTest {
 
         Mockito.when(this.repository.save(any(Annonce.class))).thenReturn(annonce);
 
-        this.mvc.perform(post("/annonce/one")
+        this.mvc.perform(post("/annonce/one").header("Authorization", "Bearer " + token)
                 .content(asJsonString(annonce))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -142,7 +144,7 @@ class AnnonceControllerTest {
         Mockito.when(repository.getReferenceById(annonceId)).thenReturn(annonce);
         Mockito.when(repository.save(any(Annonce.class))).thenAnswer(e -> e.getArgument(0));
 
-        this.mvc.perform(put("/annonce/{id}", annonceId)
+        this.mvc.perform(put("/annonce/{id}", annonceId).header("Authorization", "Bearer " + token)
                 .content(asJsonString(annonce))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -157,7 +159,7 @@ class AnnonceControllerTest {
         int annonceId = 1;
         doNothing().when(repository).deleteById(annonceId);
 
-        this.mvc.perform(delete("/annonce/{id}", annonceId))
+        this.mvc.perform(delete("/annonce/{id}", annonceId).header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
 

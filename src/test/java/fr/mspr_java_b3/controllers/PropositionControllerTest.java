@@ -31,6 +31,8 @@ class PropositionControllerTest {
     @MockBean
     private PropositionRepository repository;
 
+    String token = new JwtUtilTest().getFakeToken();
+
     @Test
     void getProposition() throws Exception {
         int propositionId = 1;
@@ -39,7 +41,7 @@ class PropositionControllerTest {
 
         Mockito.when(repository.findById(propositionId)).thenReturn(Optional.of(proposition));
 
-        this.mvc.perform(get("/proposition/{id}", propositionId))
+        this.mvc.perform(get("/proposition/{id}", propositionId).header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(proposition.getId())));
 
@@ -53,7 +55,7 @@ class PropositionControllerTest {
 
         Mockito.when(repository.save(any(Proposition.class))).thenReturn(proposition);
 
-        this.mvc.perform(post("/proposition")
+        this.mvc.perform(post("/proposition").header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(proposition)))
                 .andExpect(status().isOk())
@@ -69,7 +71,7 @@ class PropositionControllerTest {
 
         Mockito.when(repository.save(any(Proposition.class))).thenReturn(proposition);
 
-        this.mvc.perform(patch("/proposition")
+        this.mvc.perform(patch("/proposition").header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(proposition)))
                 .andExpect(status().isOk())
