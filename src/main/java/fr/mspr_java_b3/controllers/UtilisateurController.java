@@ -1,7 +1,8 @@
 package fr.mspr_java_b3.controllers;
 
-import fr.mspr_java_b3.controllers.requests_body.LoginUserRequest;
+import fr.mspr_java_b3.controllers.requests_body.*;
 import fr.mspr_java_b3.controllers.responses.AuthResponse;
+import fr.mspr_java_b3.entities.Plante;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AdresseRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
@@ -88,6 +89,56 @@ public class UtilisateurController {
         } catch (Error e) {
             return false;
         }
+    }
+
+    @SecurityRequirement(name = "bearer")
+    @PutMapping("/utilisateur/me")
+    Utilisateur putUtilisateur(@RequestBody PutUtilisateurRequest entity, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
+
+        Utilisateur initialEntity = repository.getReferenceById(Integer.parseInt(authorizationHeader));
+
+        if(entity.nom != null) initialEntity.setNom(entity.nom);
+        if(entity.image_url != null) initialEntity.setImage_url(entity.image_url);
+        if(entity.botaniste != null) initialEntity.setBotaniste(entity.botaniste);
+
+        return repository.save(initialEntity);
+
+    }
+
+    @SecurityRequirement(name = "bearer")
+    @PutMapping("/utilisateur/password")
+    boolean putPassword(@RequestBody PutPasswordUserRequest request, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
+
+        Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
+                .orElseThrow(() -> new Error("Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
+
+        if (!utilisateur.checkMdp(request.getMdp())) {
+            throw new Error("Mot de passe incorrect");
+        }
+
+        utilisateur.setMdp(request.getNewMdp());
+
+        this.repository.save(utilisateur);
+
+        return true;
+    }
+
+    @SecurityRequirement(name = "bearer")
+    @PutMapping("/utilisateur/mail")
+    boolean putMail(@RequestBody PutMailUserRequest request, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
+
+        Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
+                .orElseThrow(() -> new Error("Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
+
+        if (!utilisateur.checkMdp(request.getMdp())) {
+            throw new Error("Mot de passe incorrect");
+        }
+
+        utilisateur.setMail(request.getNewMail());
+
+        this.repository.save(utilisateur);
+
+        return true;
     }
 
 
