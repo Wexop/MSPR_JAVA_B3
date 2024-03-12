@@ -108,7 +108,7 @@ public class UtilisateurController {
         if(entity.image_url != null) initialEntity.setImage_url(entity.image_url);
         if(entity.botaniste != null) initialEntity.setBotaniste(entity.botaniste);
         if (entity.adresse != null) {
-            Adresse adresse = adresseRepository.findById(initialEntity.getAdresse().getId()).orElseThrow(() -> new Error("Aucune adresse trouvée avec l'id " + initialEntity.getAdresse().getId()));
+            Adresse adresse = adresseRepository.findById(initialEntity.getAdresse().getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucune adresse trouvée avec l'id " + initialEntity.getAdresse().getId()));
             Adresse adresseEntity = new Adresse(adresse.getId(), entity.adresse.getAdresse(), entity.adresse.getLatitude(), entity.adresse.getLongitude());
             initialEntity.setAdresse(adresseEntity);
         }
@@ -121,7 +121,7 @@ public class UtilisateurController {
     boolean putPassword(@RequestBody PutPasswordUserRequest request, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
         Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
-                .orElseThrow(() -> new Error("Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
+                .orElseThrow(() -> new ResponseStatusException( HttpStatus.NOT_FOUND, "Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
 
         if (!utilisateur.checkMdp(request.getMdp())) {
             throw new Error("Mot de passe incorrect");
@@ -139,10 +139,10 @@ public class UtilisateurController {
     boolean putMail(@RequestBody PutMailUserRequest request, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
         Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
-                .orElseThrow(() -> new Error("Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
 
         if (!utilisateur.checkMdp(request.getMdp())) {
-            throw new Error("Mot de passe incorrect");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Mot de passe incorrect");
         }
 
         utilisateur.setMail(request.getNewMail());
