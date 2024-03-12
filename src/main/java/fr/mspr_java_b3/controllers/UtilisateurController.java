@@ -2,6 +2,7 @@ package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.controllers.requests_body.*;
 import fr.mspr_java_b3.controllers.responses.AuthResponse;
+import fr.mspr_java_b3.entities.Adresse;
 import fr.mspr_java_b3.entities.Plante;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AdresseRepository;
@@ -106,8 +107,11 @@ public class UtilisateurController {
         if(entity.nom != null) initialEntity.setNom(entity.nom);
         if(entity.image_url != null) initialEntity.setImage_url(entity.image_url);
         if(entity.botaniste != null) initialEntity.setBotaniste(entity.botaniste);
-        if(entity.adresse != null) initialEntity.setAdresse(entity.adresse);
-
+        if (entity.adresse != null) {
+            Adresse adresse = adresseRepository.findById(initialEntity.getAdresse().getId()).orElseThrow(() -> new Error("Aucune adresse trouvée avec l'id " + initialEntity.getAdresse().getId()));
+            Adresse adresseEntity = new Adresse(adresse.getId(), entity.adresse.getAdresse(), entity.adresse.getLatitude(), entity.adresse.getLongitude());
+            initialEntity.setAdresse(adresseEntity);
+        }
         return repository.save(initialEntity);
 
     }
