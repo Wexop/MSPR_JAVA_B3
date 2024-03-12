@@ -28,7 +28,7 @@ public class Utilisateur {
     @OneToMany(mappedBy = "utilisateur")
     Set<Annonce> annonces;
 
-    @OneToMany(mappedBy = "utilisateur")
+    @OneToMany(mappedBy = "utilisateur",cascade = CascadeType.REMOVE)
     Set<Bibliotheque> bibliotheques;
 
     @OneToMany(mappedBy = "utilisateur")

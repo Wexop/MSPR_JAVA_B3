@@ -77,7 +77,7 @@ public class UtilisateurController {
     @SecurityRequirement(name = "bearer")
     Utilisateur getMe(@RequestAttribute(value = "Utilisateur_id") String authorizationHeader) throws Exception {
         return this.repository.findById(Integer.parseInt(authorizationHeader))
-                .orElseThrow(() -> new Exception("Utilisteur introuvable"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Utilisteur introuvable"));
     }
 
     @DeleteMapping("/utilisateur/me")
@@ -86,7 +86,7 @@ public class UtilisateurController {
 
         try {
             Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
-                    .orElseThrow(() -> new Error("Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
 
             if (!utilisateur.checkMdp(request.getMdp())) {
                 throw new Error("Mot de passe incorrect");
