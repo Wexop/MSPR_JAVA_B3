@@ -1,5 +1,7 @@
 package fr.mspr_java_b3.controllers.requests_body;
 
+import fr.mspr_java_b3.entities.Adresse;
+
 public class PutUtilisateurRequest {
 
     public String nom;
@@ -8,13 +10,16 @@ public class PutUtilisateurRequest {
 
     public Boolean botaniste;
 
-    public PutUtilisateurRequest() {
-    }
+    public Adresse adresse;
 
-    public PutUtilisateurRequest(String nom, String image_url, Boolean botaniste) {
+    public PutUtilisateurRequest(String nom, String image_url, Boolean botaniste, Adresse adresse) {
         this.nom = nom;
         this.image_url = image_url;
         this.botaniste = botaniste;
+        this.adresse = adresse;
+    }
+
+    public PutUtilisateurRequest() {
     }
 
     public String getNom() {
@@ -39,5 +44,13 @@ public class PutUtilisateurRequest {
 
     public void setBotaniste(Boolean botaniste) {
         this.botaniste = botaniste;
+    }
+
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
     }
 }

@@ -81,9 +81,15 @@ public class UtilisateurController {
 
     @DeleteMapping("/utilisateur/me")
     @SecurityRequirement(name = "bearer")
-    Boolean deleteUser(@RequestAttribute(value = "Utilisateur_id") String authorizationHeader) throws Exception {
+    Boolean deleteUser(@RequestAttribute(value = "Utilisateur_id") String authorizationHeader, @RequestBody DeleteUserRequest request) throws Exception {
 
         try {
+            Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
+                    .orElseThrow(() -> new Error("Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
+
+            if (!utilisateur.checkMdp(request.getMdp())) {
+                throw new Error("Mot de passe incorrect");
+            }
             this.repository.deleteById(Integer.parseInt(authorizationHeader));
             return true;
         } catch (Error e) {
@@ -100,6 +106,7 @@ public class UtilisateurController {
         if(entity.nom != null) initialEntity.setNom(entity.nom);
         if(entity.image_url != null) initialEntity.setImage_url(entity.image_url);
         if(entity.botaniste != null) initialEntity.setBotaniste(entity.botaniste);
+        if(entity.adresse != null) initialEntity.setAdresse(entity.adresse);
 
         return repository.save(initialEntity);
 
