@@ -41,5 +41,6 @@ C:\Users\Matthieu\OneDrive\Desktop\COURS\B3\java\MSPR_JAVA_B3\src\main\java\fr\m
 C:\Users\Matthieu\OneDrive\Desktop\COURS\B3\java\MSPR_JAVA_B3\src\main\java\fr\mspr_java_b3\controllers\requests_body\PutMailUserRequest.java
 C:\Users\Matthieu\OneDrive\Desktop\COURS\B3\java\MSPR_JAVA_B3\src\main\java\fr\mspr_java_b3\repository\AdresseRepository.java
 C:\Users\Matthieu\OneDrive\Desktop\COURS\B3\java\MSPR_JAVA_B3\src\main\java\fr\mspr_java_b3\repository\BibliothequeRepository.java
+C:\Users\Matthieu\OneDrive\Desktop\COURS\B3\java\MSPR_JAVA_B3\src\main\java\fr\mspr_java_b3\controllers\requests_body\DeleteUserRequest.java
 C:\Users\Matthieu\OneDrive\Desktop\COURS\B3\java\MSPR_JAVA_B3\src\main\java\fr\mspr_java_b3\controllers\requests_body\LoginUserRequest.java
 C:\Users\Matthieu\OneDrive\Desktop\COURS\B3\java\MSPR_JAVA_B3\src\main\java\fr\mspr_java_b3\entities\Adresse.java
