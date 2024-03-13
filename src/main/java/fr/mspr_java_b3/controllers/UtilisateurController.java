@@ -111,6 +111,7 @@ public class UtilisateurController {
             Adresse adresse = adresseRepository.findById(initialEntity.getAdresse().getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucune adresse trouvée avec l'id " + initialEntity.getAdresse().getId()));
             Adresse adresseEntity = new Adresse(adresse.getId(), entity.adresse.getAdresse(), entity.adresse.getLatitude(), entity.adresse.getLongitude());
             initialEntity.setAdresse(adresseEntity);
+            adresseRepository.save(adresseEntity);
         }
         return repository.save(initialEntity);
 
