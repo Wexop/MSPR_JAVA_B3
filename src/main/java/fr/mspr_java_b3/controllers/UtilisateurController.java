@@ -11,6 +11,7 @@ import fr.mspr_java_b3.security.JwtUtil;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -125,7 +126,7 @@ public class UtilisateurController {
                 .orElseThrow(() -> new ResponseStatusException( HttpStatus.NOT_FOUND, "Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
 
         if (!utilisateur.checkMdp(request.getMdp())) {
-            throw new Error("Mot de passe incorrect");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Mot de passe incorrect");
         }
 
         utilisateur.setMdp(request.getNewMdp());
