@@ -3,15 +3,14 @@ package fr.mspr_java_b3.controllers;
 import fr.mspr_java_b3.controllers.requests_body.*;
 import fr.mspr_java_b3.controllers.responses.AuthResponse;
 import fr.mspr_java_b3.entities.Adresse;
-import fr.mspr_java_b3.entities.Plante;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AdresseRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
 import fr.mspr_java_b3.security.JwtUtil;
+import fr.mspr_java_b3.services.UtilisateurService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,6 +20,7 @@ import java.util.Optional;
 public class UtilisateurController {
     private final UtilisateurRepository repository;
     private final AdresseRepository adresseRepository;
+    private final UtilisateurService utilisateurService = new UtilisateurService();
 
     UtilisateurController(UtilisateurRepository repository, AdresseRepository adresseRepository) {
         this.repository = repository;
@@ -33,8 +33,8 @@ public class UtilisateurController {
         Utilisateur utilisateur = this.repository.getUtilisateurByMail(request.getMail())
                 .orElseThrow(() -> new Error("Aucun utilisateur trouvé avec le mail " + request.getMail()));
 
-        if (!utilisateur.checkMdp(request.getMdp())) {
-            throw new Error("Mot de passe incorrect");
+        if (!utilisateurService.checkMdp(utilisateur,request.getMdp())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Mot de passe incorrect");
         }
 
         JwtUtil jwtUtil = new JwtUtil();
@@ -64,7 +64,9 @@ public class UtilisateurController {
 
         JwtUtil jwtUtil = new JwtUtil();
 
-        Utilisateur createdUser = this.repository.save(request);
+        Utilisateur userWithHash = utilisateurService.hashMdp(request);
+
+        Utilisateur createdUser = this.repository.save(userWithHash);
 
         String token = jwtUtil.createToken(createdUser);
         AuthResponse authResponse = new AuthResponse();
@@ -87,10 +89,10 @@ public class UtilisateurController {
 
         try {
             Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
+                    .orElseThrow(() -> new ResponseStatusException( HttpStatus.NOT_FOUND, "Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
 
-            if (!utilisateur.checkMdp(request.getMdp())) {
-                throw new Error("Mot de passe incorrect");
+            if (!utilisateurService.checkMdp(utilisateur,request.getMdp())) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Mot de passe incorrect");
             }
             this.repository.deleteById(Integer.parseInt(authorizationHeader));
             return true;
@@ -125,8 +127,8 @@ public class UtilisateurController {
         Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
                 .orElseThrow(() -> new ResponseStatusException( HttpStatus.NOT_FOUND, "Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
 
-        if (!utilisateur.checkMdp(request.getMdp())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Mot de passe incorrect");
+        if (!utilisateurService.checkMdp(utilisateur,request.getMdp())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Mot de passe incorrect");
         }
 
         utilisateur.setMdp(request.getNewMdp());
@@ -143,7 +145,7 @@ public class UtilisateurController {
         Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
 
-        if (!utilisateur.checkMdp(request.getMdp())) {
+        if (!utilisateurService.checkMdp(utilisateur ,request.getMdp())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Mot de passe incorrect");
         }
 
