@@ -1,10 +1,10 @@
-FROM maven:3.6.0-jdk-11-slim AS build   
+FROM maven:3.8.7-openjdk-18-slim AS build
 
 COPY .mvn/ ./mvn
 COPY mvnw pom.xml ./
 COPY src ./src
 
-RUN mvn install package
+RUN mvn build package
 
 
 FROM eclipse-temurin:17-jdk-alpine
