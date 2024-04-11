@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: fr.mspr_java_b3.controllers.AnnonceControllerTest
--------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.137 s -- in fr.mspr_java_b3.controllers.AnnonceControllerTest

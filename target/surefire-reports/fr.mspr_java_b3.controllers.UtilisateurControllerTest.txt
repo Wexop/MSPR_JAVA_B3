@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: fr.mspr_java_b3.controllers.UtilisateurControllerTest
--------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.750 s -- in fr.mspr_java_b3.controllers.UtilisateurControllerTest
