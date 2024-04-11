@@ -6,6 +6,7 @@ import fr.mspr_java_b3.entities.Adresse;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AdresseRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
+import fr.mspr_java_b3.services.UtilisateurService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -44,9 +45,13 @@ class UtilisateurControllerTest {
         String password = "password";
         LoginUserRequest request = new LoginUserRequest(email, password);
         Utilisateur utilisateur = new Utilisateur();
+        UtilisateurService utilisateurService = new UtilisateurService();
+        utilisateur.setMail(email);
         utilisateur.setMdp(password);
+        Utilisateur hashedUser = utilisateurService.hashMdp(utilisateur);
 
-        Mockito.when(repository.getUtilisateurByMail(email)).thenReturn(Optional.of(utilisateur));
+
+        Mockito.when(repository.getUtilisateurByMail(email)).thenReturn(Optional.of(hashedUser));
 
         this.mvc.perform(post("/login")
                         .contentType(MediaType.APPLICATION_JSON)
