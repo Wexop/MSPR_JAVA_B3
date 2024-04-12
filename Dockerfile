@@ -7,8 +7,6 @@ COPY pom.xml /pom.xml
 COPY src /src
 
 RUN mvn install
-RUN ls
-RUN pwd
 
 COPY target/* /
 
