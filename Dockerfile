@@ -5,8 +5,9 @@ COPY .mvn/ /mvn
 COPY mvnw /mvnw
 COPY pom.xml /pom.xml
 COPY src /src
-RUN ls
+
 RUN mvn install
+RUN ls
 
 COPY target/* /
 
