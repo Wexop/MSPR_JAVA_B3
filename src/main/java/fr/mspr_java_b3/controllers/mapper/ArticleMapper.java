@@ -1,6 +1,7 @@
 package fr.mspr_java_b3.controllers.mapper;
 
 import fr.mspr_java_b3.dto.ArticleDTO;
+import fr.mspr_java_b3.dto.ArticleGetDTO;
 import fr.mspr_java_b3.entities.Article;
 import org.springframework.stereotype.Component;
 
@@ -29,11 +30,11 @@ public class ArticleMapper {
         return article;
     }
 
-    public ArticleDTO toGetDTO(Article article) {
+    public ArticleGetDTO toGetDTO(Article article) {
         if (article == null) {
             return null;
         }
-        ArticleDTO dto = new ArticleDTO();
+        ArticleGetDTO dto = new ArticleGetDTO();
         dto.setId(article.getId());
         dto.setTitre(article.getTitre());
         dto.setImage_url(article.getImage_url());
@@ -41,15 +42,15 @@ public class ArticleMapper {
         return dto;
     }
 
-    public Article toGetArticle(ArticleDTO articleDTO) {
-        if (articleDTO == null) {
+    public Article toGetArticle(ArticleGetDTO articleGetDTO) {
+        if (articleGetDTO == null) {
             return null;
         }
         Article article = new Article();
-        article.setId(articleDTO.getId());
-        article.setTitre(articleDTO.getTitre());
-        article.setImage_url(articleDTO.getImage_url());
-        article.setContenu(articleDTO.getContenue());
+        article.setId(articleGetDTO.getId());
+        article.setTitre(articleGetDTO.getTitre());
+        article.setImage_url(articleGetDTO.getImage_url());
+        article.setContenu(articleGetDTO.getContenue());
         return article;
     }
 }
