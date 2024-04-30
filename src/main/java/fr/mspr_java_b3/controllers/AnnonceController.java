@@ -3,9 +3,13 @@ package fr.mspr_java_b3.controllers;
 import fr.mspr_java_b3.controllers.requests_body.PutAnnonceRequest;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
+import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AnnonceRepository;
+import fr.mspr_java_b3.repository.UtilisateurRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,8 +20,11 @@ public class AnnonceController {
 
     private final AnnonceRepository repository;
 
-    AnnonceController(AnnonceRepository repository) {
+    private final UtilisateurRepository utilisateurRepository;
+
+    AnnonceController(AnnonceRepository repository, UtilisateurRepository utilisateurRepository) {
         this.repository = repository;
+        this.utilisateurRepository  = utilisateurRepository;
     }
 
     @GetMapping("/annonce_attente")
@@ -50,10 +57,13 @@ public class AnnonceController {
     }
 
     @PostMapping("/annonce/one")
-    Annonce postAnnonce(@RequestBody Annonce body) {
+    Annonce postAnnonce(@RequestBody Annonce body, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
+
+        Utilisateur utilisateur = utilisateurRepository.findById(Integer.parseInt(authorizationHeader)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvale"));
 
         LocalDateTime localDateTime = LocalDateTime.now();
         body.setDate_creation(localDateTime);
+        body.setUtilisateur(utilisateur);
 
         return repository.save(body);
     }
