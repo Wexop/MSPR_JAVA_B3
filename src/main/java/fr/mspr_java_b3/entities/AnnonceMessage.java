@@ -79,4 +79,12 @@ public class AnnonceMessage {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
 }
