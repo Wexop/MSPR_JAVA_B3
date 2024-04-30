@@ -7,15 +7,14 @@ import fr.mspr_java_b3.repository.AnnonceMessageRepository;
 import fr.mspr_java_b3.repository.AnnonceRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
 
 @RestController
 @SecurityRequirement(name = "bearer")
@@ -26,7 +25,10 @@ public class AnnonceMessageController {
 
     private final UtilisateurRepository utilisateurRepository;
 
-    AnnonceMessageController(AnnonceMessageRepository repository, AnnonceRepository annonceRepository,UtilisateurRepository utilisateurRepository) {
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
+    AnnonceMessageController(AnnonceMessageRepository repository, AnnonceRepository annonceRepository, UtilisateurRepository utilisateurRepository) {
         this.repository = repository;
         this.annonceRepository = annonceRepository;
         this.utilisateurRepository = utilisateurRepository;
@@ -38,7 +40,7 @@ public class AnnonceMessageController {
     }
 
     @PostMapping("/message/annonce/{id}")
-    AnnonceMessage postMessageAnnonce(@PathVariable int id, @RequestBody PostAnnonceMessage annonce,@RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
+    AnnonceMessage postMessageAnnonce(@PathVariable int id, @RequestBody PostAnnonceMessage annonce, @RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
 
         var annonceMessage = new AnnonceMessage();
 
@@ -69,4 +71,11 @@ public class AnnonceMessageController {
             return false;
         }
     }
+
+    @PostMapping("/message/truc/{id_annonce}")
+    public void sendMessage(@PathVariable String id_annonce, @RequestBody PostAnnonceMessage message) {
+        messagingTemplate.convertAndSend("/message/annonce/" + id_annonce, message);
+    }
+
+
 }
