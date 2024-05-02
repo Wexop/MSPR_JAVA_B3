@@ -3,7 +3,9 @@ package fr.mspr_java_b3.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
+import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AnnonceRepository;
+import fr.mspr_java_b3.repository.UtilisateurRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -14,18 +16,19 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import static fr.mspr_java_b3.entities.AnnonceEnum.termine;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(AnnonceController.class)
@@ -37,6 +40,9 @@ class AnnonceControllerTest {
     @MockBean
     private AnnonceRepository repository;
 
+    @MockBean
+    UtilisateurRepository utilisateurRepository;
+
     String token = new JwtUtilTest().getFakeToken();
 
 
@@ -45,7 +51,7 @@ class AnnonceControllerTest {
         final Annonce annonce = new Annonce();
         annonce.setEtat(AnnonceEnum.en_attente);
 
-        final List<Annonce> annonces = Arrays.asList(annonce);
+        final List<Annonce> annonces = List.of(annonce);
 
         Mockito.when(this.repository.findByEtat(AnnonceEnum.en_attente)).thenReturn(annonces);
 
@@ -62,7 +68,7 @@ class AnnonceControllerTest {
         final Annonce annonce = new Annonce();
         annonce.setEtat(AnnonceEnum.en_cours);
 
-        final List<Annonce> annonces = Arrays.asList(annonce);
+        final List<Annonce> annonces = List.of(annonce);
 
         Mockito.when(this.repository.findNeedHelp(AnnonceEnum.en_cours)).thenReturn(annonces);
 
@@ -125,6 +131,10 @@ class AnnonceControllerTest {
         annonce.setEtat(AnnonceEnum.en_attente);
 
         Mockito.when(this.repository.save(any(Annonce.class))).thenReturn(annonce);
+
+        Utilisateur user = new Utilisateur();
+        user.setId(1);
+        Mockito.when(utilisateurRepository.findById(anyInt())).thenReturn(Optional.of(user));
 
         this.mvc.perform(post("/annonce/one").header("Authorization", "Bearer " + token)
                 .content(asJsonString(annonce))
