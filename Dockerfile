@@ -6,7 +6,8 @@ COPY mvnw /mvnw
 COPY pom.xml /pom.xml
 COPY src /src
 
-RUN mvn install
+
+RUN /bin/sh -xeu -c "mvn install"
 
 COPY target/* /
 
