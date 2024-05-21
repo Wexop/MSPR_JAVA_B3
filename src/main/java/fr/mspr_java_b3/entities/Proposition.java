@@ -43,10 +43,29 @@ public class Proposition {
         this.annonce = annonce;
     }
 
+    public Annonce getAnnonce() {
+        return annonce;
+    }
+
+    public void setAnnonce(Annonce annonce) {
+        this.annonce = annonce;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
     public int getId() {
         return id;
     }
-    public void setId(int id) { this.id = id; }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public LocalDateTime getDate() {
         return date;
