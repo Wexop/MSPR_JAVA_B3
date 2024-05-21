@@ -33,7 +33,7 @@ public class UtilisateurController {
         Utilisateur utilisateur = this.repository.getUtilisateurByMail(request.getMail())
                 .orElseThrow(() -> new Error("Aucun utilisateur trouvé avec le mail " + request.getMail()));
 
-        if (!utilisateurService.checkMdp(utilisateur,request.getMdp())) {
+        if (!utilisateurService.checkMdp(utilisateur, request.getMdp())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Mot de passe incorrect");
         }
 
@@ -43,6 +43,7 @@ public class UtilisateurController {
 
         AuthResponse authResponse = new AuthResponse();
         authResponse.setToken(token);
+        authResponse.setUserId(utilisateur.getId());
 
         return authResponse;
     }
@@ -71,6 +72,7 @@ public class UtilisateurController {
         String token = jwtUtil.createToken(createdUser);
         AuthResponse authResponse = new AuthResponse();
         authResponse.setToken(token);
+        authResponse.setUserId(createdUser.getId());
 
 
         return authResponse;
@@ -80,7 +82,7 @@ public class UtilisateurController {
     @SecurityRequirement(name = "bearer")
     Utilisateur getMe(@RequestAttribute(value = "Utilisateur_id") String authorizationHeader) throws Exception {
         return this.repository.findById(Integer.parseInt(authorizationHeader))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Utilisteur introuvable"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisteur introuvable"));
     }
 
     @DeleteMapping("/utilisateur/me")
@@ -89,9 +91,9 @@ public class UtilisateurController {
 
         try {
             Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
-                    .orElseThrow(() -> new ResponseStatusException( HttpStatus.NOT_FOUND, "Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
 
-            if (!utilisateurService.checkMdp(utilisateur,request.getMdp())) {
+            if (!utilisateurService.checkMdp(utilisateur, request.getMdp())) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Mot de passe incorrect");
             }
             this.repository.deleteById(Integer.parseInt(authorizationHeader));
@@ -107,9 +109,9 @@ public class UtilisateurController {
 
         Utilisateur initialEntity = repository.getReferenceById(Integer.parseInt(authorizationHeader));
 
-        if(entity.nom != null) initialEntity.setNom(entity.nom);
-        if(entity.image_url != null) initialEntity.setImage_url(entity.image_url);
-        if(entity.botaniste != null) initialEntity.setBotaniste(entity.botaniste);
+        if (entity.nom != null) initialEntity.setNom(entity.nom);
+        if (entity.image_url != null) initialEntity.setImage_url(entity.image_url);
+        if (entity.botaniste != null) initialEntity.setBotaniste(entity.botaniste);
         if (entity.adresse != null) {
             Adresse adresse = adresseRepository.findById(initialEntity.getAdresse().getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucune adresse trouvée avec l'id " + initialEntity.getAdresse().getId()));
             Adresse adresseEntity = new Adresse(adresse.getId(), entity.adresse.getAdresse(), entity.adresse.getLatitude(), entity.adresse.getLongitude());
@@ -125,9 +127,9 @@ public class UtilisateurController {
     boolean putPassword(@RequestBody PutPasswordUserRequest request, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
         Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
-                .orElseThrow(() -> new ResponseStatusException( HttpStatus.NOT_FOUND, "Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
 
-        if (!utilisateurService.checkMdp(utilisateur,request.getMdp())) {
+        if (!utilisateurService.checkMdp(utilisateur, request.getMdp())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Mot de passe incorrect");
         }
 
@@ -143,10 +145,10 @@ public class UtilisateurController {
     boolean putMail(@RequestBody PutMailUserRequest request, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
         Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun utilisateur trouvé avec l'id " + Integer.parseInt(authorizationHeader)));
 
-        if (!utilisateurService.checkMdp(utilisateur ,request.getMdp())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Mot de passe incorrect");
+        if (!utilisateurService.checkMdp(utilisateur, request.getMdp())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Mot de passe incorrect");
         }
 
         utilisateur.setMail(request.getNewMail());
