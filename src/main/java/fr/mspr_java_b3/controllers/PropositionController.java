@@ -42,8 +42,16 @@ public class PropositionController {
         return repository.save(proposition);
     }
 
-    @PatchMapping("/proposition")
-    Proposition patchProposition(@RequestBody Proposition proposition) {
+    @PatchMapping("/proposition/{proposition_id}")
+    Proposition postProposition(@RequestBody Proposition proposition, @PathVariable int annonce_id, @PathVariable int proposition_id, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
+
+        Annonce annonce = annonceRepository.findById(annonce_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pas d'annonce avec l'id " + annonce_id));
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setId(Integer.parseInt(authorizationHeader));
+
+        proposition.setAnnonce(annonce);
+        proposition.setUtilisateur(utilisateur);
+
         return repository.save(proposition);
     }
 
