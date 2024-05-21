@@ -30,7 +30,7 @@ public class ArticleController {
     }
 
     @SecurityRequirement(name = "bearer")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/article")
     ArticleGetDTO postArticle(@RequestBody ArticleGetDTO article, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
         return articleService.postArticle(article, authorizationHeader);

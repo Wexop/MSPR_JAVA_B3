@@ -1,7 +1,6 @@
 package fr.mspr_java_b3.services;
 
 import fr.mspr_java_b3.controllers.mapper.ArticleMapper;
-import fr.mspr_java_b3.dto.ArticleDTO;
 import fr.mspr_java_b3.dto.ArticleGetDTO;
 import fr.mspr_java_b3.entities.Article;
 import fr.mspr_java_b3.entities.Utilisateur;
