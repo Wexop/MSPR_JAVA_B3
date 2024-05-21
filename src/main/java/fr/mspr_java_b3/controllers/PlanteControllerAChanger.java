@@ -14,13 +14,13 @@ import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "bearer")
-public class PlanteController {
+public class PlanteControllerAChanger {
 
     private final PlanteRepository repository;
 
     private final UtilisateurRepository utilisateurRepository;
 
-    PlanteController(PlanteRepository repository, UtilisateurRepository utilisateurRepository) {
+    PlanteControllerAChanger(PlanteRepository repository, UtilisateurRepository utilisateurRepository) {
         this.repository = repository;
         this.utilisateurRepository = utilisateurRepository;
     }

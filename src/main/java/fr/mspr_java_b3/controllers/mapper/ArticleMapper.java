@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ArticleMapper {
 
-    public ArticleDTO toDTO(Article article) {
+    public ArticleDTO toArtcileDTO(Article article) {
         if (article == null) {
             return null;
         }
@@ -30,7 +30,7 @@ public class ArticleMapper {
         return article;
     }
 
-    public ArticleGetDTO toGetDTO(Article article) {
+    public ArticleGetDTO toArticleGetDTO(Article article) {
         if (article == null) {
             return null;
         }

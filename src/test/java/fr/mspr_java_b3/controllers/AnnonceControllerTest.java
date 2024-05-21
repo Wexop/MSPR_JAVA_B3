@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(AnnonceController.class)
+@WebMvcTest(AnnonceControllerAChanger.class)
 class AnnonceControllerTest {
 
     @Autowired

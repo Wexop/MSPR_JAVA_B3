@@ -8,24 +8,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UtilisateurMapper {
-
-    public AuthDTO toAuthDTO(Utilisateur utilisateur) {
-        if (utilisateur != null) {
-            return null;
-        }
-        AuthDTO dto = new AuthDTO();
-        dto.setToken(utilisateur.getToken);
-        return dto;
-    }
-    public Utilisateur toAuthUtilisateur(AuthDTO dto) {
-        if (dto != null) {
-            return null;
-        }
-        Utilisateur utilisateur = new Utilisateur();
-        // set token ?
-        return utilisateur;
-    }
-
     public LoginDTO toLoginDTO(Utilisateur utilisateur) {
         if (utilisateur != null) {
             return null;

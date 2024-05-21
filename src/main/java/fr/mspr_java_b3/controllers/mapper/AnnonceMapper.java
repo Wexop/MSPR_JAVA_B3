@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AnnonceMapper {
 
-    public AnnonceDTO toDTO(Annonce annonce) {
+    public AnnonceDTO toAnnonceDTO(Annonce annonce) {
         if (annonce == null) {
             return null;
         }
@@ -16,6 +16,7 @@ public class AnnonceMapper {
         dto.setEtat(annonce.getEtat());
         dto.setDescription(annonce.getDescription());
         dto.setBesoin_aide(annonce.getBesoin_aide());
+        dto.setTitre(annonce.getTitre());
         return dto;
     }
 
@@ -27,10 +28,11 @@ public class AnnonceMapper {
         annonce.setEtat(annonceDTO.getEtat());
         annonce.setDescription(annonceDTO.getDescription());
         annonce.setBesoin_aide(annonceDTO.getBesoin_aide());
+        annonce.setTitre(annonceDTO.getTitre());
         return annonce;
     }
 
-    public AnnonceGetDTO toGetDTO(Annonce annonce) {
+    public AnnonceGetDTO toAnnonceGetDTO(Annonce annonce) {
         if (annonce == null) {
             return null;
         }
@@ -39,6 +41,7 @@ public class AnnonceMapper {
         getDTO.setEtat(annonce.getEtat());
         getDTO.setDescription(annonce.getDescription());
         getDTO.setBesoin_aide(annonce.getBesoin_aide());
+        getDTO.setTitre(annonce.getTitre());
         return getDTO;
     }
 
@@ -51,6 +54,7 @@ public class AnnonceMapper {
         annonce.setEtat(annonceGetDTO.getEtat());
         annonce.setDescription(annonceGetDTO.getDescription());
         annonce.setBesoin_aide(annonceGetDTO.getBesoin_aide());
+        annonce.setTitre(annonceGetDTO.getTitre());
         return annonce;
     }
 }

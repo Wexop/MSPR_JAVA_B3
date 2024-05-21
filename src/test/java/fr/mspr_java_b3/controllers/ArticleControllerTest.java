@@ -5,7 +5,6 @@ import fr.mspr_java_b3.entities.Article;
 import fr.mspr_java_b3.repository.ArticleRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.hamcrest.Matchers.is;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(ArticleController.class)
+@WebMvcTest(ArticleControllerAChanger.class)
 class ArticleControllerTest {
 
     @Autowired

@@ -6,7 +6,7 @@ import fr.mspr_java_b3.entities.Bibliotheque;
 
 public class BibliothequeMapper {
 
-    public BibliothequeDTO toDTO(Bibliotheque bibliotheque) {
+    public BibliothequeDTO toBibliothequeDTO(Bibliotheque bibliotheque) {
         if (bibliotheque == null) {
             return null;
         }
@@ -26,7 +26,7 @@ public class BibliothequeMapper {
         return bibliotheque;
     }
 
-    public BibliothequeGetDTO toGetDTO(Bibliotheque bibliotheque) {
+    public BibliothequeGetDTO toBibliothequeGetDTO(Bibliotheque bibliotheque) {
         if (bibliotheque == null) {
             return null;
         }

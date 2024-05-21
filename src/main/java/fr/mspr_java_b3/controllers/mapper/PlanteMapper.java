@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PlanteMapper {
 
-    public PlanteDTO toDTO(Plante plante) {
+    public PlanteDTO toPlanteDTO(Plante plante) {
         if (plante == null) {
             return null;
         }
@@ -28,7 +28,7 @@ public class PlanteMapper {
         return plante;
     }
 
-    public PlanteGetDTO toGetDTO(Plante plante) {
+    public PlanteGetDTO toPlanteGetDTO(Plante plante) {
         if (plante == null) {
             return null;
         }

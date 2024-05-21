@@ -13,4 +13,5 @@ public class AnnonceGetDTO {
     private AnnonceEnum etat;
     private String description;
     private Boolean besoin_aide;
+    private String titre;
 }

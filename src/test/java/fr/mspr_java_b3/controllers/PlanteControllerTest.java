@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(PlanteController.class)
+@WebMvcTest(PlanteControllerAChanger.class)
 class PlanteControllerTest {
 
     @Autowired
