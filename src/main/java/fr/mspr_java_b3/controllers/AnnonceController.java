@@ -1,14 +1,12 @@
 package fr.mspr_java_b3.controllers;
 
-import fr.mspr_java_b3.dto.*;
+import fr.mspr_java_b3.dto.AnnonceGetDTO;
 import fr.mspr_java_b3.services.AnnonceService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 
 import java.util.List;
 
@@ -25,11 +23,6 @@ public class AnnonceController {
     AnnonceGetDTO getAnnonceById(@PathVariable int id) {
         return annonceService.getAnnonceById(id);
     }
-    
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/annonce/{id}")
-    AnnonceGetDTO getAnnonceById(@PathVariable int id) {
-        return annonceService.getAnnonceById(id);
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/annonces_attente")
@@ -63,7 +56,7 @@ public class AnnonceController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    //AnnonceGetDTO putAnnonce(@RequestBody PutAnnonceRequest entity, @PathVariable(name = "id") Integer id) {
+        //AnnonceGetDTO putAnnonce(@RequestBody PutAnnonceRequest entity, @PathVariable(name = "id") Integer id) {
     AnnonceGetDTO putAnnonce(@RequestBody AnnonceGetDTO entity, @PathVariable(name = "id") Integer id) {
         return annonceService.putAnnonce(entity, id);
     }
