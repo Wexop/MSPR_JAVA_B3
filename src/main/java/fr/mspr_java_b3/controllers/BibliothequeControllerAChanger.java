@@ -13,11 +13,11 @@ import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "bearer")
-public class BibliothequeController {
+public class BibliothequeControllerAChanger {
     private final BibliothequeRepository repository;
     private final UtilisateurRepository utilisateurRepository;
 
-    BibliothequeController(BibliothequeRepository repository, UtilisateurRepository utilisateurRepository) {
+    BibliothequeControllerAChanger(BibliothequeRepository repository, UtilisateurRepository utilisateurRepository) {
         this.repository = repository;
         this.utilisateurRepository = utilisateurRepository;
     }

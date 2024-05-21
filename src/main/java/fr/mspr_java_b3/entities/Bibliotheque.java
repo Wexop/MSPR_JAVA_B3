@@ -39,6 +39,8 @@ public class Bibliotheque {
         return id;
     }
 
+    public void setId(int id) { this.id = id; }
+
     public String getImage_url() {
         return image_url;
     }
