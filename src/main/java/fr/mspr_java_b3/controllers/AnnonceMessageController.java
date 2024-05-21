@@ -9,7 +9,7 @@ import fr.mspr_java_b3.repository.UtilisateurRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,7 +26,8 @@ public class AnnonceMessageController {
     private final UtilisateurRepository utilisateurRepository;
 
     @Autowired
-    private SimpMessagingTemplate messagingTemplate;
+    private MessageSendingOperations<String> wsTemplate;
+
 
     AnnonceMessageController(AnnonceMessageRepository repository, AnnonceRepository annonceRepository, UtilisateurRepository utilisateurRepository) {
         this.repository = repository;
@@ -57,7 +58,7 @@ public class AnnonceMessageController {
         if (utilisateur != null) {
             annonceMessage.setUtilisateur(utilisateur);
         }
-
+        this.wsTemplate.convertAndSend("/newMessage/annonce/"+ id, annonceMessage);
         return repository.save(annonceMessage);
     }
 
@@ -71,11 +72,4 @@ public class AnnonceMessageController {
             return false;
         }
     }
-
-    @PostMapping("/message/truc/{id_annonce}")
-    public void sendMessage(@PathVariable String id_annonce, @RequestBody PostAnnonceMessage message) {
-        messagingTemplate.convertAndSend("/message/annonce/" + id_annonce, message);
-    }
-
-
 }
