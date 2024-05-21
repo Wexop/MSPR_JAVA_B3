@@ -3,9 +3,9 @@ package fr.mspr_java_b3.security;
 import fr.mspr_java_b3.entities.Utilisateur;
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 
-import javax.naming.AuthenticationException;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.concurrent.TimeUnit;
@@ -58,6 +58,24 @@ public class JwtUtil {
         }
     }
 
+    public Claims resolveClaimsWebsocket(StompHeaderAccessor accessor) {
+        try {
+            String token = resolveTokenWebsocket(accessor);
+            if (token != null) {
+                return parseJwtClaims(token);
+            }
+            return null;
+
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public String resolveTokenWebsocket(StompHeaderAccessor accessor) {
+        String bearerToken = accessor.getFirstNativeHeader(TOKEN_HEADER);
+        return tokenResolver(bearerToken);
+    }
+
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(TOKEN_HEADER);
 
@@ -68,6 +86,10 @@ public class JwtUtil {
             System.out.println("Header Name: " + headerName + ", Value: " + request.getHeader(headerName));
         }
 
+        return tokenResolver(bearerToken);
+    }
+
+    private String tokenResolver(String bearerToken) {
         System.out.println("Bearer Token: " + bearerToken);
 
         if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
@@ -76,12 +98,8 @@ public class JwtUtil {
         return null;
     }
 
-    public boolean validateClaims(Claims claims) throws AuthenticationException {
-        try {
-            return claims.getExpiration().after(new Date());
-        } catch (Exception e) {
-            throw e;
-        }
+    public boolean validateClaims(Claims claims) {
+        return claims.getExpiration().after(new Date());
     }
 
     public String getEmail(Claims claims) {

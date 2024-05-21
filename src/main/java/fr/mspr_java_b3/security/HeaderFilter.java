@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,11 +17,11 @@ import java.util.List;
 @Component
 public class HeaderFilter extends OncePerRequestFilter {
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getRequestURI();
 
-        List<String> noAuthRequiredList = List.of("/login", "/register", "swagger", "/v3/api-docs", "/article_by_id/", "/article/all");
+        List<String> noAuthRequiredList = List.of("/login", "/register", "swagger", "/v3/api-docs", "/article_by_id/", "/article/all", "/websocket");
 
         boolean noAuth = false;
 
