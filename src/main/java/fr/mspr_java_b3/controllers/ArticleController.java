@@ -35,4 +35,11 @@ public class ArticleController {
     ArticleGetDTO postArticle(@RequestBody ArticleGetDTO article, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
         return articleService.postArticle(article, authorizationHeader);
     }
+
+    @SecurityRequirement(name = "bearer")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/article/{id}")
+    ArticleGetDTO putArticle(@RequestBody ArticleGetDTO article, @PathVariable(name = "id") Integer id) {
+        return articleService.putAnnonce(article, id);
+    }
 }
