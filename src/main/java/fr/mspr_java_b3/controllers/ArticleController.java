@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/article")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;
@@ -30,7 +30,7 @@ public class ArticleController {
     }
 
     @SecurityRequirement(name = "bearer")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/article")
     ArticleGetDTO postArticle(@RequestBody ArticleGetDTO article, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
         return articleService.postArticle(article, authorizationHeader);
@@ -40,6 +40,6 @@ public class ArticleController {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/article/{id}")
     ArticleGetDTO putArticle(@RequestBody ArticleGetDTO article, @PathVariable(name = "id") Integer id) {
-        return articleService.putAnnonce(article, id);
+        return articleService.putArticle(article, id);
     }
 }

@@ -13,13 +13,13 @@ import java.util.List;
 @RestController
 @SecurityRequirement(name = "bearer")
 @Slf4j
-@RequestMapping("/api/annonce")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class AnnonceController {
     private final AnnonceService annonceService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}")
+    @GetMapping("/annonce/{id}")
     AnnonceGetDTO getAnnonceById(@PathVariable int id) {
         return annonceService.getAnnonceById(id);
     }
@@ -37,26 +37,25 @@ public class AnnonceController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/mes_annonces")
+    @GetMapping("/annonces/me")
     List<AnnonceGetDTO> getMesAnnonces(@RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
         return annonceService.getMesAnnonces(authorizationValue);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/mes_gardes")
+    @GetMapping("/annonces_garde/me")
     List<AnnonceGetDTO> getMesGardes(@RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
         return annonceService.getMesGardes(authorizationValue);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/")
+    @PostMapping("/annonce")
     AnnonceGetDTO postAnnonce(@RequestBody AnnonceGetDTO body) {
         return annonceService.postAnnonce(body);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{id}")
-        //AnnonceGetDTO putAnnonce(@RequestBody PutAnnonceRequest entity, @PathVariable(name = "id") Integer id) {
+    @PutMapping("/annonce/{id}")
     AnnonceGetDTO putAnnonce(@RequestBody AnnonceGetDTO entity, @PathVariable(name = "id") Integer id) {
         return annonceService.putAnnonce(entity, id);
     }
