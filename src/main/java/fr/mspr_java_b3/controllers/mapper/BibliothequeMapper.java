@@ -3,7 +3,9 @@ package fr.mspr_java_b3.controllers.mapper;
 import fr.mspr_java_b3.dto.BibliothequeDTO;
 import fr.mspr_java_b3.dto.BibliothequeGetDTO;
 import fr.mspr_java_b3.entities.Bibliotheque;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BibliothequeMapper {
 
     public BibliothequeDTO toBibliothequeDTO(Bibliotheque bibliotheque) {

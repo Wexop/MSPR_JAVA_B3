@@ -21,11 +21,12 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(BibliothequeControllerAChanger.class)
+@WebMvcTest(BibliothequeController.class)
 class BibliothequeControllerTest {
 
     @Autowired
@@ -43,7 +44,7 @@ class BibliothequeControllerTest {
     void getBibliotheque() throws Exception {
         int utilisateurId = 1;
         Bibliotheque bibliotheque = new Bibliotheque();
-        List<Bibliotheque> bibliotheques = Arrays.asList(bibliotheque);
+        List<Bibliotheque> bibliotheques = List.of(bibliotheque);
 
         Mockito.when(repository.getBibliothequeByUtilisateur(utilisateurId)).thenReturn(bibliotheques);
 
