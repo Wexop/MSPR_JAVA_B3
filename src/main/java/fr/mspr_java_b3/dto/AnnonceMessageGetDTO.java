@@ -12,11 +12,10 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class AnnonceMessageGetDTO {
-    private String message;
+    private int id;
     private String image_url;
-    private int message_id;
-    private String username;
-    private Utilisateur utilisateur;
+    private String message;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime date;
+    private UtilisateurGetDTO utilisateur;
 }

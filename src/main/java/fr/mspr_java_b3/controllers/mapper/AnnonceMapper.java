@@ -13,10 +13,11 @@ public class AnnonceMapper {
             return null;
         }
         AnnoncePostDTO dto = new AnnoncePostDTO();
-        dto.setEtat(annonce.getEtat());
-        dto.setDescription(annonce.getDescription());
-        dto.setBesoin_aide(annonce.getBesoin_aide());
         dto.setTitre(annonce.getTitre());
+        dto.setDescription(annonce.getDescription());
+        dto.setDate_debut(annonce.getDate_debut());
+        dto.setDate_fin(annonce.getDate_fin());
+        dto.setPlante(annonce.getPlante());
         return dto;
     }
 
@@ -25,10 +26,11 @@ public class AnnonceMapper {
             return null;
         }
         Annonce annonce = new Annonce();
-        annonce.setEtat(annonceDTO.getEtat());
-        annonce.setDescription(annonceDTO.getDescription());
-        annonce.setBesoin_aide(annonceDTO.getBesoin_aide());
         annonce.setTitre(annonceDTO.getTitre());
+        annonce.setDescription(annonceDTO.getDescription());
+        annonce.setDate_debut(annonceDTO.getDate_debut());
+        annonce.setDate_fin(annonceDTO.getDate_fin());
+        annonce.setPlante(annonceDTO.getPlante());
         return annonce;
     }
 

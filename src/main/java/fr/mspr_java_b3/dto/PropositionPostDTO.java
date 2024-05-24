@@ -1,14 +1,18 @@
 package fr.mspr_java_b3.dto;
 
-import fr.mspr_java_b3.entities.Annonce;
-import fr.mspr_java_b3.entities.Utilisateur;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import fr.mspr_java_b3.entities.PropositionEnum;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@ToString
 public class PropositionPostDTO {
-    private Date date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    private LocalDateTime date;
     private String message;
-    private String etat;
-    private Annonce annonce;
-    private Utilisateur utilisateur;
 }

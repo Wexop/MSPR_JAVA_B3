@@ -32,12 +32,11 @@ public class AnnonceMessageMapper {
             return null;
         }
         AnnonceMessageGetDTO dto = new AnnonceMessageGetDTO();
-        dto.setMessage(annonceMessage.getMessage());
+        dto.setId(annonceMessage.getId());
         dto.setImage_url(annonceMessage.getImage_url());
-        dto.setMessage_id(annonceMessage.getId());
-        dto.setUsername(annonceMessage.getUtilisateur().getNom());
-        dto.setUtilisateur(annonceMessage.getUtilisateur());
+        dto.setMessage(annonceMessage.getMessage());
         dto.setDate(annonceMessage.getDate());
+        dto.setUtilisateur(new UtilisateurMapper().toUtilisateurGetDTO(annonceMessage.getUtilisateur()));
         return dto;
     }
 
@@ -47,10 +46,9 @@ public class AnnonceMessageMapper {
         }
 
         AnnonceMessage annonceMessage = new AnnonceMessage();
-        annonceMessage.setMessage(dto.getMessage());
+        annonceMessage.setId(dto.getId());
         annonceMessage.setImage_url(dto.getImage_url());
-        annonceMessage.setId(dto.getMessage_id());
-        annonceMessage.setUtilisateur(dto.getUtilisateur());
+        annonceMessage.setMessage(dto.getMessage());
         annonceMessage.setDate(dto.getDate());
         return annonceMessage;
     }

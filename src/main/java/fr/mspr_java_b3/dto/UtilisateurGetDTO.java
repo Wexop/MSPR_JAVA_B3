@@ -7,7 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ArticlePostDTO {
-    private String titre;
-    private String contenue;
+public class UtilisateurGetDTO {
+    private String nom;
+    private String image_url;
+    private Boolean botaniste;
 }

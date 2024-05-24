@@ -14,7 +14,6 @@ public class ArticleMapper {
         }
         ArticlePostDTO dto = new ArticlePostDTO();
         dto.setTitre(article.getTitre());
-        dto.setImage_url(article.getImage_url());
         dto.setContenue(article.getContenu());
         return dto;
     }
@@ -25,7 +24,6 @@ public class ArticleMapper {
         }
         Article article = new Article();
         article.setTitre(articleDTO.getTitre());
-        article.setImage_url(articleDTO.getImage_url());
         article.setContenu(articleDTO.getContenue());
         return article;
     }
@@ -36,9 +34,10 @@ public class ArticleMapper {
         }
         ArticleGetDTO dto = new ArticleGetDTO();
         dto.setId(article.getId());
-        dto.setTitre(article.getTitre());
-        dto.setImage_url(article.getImage_url());
         dto.setContenue(article.getContenu());
+        dto.setTitre(article.getTitre());
+        dto.setDate(article.getDate());
+        dto.setUtilisateur(new UtilisateurMapper().toUtilisateurGetDTO(article.getUtilisateur()));
         return dto;
     }
 
@@ -48,9 +47,9 @@ public class ArticleMapper {
         }
         Article article = new Article();
         article.setId(articleGetDTO.getId());
-        article.setTitre(articleGetDTO.getTitre());
-        article.setImage_url(articleGetDTO.getImage_url());
         article.setContenu(articleGetDTO.getContenue());
+        article.setTitre(articleGetDTO.getTitre());
+        article.setDate(articleGetDTO.getDate());
         return article;
     }
 }
