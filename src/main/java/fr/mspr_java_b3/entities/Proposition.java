@@ -1,5 +1,6 @@
 package fr.mspr_java_b3.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ public class Proposition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime date;
 
     private String message;

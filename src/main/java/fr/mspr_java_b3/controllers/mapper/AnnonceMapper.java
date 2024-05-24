@@ -1,7 +1,7 @@
 package fr.mspr_java_b3.controllers.mapper;
 
-import fr.mspr_java_b3.dto.AnnoncePostDTO;
 import fr.mspr_java_b3.dto.AnnonceGetDTO;
+import fr.mspr_java_b3.dto.AnnoncePostDTO;
 import fr.mspr_java_b3.entities.Annonce;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +42,12 @@ public class AnnonceMapper {
         getDTO.setDescription(annonce.getDescription());
         getDTO.setBesoin_aide(annonce.getBesoin_aide());
         getDTO.setTitre(annonce.getTitre());
+        getDTO.setAdresse(annonce.getUtilisateur().getAdresse());
+        getDTO.setDate_debut(annonce.getDate_debut());
+        getDTO.setDate_creation(annonce.getDate_creation());
+        getDTO.setDate_fin(annonce.getDate_fin());
+        getDTO.setUtilisateur_nom(annonce.getUtilisateur().getNom());
+        getDTO.setPlante(new PlanteMapper().toPlanteGetDTO(annonce.getPlante()));
         return getDTO;
     }
 
