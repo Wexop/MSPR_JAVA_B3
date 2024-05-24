@@ -47,7 +47,7 @@ public class AnnonceMapper {
         getDTO.setDate_creation(annonce.getDate_creation());
         getDTO.setDate_fin(annonce.getDate_fin());
         getDTO.setUtilisateur_nom(annonce.getUtilisateur().getNom());
-        getDTO.setPlante(new PlanteMapper().toPlanteGetDTO(annonce.getPlante()));
+        getDTO.setPlante(new PlanteMapper().toGetPlanteDTO(annonce.getPlante()));
         return getDTO;
     }
 
