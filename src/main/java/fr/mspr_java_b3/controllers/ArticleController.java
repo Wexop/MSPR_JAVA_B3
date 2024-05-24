@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api")
 @RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;

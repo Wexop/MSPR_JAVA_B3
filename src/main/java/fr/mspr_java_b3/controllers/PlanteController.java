@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "bearer")
 public class PlanteController {

@@ -1,75 +1,33 @@
 package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.controllers.requests_body.PostAnnonceMessage;
-import fr.mspr_java_b3.entities.AnnonceMessage;
-import fr.mspr_java_b3.entities.Utilisateur;
-import fr.mspr_java_b3.repository.AnnonceMessageRepository;
-import fr.mspr_java_b3.repository.AnnonceRepository;
-import fr.mspr_java_b3.repository.UtilisateurRepository;
+import fr.mspr_java_b3.dto.AnnonceMessageGetDTO;
+import fr.mspr_java_b3.dto.AnnonceMessagePostDTO;
+import fr.mspr_java_b3.services.AnnonceMessageService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "bearer")
+@Slf4j
+@RequiredArgsConstructor
 public class AnnonceMessageController {
+    private final AnnonceMessageService annonceMessageService;
 
-    private final AnnonceMessageRepository repository;
-    private final AnnonceRepository annonceRepository;
-
-    private final UtilisateurRepository utilisateurRepository;
-
-    @Autowired
-    private MessageSendingOperations<String> wsTemplate;
-
-
-    AnnonceMessageController(AnnonceMessageRepository repository, AnnonceRepository annonceRepository, UtilisateurRepository utilisateurRepository) {
-        this.repository = repository;
-        this.annonceRepository = annonceRepository;
-        this.utilisateurRepository = utilisateurRepository;
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/message/annonce/{id_annonce}")
+    List<AnnonceMessageGetDTO> getAllMessageByAnnonce(@PathVariable int id_annonce) {
+        return annonceMessageService.getAllMessageByAnnonce(id_annonce);
     }
 
-    @GetMapping("/message/annonce/{id}")
-    List<AnnonceMessage> getMessageAnnonce(@PathVariable int id) {
-        return repository.findByAnnonce(id);
-    }
-
-    @PostMapping("/message/annonce/{id}")
-    AnnonceMessage postMessageAnnonce(@PathVariable int id, @RequestBody PostAnnonceMessage annonce, @RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
-
-        var annonceMessage = new AnnonceMessage();
-
-        annonceMessage.setMessage(annonce.getMessage());
-        annonceMessage.setImage_url(annonce.getImage_url());
-        annonceMessage.setDate(LocalDateTime.now());
-
-        var annonceFound = annonceRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pas d'annonce avec l'id " + id));
-        if (annonceFound != null) {
-            annonceMessage.setAnnonce(annonceFound);
-        }
-
-        Utilisateur utilisateur = utilisateurRepository.findById(Integer.parseInt(authorizationValue)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisateur introuvale"));
-        if (utilisateur != null) {
-            annonceMessage.setUtilisateur(utilisateur);
-        }
-        this.wsTemplate.convertAndSend("/newMessage/annonce/"+ id, annonceMessage);
-        return repository.save(annonceMessage);
-    }
-
-    @DeleteMapping("/message/annonce/{id}")
-    boolean delete(@PathVariable(name = "id") Integer id) {
-
-        try {
-            repository.deleteById(id);
-            return true;
-        } catch (Error error) {
-            return false;
-        }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/message/annonce/{id_annonce")
+    AnnonceMessageGetDTO postMessageAnnonce(@PathVariable int id_annonce, @RequestBody AnnonceMessagePostDTO annonce, @RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
+        return annonceMessageService.postMessageAnnonce(id_annonce, annonce, authorizationValue);
     }
 }
