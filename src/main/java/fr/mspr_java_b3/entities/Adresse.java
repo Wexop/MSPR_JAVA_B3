@@ -36,6 +36,8 @@ public class Adresse {
         return id;
     }
 
+    public void setId(int id) { this.id = id; }
+
     public String getAdresse() {
         return adresse;
     }

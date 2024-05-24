@@ -1,71 +1,45 @@
 package fr.mspr_java_b3.controllers;
 
-import fr.mspr_java_b3.controllers.requests_body.PutArticleRequest;
-import fr.mspr_java_b3.entities.Article;
-import fr.mspr_java_b3.entities.Utilisateur;
-import fr.mspr_java_b3.repository.ArticleRepository;
+import fr.mspr_java_b3.dto.ArticleGetDTO;
+import fr.mspr_java_b3.services.ArticleService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
+@Slf4j
+@RequestMapping("/api")
+@RequiredArgsConstructor
 public class ArticleController {
-    private final ArticleRepository repository;
+    private final ArticleService articleService;
 
-    ArticleController(ArticleRepository repository) {
-        this.repository = repository;
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/articles")
+    List<ArticleGetDTO> getAllArticles() {
+        return articleService.getAllArticles();
     }
 
-    @SecurityRequirement(name = "")
-    @GetMapping("/article/all")
-    List<Article> getAllArticle() {
-        return repository.findAll();
-    }
-
-    @GetMapping("/article_by_id/{id}")
-    Article getOneArticle(@PathVariable("id") String articleId) {
-        return repository.findById(Integer.parseInt(articleId))
-                .orElseThrow(() -> new Error("Aucun article avec l'id " + articleId));
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/article/{id}")
+    ArticleGetDTO getArticleById(@PathVariable("id") String articleId) {
+        return articleService.getArticleById(articleId);
     }
 
     @SecurityRequirement(name = "bearer")
-    @PostMapping("/article/one")
-    Article postArticle(@RequestBody Article article, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
-
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(Integer.parseInt(authorizationHeader));
-
-        article.setUtilisateur(utilisateur);
-
-        return repository.save(article);
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/article")
+    ArticleGetDTO postArticle(@RequestBody ArticleGetDTO article, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
+        return articleService.postArticle(article, authorizationHeader);
     }
 
     @SecurityRequirement(name = "bearer")
-    @DeleteMapping("/article/{id}")
-    boolean delete(@PathVariable(name = "id") Integer id) {
-
-        try {
-            repository.deleteById(id);
-            return true;
-        } catch (Error error) {
-            return false;
-        }
-    }
-
-    @SecurityRequirement(name = "bearer")
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/article/{id}")
-    Article putAnnonce(@RequestBody PutArticleRequest entity, @PathVariable(name = "id") Integer id) {
-
-        Article initialEntity = repository.getReferenceById(id);
-
-        if(entity.titre != null) initialEntity.setTitre(entity.titre);
-        if(entity.contenu != null) initialEntity.setContenu(entity.contenu);
-
-        return repository.save(initialEntity);
-
+    ArticleGetDTO putArticle(@RequestBody ArticleGetDTO article, @PathVariable(name = "id") Integer id) {
+        return articleService.putArticle(article, id);
     }
-
 }
