@@ -62,6 +62,7 @@ public class AnnonceService {
         annonce.setDate_creation(localDateTime);
         annonce = annonceRepository.save(annonce);
         annonce.setUtilisateur(utilisateurRepository.getReferenceById(utilisateurId));
+        annonce.setEtat(AnnonceEnum.en_attente);
         return annonceMapper.toAnnonceGetDTO(annonce);
     }
 
