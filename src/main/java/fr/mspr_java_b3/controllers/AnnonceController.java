@@ -1,6 +1,7 @@
 package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.dto.AnnonceGetDTO;
+import fr.mspr_java_b3.dto.AnnoncePostDTO;
 import fr.mspr_java_b3.services.AnnonceService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,6 @@ import java.util.List;
 @RestController
 @SecurityRequirement(name = "bearer")
 @Slf4j
-@RequestMapping("/api")
 @RequiredArgsConstructor
 public class AnnonceController {
     private final AnnonceService annonceService;
@@ -50,13 +50,13 @@ public class AnnonceController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/annonce")
-    AnnonceGetDTO postAnnonce(@RequestBody AnnonceGetDTO body) {
+    AnnonceGetDTO postAnnonce(@RequestBody AnnoncePostDTO body) {
         return annonceService.postAnnonce(body);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/annonce/{id}")
-    AnnonceGetDTO putAnnonce(@RequestBody AnnonceGetDTO entity, @PathVariable(name = "id") Integer id) {
+    @PatchMapping("/annonce/{id}")
+    AnnonceGetDTO patchAnnonce(@RequestBody AnnoncePostDTO entity, @PathVariable(name = "id") Integer id) {
         return annonceService.putAnnonce(entity, id);
     }
 }

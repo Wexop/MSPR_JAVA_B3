@@ -2,6 +2,7 @@ package fr.mspr_java_b3.services;
 
 import fr.mspr_java_b3.controllers.mapper.AnnonceMapper;
 import fr.mspr_java_b3.dto.AnnonceGetDTO;
+import fr.mspr_java_b3.dto.AnnoncePostDTO;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
@@ -53,17 +54,17 @@ public class AnnonceService {
                 .collect(Collectors.toList());
     }
 
-    public AnnonceGetDTO postAnnonce(AnnonceGetDTO dto) {
-        Annonce annonce = annonceMapper.toGetAnnonce(dto);
+    public AnnonceGetDTO postAnnonce(AnnoncePostDTO dto) {
+        Annonce annonce = annonceMapper.toPostAnnonce(dto);
         LocalDateTime localDateTime = LocalDateTime.now();
         annonce.setDate_creation(localDateTime);
         annonce = annonceRepository.save(annonce);
         return annonceMapper.toAnnonceGetDTO(annonce);
     }
 
-    public AnnonceGetDTO putAnnonce(AnnonceGetDTO dto, Integer id) {
-        dto.setId(id);
-        Annonce entity = annonceMapper.toGetAnnonce(dto);
+    public AnnonceGetDTO putAnnonce(AnnoncePostDTO dto, Integer id) {
+        Annonce entity = annonceMapper.toPostAnnonce(dto);
+        entity.setId(id);
         Annonce saved = annonceRepository.save(entity);
         return annonceMapper.toAnnonceGetDTO(saved);
     }

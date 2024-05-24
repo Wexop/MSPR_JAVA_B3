@@ -1,6 +1,6 @@
 package fr.mspr_java_b3.controllers.mapper;
 
-import fr.mspr_java_b3.dto.AnnonceDTO;
+import fr.mspr_java_b3.dto.AnnoncePostDTO;
 import fr.mspr_java_b3.dto.AnnonceGetDTO;
 import fr.mspr_java_b3.entities.Annonce;
 import org.springframework.stereotype.Component;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class AnnonceMapper {
 
-    public AnnonceDTO toAnnonceDTO(Annonce annonce) {
+    public AnnoncePostDTO toAnnoncePostDTO(Annonce annonce) {
         if (annonce == null) {
             return null;
         }
-        AnnonceDTO dto = new AnnonceDTO();
+        AnnoncePostDTO dto = new AnnoncePostDTO();
         dto.setEtat(annonce.getEtat());
         dto.setDescription(annonce.getDescription());
         dto.setBesoin_aide(annonce.getBesoin_aide());
@@ -20,7 +20,7 @@ public class AnnonceMapper {
         return dto;
     }
 
-    public Annonce toAnnonce (AnnonceDTO annonceDTO) {
+    public Annonce toPostAnnonce (AnnoncePostDTO annonceDTO) {
         if (annonceDTO == null) {
             return null;
         }

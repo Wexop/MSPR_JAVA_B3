@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class AnnonceDTO {
+public class AnnoncePostDTO {
     private AnnonceEnum etat;
     private String description;
     private Boolean besoin_aide;
