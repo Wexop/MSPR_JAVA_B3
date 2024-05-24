@@ -50,8 +50,8 @@ public class AnnonceController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/annonce")
-    AnnonceGetDTO postAnnonce(@RequestBody AnnoncePostDTO body) {
-        return annonceService.postAnnonce(body);
+    AnnonceGetDTO postAnnonce(@RequestBody AnnoncePostDTO body,@RequestAttribute(value = "Utilisateur_id")String authorizationValue) {
+        return annonceService.postAnnonce(body, Integer.parseInt(authorizationValue));
     }
 
     @ResponseStatus(HttpStatus.OK)
