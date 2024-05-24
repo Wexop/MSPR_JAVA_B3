@@ -5,7 +5,6 @@ import fr.mspr_java_b3.dto.PropositionGetDTO;
 import fr.mspr_java_b3.dto.PropositionPatchDTO;
 import fr.mspr_java_b3.dto.PropositionPostDTO;
 import fr.mspr_java_b3.entities.Proposition;
-import fr.mspr_java_b3.repository.AnnonceRepository;
 import fr.mspr_java_b3.repository.PropositionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,7 @@ public class PropositionService {
 
     private final PropositionRepository propositionRepository;
     private final PropositionMapper propositionMapper;
-=
+
     public PropositionGetDTO getProposition(int id) {
         return propositionRepository.findById(id)
                 .map(propositionMapper::toPropositionGetDTO)
