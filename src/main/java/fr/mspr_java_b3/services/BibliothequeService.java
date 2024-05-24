@@ -2,6 +2,7 @@ package fr.mspr_java_b3.services;
 
 import fr.mspr_java_b3.controllers.mapper.BibliothequeMapper;
 import fr.mspr_java_b3.dto.BibliothequeGetDTO;
+import fr.mspr_java_b3.dto.BibliothequePostDTO;
 import fr.mspr_java_b3.entities.Bibliotheque;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.BibliothequeRepository;
@@ -25,11 +26,11 @@ public class BibliothequeService {
                 .collect(Collectors.toList());
     }
 
-    public BibliothequeGetDTO postBibliotheque(BibliothequeGetDTO dto, String authorizationHeader) {
+    public BibliothequeGetDTO postBibliotheque(BibliothequePostDTO dto, String authorizationHeader) {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setId(Integer.parseInt(authorizationHeader));
 
-        Bibliotheque bibliotheque = bibliothequeMapper.toGetBibliotheque(dto);
+        Bibliotheque bibliotheque = bibliothequeMapper.toPostBibliotheque(dto);
         bibliotheque.setUtilisateur(utilisateur);
         bibliotheque = bibliothequeRepository.save(bibliotheque);
         return bibliothequeMapper.toBibliothequeGetDTO(bibliotheque);

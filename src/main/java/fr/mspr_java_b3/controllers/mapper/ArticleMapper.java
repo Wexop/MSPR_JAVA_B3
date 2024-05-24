@@ -1,6 +1,6 @@
 package fr.mspr_java_b3.controllers.mapper;
 
-import fr.mspr_java_b3.dto.ArticleDTO;
+import fr.mspr_java_b3.dto.ArticlePostDTO;
 import fr.mspr_java_b3.dto.ArticleGetDTO;
 import fr.mspr_java_b3.entities.Article;
 import org.springframework.stereotype.Component;
@@ -8,18 +8,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class ArticleMapper {
 
-    public ArticleDTO toArtcileDTO(Article article) {
+    public ArticlePostDTO toPostArtcileDTO(Article article) {
         if (article == null) {
             return null;
         }
-        ArticleDTO dto = new ArticleDTO();
+        ArticlePostDTO dto = new ArticlePostDTO();
         dto.setTitre(article.getTitre());
         dto.setImage_url(article.getImage_url());
         dto.setContenue(article.getContenu());
         return dto;
     }
 
-    public Article toArticle (ArticleDTO articleDTO) {
+    public Article toPostArticle (ArticlePostDTO articleDTO) {
         if (articleDTO == null) {
             return null;
         }

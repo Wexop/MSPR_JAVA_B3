@@ -62,7 +62,7 @@ public class AnnonceService {
         return annonceMapper.toAnnonceGetDTO(annonce);
     }
 
-    public AnnonceGetDTO putAnnonce(AnnoncePostDTO dto, Integer id) {
+    public AnnonceGetDTO patchAnnonce(AnnoncePostDTO dto, Integer id) {
         Annonce entity = annonceMapper.toPostAnnonce(dto);
         entity.setId(id);
         Annonce saved = annonceRepository.save(entity);

@@ -57,6 +57,6 @@ public class AnnonceController {
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/annonce/{id}")
     AnnonceGetDTO patchAnnonce(@RequestBody AnnoncePostDTO entity, @PathVariable(name = "id") Integer id) {
-        return annonceService.putAnnonce(entity, id);
+        return annonceService.patchAnnonce(entity, id);
     }
 }

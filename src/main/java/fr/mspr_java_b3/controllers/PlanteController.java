@@ -1,6 +1,7 @@
 package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.dto.PlanteGetDTO;
+import fr.mspr_java_b3.dto.PlantePostDTO;
 import fr.mspr_java_b3.services.PlanteService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,8 @@ public class PlanteController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/plante/{id}")
-    PlanteGetDTO putPlante(@RequestBody PlanteGetDTO entity, @PathVariable("id") Integer id) {
-        return planteService.putPlante(entity, id);
+    @PatchMapping("/plante/{id}")
+    PlanteGetDTO patchPlante(@RequestBody PlantePostDTO entity, @PathVariable("id") Integer id) {
+        return planteService.patchPlante(entity, id);
     }
 }

@@ -7,8 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AdresseDTO {
-    private String latitude;
-    private String longitude;
-    private String adresse;
+public class BibliothequePostDTO {
+    private String image_url;
+    private String titre;
 }

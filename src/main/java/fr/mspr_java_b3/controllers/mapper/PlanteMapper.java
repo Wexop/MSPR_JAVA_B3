@@ -1,6 +1,6 @@
 package fr.mspr_java_b3.controllers.mapper;
 
-import fr.mspr_java_b3.dto.PlanteDTO;
+import fr.mspr_java_b3.dto.PlantePostDTO;
 import fr.mspr_java_b3.dto.PlanteGetDTO;
 import fr.mspr_java_b3.entities.Plante;
 import org.springframework.stereotype.Component;
@@ -8,17 +8,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class PlanteMapper {
 
-    public PlanteDTO toPlanteDTO(Plante plante) {
+    public PlantePostDTO toPostPlanteDTO(Plante plante) {
         if (plante == null) {
             return null;
         }
-        PlanteDTO dto = new PlanteDTO();
+        PlantePostDTO dto = new PlantePostDTO();
         dto.setEspece(plante.getEspece());
         dto.setImage_url(plante.getImage_url());
         return dto;
     }
 
-    public Plante toPlante(PlanteDTO planteDTO) {
+    public Plante toPostPlante(PlantePostDTO planteDTO) {
         if (planteDTO == null) {
             return null;
         }
@@ -28,7 +28,7 @@ public class PlanteMapper {
         return plante;
     }
 
-    public PlanteGetDTO toPlanteGetDTO(Plante plante) {
+    public PlanteGetDTO toGetPlanteDTO(Plante plante) {
         if (plante == null) {
             return null;
         }

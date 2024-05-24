@@ -12,6 +12,7 @@ public class AuthMapper {
         }
         AuthDTO dto = new AuthDTO();
         dto.setToken(authResponse.getToken());
+        dto.setUser_id(authResponse.getUserId());
         return dto;
     }
     public AuthResponse toAuthUtilisateur(AuthDTO dto) {
@@ -20,6 +21,7 @@ public class AuthMapper {
         }
         AuthResponse authResponse = new AuthResponse();
         authResponse.setToken(dto.getToken());
+        authResponse.setUserId(dto.getUser_id());
         return authResponse;
     }
 }

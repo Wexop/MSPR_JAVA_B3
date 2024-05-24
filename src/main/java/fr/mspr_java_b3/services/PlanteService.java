@@ -2,6 +2,7 @@ package fr.mspr_java_b3.services;
 
 import fr.mspr_java_b3.controllers.mapper.PlanteMapper;
 import fr.mspr_java_b3.dto.PlanteGetDTO;
+import fr.mspr_java_b3.dto.PlantePostDTO;
 import fr.mspr_java_b3.entities.Plante;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.PlanteRepository;
@@ -21,7 +22,7 @@ public class PlanteService {
     public List<PlanteGetDTO> getMesPlantes(String authorizationHeader) {
         List<Plante> plantes = planteRepository.findByUtilisateur(Integer.parseInt(authorizationHeader));
         return plantes.stream()
-                .map(planteMapper::toPlanteGetDTO)
+                .map(planteMapper::toGetPlanteDTO)
                 .collect(Collectors.toList());
     }
 
@@ -32,13 +33,13 @@ public class PlanteService {
         Plante plante = planteMapper.toGetPlante(dto);
         plante.setUtilisateur(utilisateur);
         plante = planteRepository.save(plante);
-        return planteMapper.toPlanteGetDTO(plante);
+        return planteMapper.toGetPlanteDTO(plante);
     }
 
-    public PlanteGetDTO putPlante(PlanteGetDTO dto, Integer id) {
-        dto.setId(id);
-        Plante plante = planteMapper.toGetPlante(dto);
+    public PlanteGetDTO patchPlante(PlantePostDTO dto, Integer id) {
+        Plante plante = planteMapper.toPostPlante(dto);
+        plante.setId(id);
         Plante saved = planteRepository.save(plante);
-        return planteMapper.toPlanteGetDTO(saved);
+        return planteMapper.toGetPlanteDTO(saved);
     }
 }

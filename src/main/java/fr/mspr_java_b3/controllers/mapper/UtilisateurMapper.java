@@ -36,7 +36,7 @@ public class UtilisateurMapper {
         RegisterDTO dto = new RegisterDTO();
         dto.setMail(utilisateur.getMail());
         dto.setMdp(utilisateur.getMdp());
-        dto.setMdp(utilisateur.getMdp());
+        dto.setNom(utilisateur.getNom());
         return dto;
     }
 

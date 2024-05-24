@@ -52,6 +52,8 @@ public class AnnonceMessage {
         return id;
     }
 
+    public void setId(int id) { this.id = id; }
+
     public void setAnnonce(Annonce annonce) {
         this.annonce = annonce;
     }

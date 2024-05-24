@@ -1,6 +1,6 @@
 package fr.mspr_java_b3.controllers.mapper;
 
-import fr.mspr_java_b3.dto.BibliothequeDTO;
+import fr.mspr_java_b3.dto.BibliothequePostDTO;
 import fr.mspr_java_b3.dto.BibliothequeGetDTO;
 import fr.mspr_java_b3.entities.Bibliotheque;
 import org.springframework.stereotype.Component;
@@ -8,17 +8,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class BibliothequeMapper {
 
-    public BibliothequeDTO toBibliothequeDTO(Bibliotheque bibliotheque) {
+    public BibliothequePostDTO toPostBibliothequeDTO(Bibliotheque bibliotheque) {
         if (bibliotheque == null) {
             return null;
         }
-        BibliothequeDTO dto = new BibliothequeDTO();
+        BibliothequePostDTO dto = new BibliothequePostDTO();
         dto.setImage_url(bibliotheque.getImage_url());
         dto.setTitre(bibliotheque.getTitre());
         return dto;
     }
 
-    public Bibliotheque toBibliotheque(BibliothequeDTO dto) {
+    public Bibliotheque toPostBibliotheque(BibliothequePostDTO dto) {
         if (dto == null) {
             return null;
         }

@@ -7,7 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AuthDTO {
-    private String token;
-    private int user_id;
+public class AdressePostDTO {
+    private String latitude;
+    private String longitude;
+    private String adresse;
 }

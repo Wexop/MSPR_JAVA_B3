@@ -11,5 +11,5 @@ public class RegisterDTO {
     private String mail;
     private String nom;
     private String mdp;
-    private AdresseDTO adresse;
+    private AdressePostDTO adresse;
 }

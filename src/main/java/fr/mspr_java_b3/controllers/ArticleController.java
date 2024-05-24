@@ -1,6 +1,7 @@
 package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.dto.ArticleGetDTO;
+import fr.mspr_java_b3.dto.ArticlePostDTO;
 import fr.mspr_java_b3.services.ArticleService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -32,14 +33,14 @@ public class ArticleController {
     @SecurityRequirement(name = "bearer")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/article")
-    ArticleGetDTO postArticle(@RequestBody ArticleGetDTO article, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
+    ArticleGetDTO postArticle(@RequestBody ArticlePostDTO article, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
         return articleService.postArticle(article, authorizationHeader);
     }
 
     @SecurityRequirement(name = "bearer")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/article/{id}")
-    ArticleGetDTO putArticle(@RequestBody ArticleGetDTO article, @PathVariable(name = "id") Integer id) {
-        return articleService.putArticle(article, id);
+    @PatchMapping("/article/{id}")
+    ArticleGetDTO patchArticle(@RequestBody ArticlePostDTO article, @PathVariable(name = "id") Integer id) {
+        return articleService.patchArticle(article, id);
     }
 }
