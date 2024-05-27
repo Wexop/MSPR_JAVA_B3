@@ -5,22 +5,24 @@ import fr.mspr_java_b3.dto.AnnonceGetDTO;
 import fr.mspr_java_b3.dto.AnnoncePostDTO;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
+import fr.mspr_java_b3.repository.AnnonceMessageRepository;
 import fr.mspr_java_b3.repository.AnnonceRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class AnnonceService {
 
     private final AnnonceRepository annonceRepository;
     private final UtilisateurRepository utilisateurRepository;
     private final AnnonceMapper annonceMapper;
+    private final AnnonceMessageRepository annonceMessageRepository;
 
     public AnnonceGetDTO getAnnonceById(int id) {
         return annonceRepository.findById(id)
@@ -72,4 +74,15 @@ public class AnnonceService {
         Annonce saved = annonceRepository.save(entity);
         return annonceMapper.toAnnonceGetDTO(saved);
     }
+
+    public void cleanAnnoncesMessages() {
+
+        LocalDateTime currentDate = LocalDateTime.now();
+        LocalDateTime dateToClean = LocalDateTime.from(currentDate.minusYears(2));
+
+        System.out.println("DATE TO CLEAN " + dateToClean.toString());
+
+        annonceMessageRepository.deleteAnnonceMessageByDateBefore(dateToClean);
+    }
+
 }
