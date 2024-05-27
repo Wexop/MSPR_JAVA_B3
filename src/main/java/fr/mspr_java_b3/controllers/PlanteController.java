@@ -25,13 +25,13 @@ public class PlanteController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/plante")
+    @PostMapping("/plantes")
     PlanteGetDTO postPlante(@RequestBody PlanteGetDTO body, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
         return planteService.postPlante(body, authorizationHeader);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/plante/{id}")
+    @PatchMapping("/plantes/{id}")
     PlanteGetDTO patchPlante(@RequestBody PlantePostDTO entity, @PathVariable("id") Integer id) {
         return planteService.patchPlante(entity, id);
     }

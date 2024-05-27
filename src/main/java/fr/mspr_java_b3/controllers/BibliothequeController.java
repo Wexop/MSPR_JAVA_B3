@@ -19,13 +19,13 @@ public class BibliothequeController {
     private final BibliothequeService bibliothequeService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/bibliotheque/me")
+    @GetMapping("/bibliotheques/me")
     List<BibliothequeGetDTO> getMesBibliotheque(@RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
         return bibliothequeService.getMesBibliotheque(authorizationHeader);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/bibliotheque")
+    @PostMapping("/bibliotheques")
     BibliothequeGetDTO postBibliotheque(@RequestBody BibliothequePostDTO bibliotheque, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
         return bibliothequeService.postBibliotheque(bibliotheque, authorizationHeader);
     }

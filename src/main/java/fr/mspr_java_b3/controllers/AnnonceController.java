@@ -19,7 +19,7 @@ public class AnnonceController {
     private final AnnonceService annonceService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/annonce/{id}")
+    @GetMapping("/annonces/{id}")
     AnnonceGetDTO getAnnonceById(@PathVariable int id) {
         return annonceService.getAnnonceById(id);
     }
@@ -49,13 +49,13 @@ public class AnnonceController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/annonce")
+    @PostMapping("/annonces")
     AnnonceGetDTO postAnnonce(@RequestBody AnnoncePostDTO body) {
         return annonceService.postAnnonce(body);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/annonce/{id}")
+    @PatchMapping("/annonces/{id}")
     AnnonceGetDTO patchAnnonce(@RequestBody AnnoncePostDTO entity, @PathVariable(name = "id") Integer id) {
         return annonceService.patchAnnonce(entity, id);
     }

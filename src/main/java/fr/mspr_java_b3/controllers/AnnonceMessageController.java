@@ -20,13 +20,13 @@ public class AnnonceMessageController {
     private final AnnonceMessageService annonceMessageService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/message/annonce/{id_annonce}")
+    @GetMapping("/messages/annonces/{id_annonce}")
     List<AnnonceMessageGetDTO> getAllMessageByAnnonce(@PathVariable int id_annonce) {
         return annonceMessageService.getAllMessageByAnnonce(id_annonce);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/message/annonce/{id_annonce")
+    @PostMapping("/messages/annonces/{id_annonce}")
     AnnonceMessageGetDTO postMessageAnnonce(@PathVariable int id_annonce, @RequestBody AnnonceMessagePostDTO annonce, @RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
         return annonceMessageService.postMessageAnnonce(id_annonce, annonce, authorizationValue);
     }

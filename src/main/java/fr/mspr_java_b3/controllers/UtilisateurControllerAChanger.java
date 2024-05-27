@@ -78,14 +78,14 @@ public class UtilisateurControllerAChanger {
         return authResponse;
     }
 
-    @GetMapping("/utilisateur/me")
+    @GetMapping("/utilisateurs/me")
     @SecurityRequirement(name = "bearer")
     Utilisateur getMe(@RequestAttribute(value = "Utilisateur_id") String authorizationHeader) throws Exception {
         return this.repository.findById(Integer.parseInt(authorizationHeader))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Utilisteur introuvable"));
     }
 
-    @DeleteMapping("/utilisateur/me")
+    @DeleteMapping("/utilisateurs/me")
     @SecurityRequirement(name = "bearer")
     Boolean deleteUser(@RequestAttribute(value = "Utilisateur_id") String authorizationHeader, @RequestBody DeleteUserRequest request) throws Exception {
 
@@ -104,7 +104,7 @@ public class UtilisateurControllerAChanger {
     }
 
     @SecurityRequirement(name = "bearer")
-    @PutMapping("/utilisateur/me")
+    @PutMapping("/utilisateurs/me")
     Utilisateur putUtilisateur(@RequestBody PutUtilisateurRequest entity, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
         Utilisateur initialEntity = repository.getReferenceById(Integer.parseInt(authorizationHeader));
@@ -123,7 +123,7 @@ public class UtilisateurControllerAChanger {
     }
 
     @SecurityRequirement(name = "bearer")
-    @PutMapping("/utilisateur/password")
+    @PutMapping("/utilisateurs/password")
     boolean putPassword(@RequestBody PutPasswordUserRequest request, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
         Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))
@@ -141,7 +141,7 @@ public class UtilisateurControllerAChanger {
     }
 
     @SecurityRequirement(name = "bearer")
-    @PutMapping("/utilisateur/mail")
+    @PutMapping("/utilisateurs/mail")
     boolean putMail(@RequestBody PutMailUserRequest request, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
 
         Utilisateur utilisateur = this.repository.findById(Integer.parseInt(authorizationHeader))

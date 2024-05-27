@@ -21,7 +21,7 @@ import java.io.IOException;
 public class ImageController {
 
 
-    @PostMapping(value = "/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/images", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     ImageResponse postImage(@RequestParam(name = "image") MultipartFile file) throws IOException, InterruptedException, UnirestException {
 
         String url = String.format("https://api.imgbb.com/1/upload?key=%s", Dotenv.load().get("image_api_key"));

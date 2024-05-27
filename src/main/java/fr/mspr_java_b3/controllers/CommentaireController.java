@@ -16,18 +16,18 @@ public class CommentaireController {
         this.repository = repository;
     }
 
-    @PostMapping("/message")
+    @PostMapping("/messages")
     Commentaire insertCommentaire(@RequestBody Commentaire commentaire) {
         return repository.save(commentaire);
     }
 
-    @GetMapping("/message/{id_article}")
+    @GetMapping("/messages/{id_article}")
     List<Commentaire> getAllCommentaireById(@PathVariable("article_id") Integer id_article) {
         return repository.findById(id_article).stream().toList();
 
     }
 
-    @DeleteMapping("/message/{id}")
+    @DeleteMapping("/messages/{id}")
     boolean delete(@PathVariable(name = "id") Integer id) {
 
         try {

@@ -24,21 +24,21 @@ public class ArticleController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/article/{id}")
+    @GetMapping("/articles/{id}")
     ArticleGetDTO getArticleById(@PathVariable("id") String articleId) {
         return articleService.getArticleById(articleId);
     }
 
     @SecurityRequirement(name = "bearer")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/article")
+    @PostMapping("/articles")
     ArticleGetDTO postArticle(@RequestBody ArticlePostDTO article, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
         return articleService.postArticle(article, authorizationHeader);
     }
 
     @SecurityRequirement(name = "bearer")
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/article/{id}")
+    @PatchMapping("/articles/{id}")
     ArticleGetDTO patchArticle(@RequestBody ArticlePostDTO article, @PathVariable(name = "id") Integer id) {
         return articleService.patchArticle(article, id);
     }

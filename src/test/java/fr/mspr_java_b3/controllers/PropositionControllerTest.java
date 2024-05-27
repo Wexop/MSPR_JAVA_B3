@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(PropositionControllerAChanger.class)
+@WebMvcTest(PropositionController.class)
 class PropositionControllerTest {
 
     @Autowired
