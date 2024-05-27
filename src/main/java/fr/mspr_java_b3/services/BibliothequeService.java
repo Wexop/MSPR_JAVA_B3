@@ -6,6 +6,7 @@ import fr.mspr_java_b3.dto.BibliothequePostDTO;
 import fr.mspr_java_b3.entities.Bibliotheque;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.BibliothequeRepository;
+import fr.mspr_java_b3.repository.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ public class BibliothequeService {
 
     private final BibliothequeRepository bibliothequeRepository;
     private final BibliothequeMapper bibliothequeMapper;
+    private final UtilisateurRepository utilisateurRepository;
 
     public List<BibliothequeGetDTO> getMesBibliotheque(String authorizationHeader) {
         List<Bibliotheque> bibliotheques = bibliothequeRepository.getBibliothequeByUtilisateur(Integer.parseInt(authorizationHeader));
@@ -27,11 +29,8 @@ public class BibliothequeService {
     }
 
     public BibliothequeGetDTO postBibliotheque(BibliothequePostDTO dto, String authorizationHeader) {
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(Integer.parseInt(authorizationHeader));
-
         Bibliotheque bibliotheque = bibliothequeMapper.toPostBibliotheque(dto);
-        bibliotheque.setUtilisateur(utilisateur);
+        bibliotheque.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationHeader)));
         bibliotheque = bibliothequeRepository.save(bibliotheque);
         return bibliothequeMapper.toBibliothequeGetDTO(bibliotheque);
     }

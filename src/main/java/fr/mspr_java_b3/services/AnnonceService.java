@@ -6,6 +6,7 @@ import fr.mspr_java_b3.dto.AnnoncePostDTO;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
+import fr.mspr_java_b3.repository.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,7 @@ public class AnnonceService {
 
     private final AnnonceRepository annonceRepository;
     private final AnnonceMapper annonceMapper;
+    private final UtilisateurRepository utilisateurRepository;
 
     public AnnonceGetDTO getAnnonceById(int id) {
         return annonceRepository.findById(id)
@@ -54,10 +56,11 @@ public class AnnonceService {
                 .collect(Collectors.toList());
     }
 
-    public AnnonceGetDTO postAnnonce(AnnoncePostDTO dto) {
+    public AnnonceGetDTO postAnnonce(AnnoncePostDTO dto, String authorizationValue) {
         Annonce annonce = annonceMapper.toPostAnnonce(dto);
         LocalDateTime localDateTime = LocalDateTime.now();
         annonce.setDate_creation(localDateTime);
+        annonce.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationValue)));
         annonce = annonceRepository.save(annonce);
         return annonceMapper.toAnnonceGetDTO(annonce);
     }

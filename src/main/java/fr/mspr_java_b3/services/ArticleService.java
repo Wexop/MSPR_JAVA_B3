@@ -6,6 +6,7 @@ import fr.mspr_java_b3.dto.ArticlePostDTO;
 import fr.mspr_java_b3.entities.Article;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.ArticleRepository;
+import fr.mspr_java_b3.repository.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
     private final ArticleMapper articleMapper;
+    private final UtilisateurRepository utilisateurRepository;
 
     public List<ArticleGetDTO> getAllArticles() {
         List<Article> articles = articleRepository.findAll();
@@ -33,11 +35,8 @@ public class ArticleService {
     }
 
     public ArticleGetDTO postArticle(ArticlePostDTO dto, String authorizationHeader) {
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(Integer.parseInt(authorizationHeader));
-
         Article article = articleMapper.toPostArticle(dto);
-        article.setUtilisateur(utilisateur);
+        article.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationHeader)));
         article = articleRepository.save(article);
         return articleMapper.toArticleGetDTO(article);
     }

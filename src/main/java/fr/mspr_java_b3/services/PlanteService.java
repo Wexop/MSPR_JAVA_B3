@@ -6,6 +6,7 @@ import fr.mspr_java_b3.dto.PlantePostDTO;
 import fr.mspr_java_b3.entities.Plante;
 import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.PlanteRepository;
+import fr.mspr_java_b3.repository.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class PlanteService {
 
     private final PlanteRepository planteRepository;
+    private final UtilisateurRepository utilisateurRepository;
     private final PlanteMapper planteMapper;
 
     public List<PlanteGetDTO> getMesPlantes(String authorizationHeader) {
@@ -27,11 +29,8 @@ public class PlanteService {
     }
 
     public PlanteGetDTO postPlante(PlanteGetDTO dto, String authorizationHeader) {
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(Integer.parseInt(authorizationHeader));
-
         Plante plante = planteMapper.toGetPlante(dto);
-        plante.setUtilisateur(utilisateur);
+        plante.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationHeader)));
         plante = planteRepository.save(plante);
         return planteMapper.toGetPlanteDTO(plante);
     }

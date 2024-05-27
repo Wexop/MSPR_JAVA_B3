@@ -17,12 +17,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 @RestController
-public class UtilisateurControllerAChanger {
+public class UtilisateurController {
     private final UtilisateurRepository repository;
     private final AdresseRepository adresseRepository;
     private final UtilisateurService utilisateurService = new UtilisateurService();
 
-    UtilisateurControllerAChanger(UtilisateurRepository repository, AdresseRepository adresseRepository) {
+    UtilisateurController(UtilisateurRepository repository, AdresseRepository adresseRepository) {
         this.repository = repository;
         this.adresseRepository = adresseRepository;
     }

@@ -5,6 +5,8 @@ import fr.mspr_java_b3.dto.AnnonceMessageGetDTO;
 import fr.mspr_java_b3.dto.AnnonceMessagePostDTO;
 import fr.mspr_java_b3.entities.AnnonceMessage;
 import fr.mspr_java_b3.repository.AnnonceMessageRepository;
+import fr.mspr_java_b3.repository.AnnonceRepository;
+import fr.mspr_java_b3.repository.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.core.MessageSendingOperations;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 public class AnnonceMessageService {
     private final AnnonceMessageRepository annonceMessageRepository;
     private final AnnonceMessageMapper annonceMessageMapper;
+    private final AnnonceRepository annonceRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
     @Autowired
     private MessageSendingOperations<String> wsTemplate;
@@ -34,6 +38,8 @@ public class AnnonceMessageService {
         AnnonceMessage annonceMessage = annonceMessageMapper.toAnnonceMessagePost(dto);
         LocalDateTime localDateTime = LocalDateTime.now();
         annonceMessage.setDate(localDateTime);
+        annonceMessage.setAnnonce(annonceRepository.getReferenceById(id_annonce));
+        annonceMessage.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationValue)));
         annonceMessage = annonceMessageRepository.save(annonceMessage);
         this.wsTemplate.convertAndSend("/newMessage/annonce/"+ id_annonce, annonceMessage);
         return annonceMessageMapper.toAnnonceMessageGetDTO(annonceMessage);
