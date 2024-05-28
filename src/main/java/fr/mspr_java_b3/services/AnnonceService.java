@@ -64,7 +64,7 @@ public class AnnonceService {
         annonce.setDate_creation(localDateTime);
         annonce.setUtilisateur(utilisateurRepository.getReferenceById(utilisateurId));
         annonce.setEtat(AnnonceEnum.en_attente);
-        
+
         annonce = annonceRepository.save(annonce);
         return annonceMapper.toAnnonceGetDTO(annonce);
     }
@@ -84,6 +84,13 @@ public class AnnonceService {
         System.out.println("DATE TO CLEAN " + dateToClean.toString());
 
         annonceMessageRepository.deleteAnnonceMessageByDateBefore(dateToClean);
+    }
+
+    public void SetAnnonceAccepted(int id) {
+        Annonce annonce = annonceRepository.getReferenceById(id);
+        annonce.setEtat(AnnonceEnum.en_cours);
+
+        annonceRepository.save(annonce);
     }
 
 }

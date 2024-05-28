@@ -5,19 +5,20 @@ import fr.mspr_java_b3.dto.PropositionGetDTO;
 import fr.mspr_java_b3.dto.PropositionPatchDTO;
 import fr.mspr_java_b3.dto.PropositionPostDTO;
 import fr.mspr_java_b3.entities.Proposition;
+import fr.mspr_java_b3.entities.PropositionEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
 import fr.mspr_java_b3.repository.PropositionRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class PropositionService {
 
@@ -25,6 +26,7 @@ public class PropositionService {
     private final PropositionMapper propositionMapper;
     private final AnnonceRepository annonceRepository;
     private final UtilisateurRepository utilisateurRepository;
+    private final AnnonceService annonceService;
 
     public PropositionGetDTO getProposition(int id) {
         return propositionRepository.findById(id)
@@ -57,6 +59,13 @@ public class PropositionService {
         entity.setAnnonce(annonceRepository.getReferenceById(entity.getAnnonce().getId()));
         entity.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationHeader)));
         Proposition saved = propositionRepository.save(entity);
+
+        if (entity.getEtat() == PropositionEnum.valide) {
+            int annonceId = entity.getAnnonce().getId();
+            annonceService.SetAnnonceAccepted(annonceId);
+            propositionRepository.refusePropositionsFromAnnonce(annonceId);
+        }
+
         return propositionMapper.toPropositionGetDTO(saved);
     }
 }
