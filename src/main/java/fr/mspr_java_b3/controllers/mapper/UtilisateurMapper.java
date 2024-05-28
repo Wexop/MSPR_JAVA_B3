@@ -1,6 +1,5 @@
 package fr.mspr_java_b3.controllers.mapper;
 
-import fr.mspr_java_b3.dto.AuthDTO;
 import fr.mspr_java_b3.dto.LoginDTO;
 import fr.mspr_java_b3.dto.RegisterDTO;
 import fr.mspr_java_b3.dto.UtilisateurGetDTO;
@@ -17,6 +16,8 @@ public class UtilisateurMapper {
         dto.setNom(utilisateur.getNom());
         dto.setImage_url(utilisateur.getImage_url());
         dto.setBotaniste(utilisateur.getBotaniste());
+        dto.setAdresse(utilisateur.getAdresse());
+        dto.setEmail(utilisateur.getMail());
         return dto;
     }
 
