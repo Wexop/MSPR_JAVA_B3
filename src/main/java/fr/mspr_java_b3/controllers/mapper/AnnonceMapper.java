@@ -15,8 +15,6 @@ public class AnnonceMapper {
         AnnoncePostDTO dto = new AnnoncePostDTO();
         dto.setTitre(annonce.getTitre());
         dto.setDescription(annonce.getDescription());
-        dto.setDate_debut(annonce.getDate_debut());
-        dto.setDate_fin(annonce.getDate_fin());
         dto.setPlante(annonce.getPlante());
         return dto;
     }
@@ -28,8 +26,6 @@ public class AnnonceMapper {
         Annonce annonce = new Annonce();
         annonce.setTitre(annonceDTO.getTitre());
         annonce.setDescription(annonceDTO.getDescription());
-        annonce.setDate_debut(annonceDTO.getDate_debut());
-        annonce.setDate_fin(annonceDTO.getDate_fin());
         annonce.setPlante(annonceDTO.getPlante());
         return annonce;
     }
