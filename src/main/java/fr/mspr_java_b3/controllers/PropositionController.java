@@ -3,7 +3,6 @@ package fr.mspr_java_b3.controllers;
 import fr.mspr_java_b3.dto.PropositionGetDTO;
 import fr.mspr_java_b3.dto.PropositionPatchDTO;
 import fr.mspr_java_b3.dto.PropositionPostDTO;
-import fr.mspr_java_b3.entities.Proposition;
 import fr.mspr_java_b3.services.PropositionService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +39,7 @@ public class PropositionController {
 
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/propositions/{proposition_id}")
-    PropositionGetDTO patchProposition(@RequestBody PropositionPatchDTO proposition, @PathVariable int annonce_id, @PathVariable int proposition_id, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
-        return propositionService.patchProposition(proposition, annonce_id, proposition_id, authorizationHeader);
+    PropositionGetDTO patchProposition(@RequestBody PropositionPatchDTO proposition, @PathVariable int proposition_id, @RequestAttribute(value = "Utilisateur_id") String authorizationHeader) {
+        return propositionService.patchProposition(proposition, proposition_id, authorizationHeader);
     }
 }

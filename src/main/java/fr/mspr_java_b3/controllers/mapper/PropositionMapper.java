@@ -67,14 +67,13 @@ public class PropositionMapper {
         return dto;
     }
 
-    public Proposition toPropositionPatch(PropositionPatchDTO dto) {
+    public Proposition toPropositionPatch(PropositionPatchDTO dto, Proposition proposition) {
         if (dto == null) {
             return null;
         }
 
-        Proposition proposition = new Proposition();
-        proposition.setMessage(dto.getMessage());
-        proposition.setEtat(dto.getEtat());
+        if (dto.getMessage() != null) proposition.setMessage(dto.getMessage());
+        if (dto.getEtat() != null) proposition.setEtat(dto.getEtat());
         return proposition;
     }
 }

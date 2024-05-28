@@ -48,10 +48,13 @@ public class PropositionService {
         return propositionMapper.toPropositionGetDTO(proposition);
     }
 
-    public PropositionGetDTO patchProposition(PropositionPatchDTO dto, int annonce_id, int proposition_id, String authorizationHeader) {
-        Proposition entity = propositionMapper.toPropositionPatch(dto);
+    public PropositionGetDTO patchProposition(PropositionPatchDTO dto, int proposition_id, String authorizationHeader) {
+
+        Proposition originalProposition = this.propositionRepository.getReferenceById(proposition_id);
+
+        Proposition entity = propositionMapper.toPropositionPatch(dto, originalProposition);
         entity.setId(proposition_id);
-        entity.setAnnonce(annonceRepository.getReferenceById(annonce_id));
+        entity.setAnnonce(annonceRepository.getReferenceById(entity.getAnnonce().getId()));
         entity.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationHeader)));
         Proposition saved = propositionRepository.save(entity);
         return propositionMapper.toPropositionGetDTO(saved);
