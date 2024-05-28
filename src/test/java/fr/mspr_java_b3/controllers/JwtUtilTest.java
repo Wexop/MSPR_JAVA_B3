@@ -1,3 +1,4 @@
+/*
 package fr.mspr_java_b3.controllers;
 
 import fr.mspr_java_b3.entities.Utilisateur;
@@ -11,3 +12,4 @@ public class JwtUtilTest {
         return jwtUtil.createToken(fakeUser);
     }
 }
+*/

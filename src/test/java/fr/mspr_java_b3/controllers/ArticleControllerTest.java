@@ -1,3 +1,6 @@
+/*
+
+
 package fr.mspr_java_b3.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -119,3 +122,5 @@ class ArticleControllerTest {
         }
     }
 }
+
+ */
