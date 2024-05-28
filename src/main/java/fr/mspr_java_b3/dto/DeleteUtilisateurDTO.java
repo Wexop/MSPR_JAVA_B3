@@ -1,12 +1,12 @@
-package fr.mspr_java_b3.controllers.requests_body;
+package fr.mspr_java_b3.dto;
 
-public class DeleteUserRequest {
+public class DeleteUtilisateurDTO {
     public String mdp;
 
-    public DeleteUserRequest() {
+    public DeleteUtilisateurDTO() {
     }
 
-    public DeleteUserRequest(String mdp) {
+    public DeleteUtilisateurDTO(String mdp) {
         this.mdp = mdp;
     }
 

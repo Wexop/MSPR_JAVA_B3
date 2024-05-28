@@ -1,6 +1,5 @@
 package fr.mspr_java_b3.controllers;
 
-import fr.mspr_java_b3.controllers.requests_body.PostAnnonceMessage;
 import fr.mspr_java_b3.dto.AnnonceMessageGetDTO;
 import fr.mspr_java_b3.dto.AnnonceMessagePostDTO;
 import fr.mspr_java_b3.services.AnnonceMessageService;
