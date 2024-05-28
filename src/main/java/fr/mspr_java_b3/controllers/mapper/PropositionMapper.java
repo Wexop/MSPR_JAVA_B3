@@ -15,7 +15,6 @@ public class PropositionMapper {
         }
 
         PropositionPostDTO dto = new PropositionPostDTO();
-        dto.setDate(proposition.getDate());
         dto.setMessage(proposition.getMessage());
         return dto;
     }
@@ -26,7 +25,6 @@ public class PropositionMapper {
         }
 
         Proposition proposition = new Proposition();
-        proposition.setDate(dto.getDate());
         proposition.setMessage(dto.getMessage());
         return proposition;
     }
