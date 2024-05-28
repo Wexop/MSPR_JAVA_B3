@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,7 @@ public class PropositionService {
 
     public PropositionGetDTO postProposition(PropositionPostDTO dto, int annonce_id, String authorizationHeader) {
         Proposition proposition = propositionMapper.toPropositionPost(dto);
+        proposition.setDate(LocalDateTime.now());
         proposition.setAnnonce(annonceRepository.getReferenceById(annonce_id));
         proposition.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationHeader)));
         proposition = propositionRepository.save(proposition);
