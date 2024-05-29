@@ -71,11 +71,13 @@ public class UtilisateurService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Adresse invalide");
         }
 
-        this.adresseRepository.save(adresseMapper.toAdresse(request.getAdresse()));
+        Adresse adresse = this.adresseRepository.save(adresseMapper.toAdresse(request.getAdresse()));
 
         JwtUtil jwtUtil = new JwtUtil();
 
         Utilisateur userWithHash = hashMdp(utilisateurMapper.toRegisterUtilisateur(request));
+
+        userWithHash.setAdresse(adresse);
 
         Utilisateur createdUser = this.repository.save(userWithHash);
 
