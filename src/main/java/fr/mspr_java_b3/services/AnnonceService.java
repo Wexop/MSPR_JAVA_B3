@@ -58,6 +58,14 @@ public class AnnonceService {
                 .collect(Collectors.toList());
     }
 
+    public List<AnnonceGetDTO> getMesAnnoncesAttente(String authorizationValue) {
+        List<Annonce> annonceList = annonceRepository.findByUtilisateurAndByEtat(Integer.parseInt(authorizationValue), AnnonceEnum.en_attente);
+
+        return annonceList.stream()
+                .map(annonceMapper::toAnnonceGetDTO)
+                .collect(Collectors.toList());
+    }
+
     public AnnonceGetDTO postAnnonce(AnnoncePostDTO dto, int utilisateurId) {
         Annonce annonce = annonceMapper.toPostAnnonce(dto);
         LocalDateTime localDateTime = LocalDateTime.now();
