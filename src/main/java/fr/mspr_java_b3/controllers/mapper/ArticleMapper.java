@@ -28,6 +28,16 @@ public class ArticleMapper {
         return article;
     }
 
+    public Article toPatchArticle (ArticlePostDTO dto, Article article) {
+        if (dto == null) {
+            return null;
+        }
+
+        if (dto.getTitre() != null) article.setTitre(dto.getTitre());
+        if (dto.getContenue() != null) article.setContenu(dto.getContenue());
+        return article;
+    }
+
     public ArticleGetDTO toArticleGetDTO(Article article) {
         if (article == null) {
             return null;

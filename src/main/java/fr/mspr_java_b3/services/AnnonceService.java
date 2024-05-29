@@ -70,7 +70,9 @@ public class AnnonceService {
     }
 
     public AnnonceGetDTO patchAnnonce(AnnoncePostDTO dto, Integer id) {
-        Annonce entity = annonceMapper.toPostAnnonce(dto);
+        Annonce originalAnnonce = annonceRepository.getReferenceById(id);
+
+        Annonce entity = annonceMapper.toPatchAnnonce(dto, originalAnnonce);
         entity.setId(id);
         Annonce saved = annonceRepository.save(entity);
         return annonceMapper.toAnnonceGetDTO(saved);

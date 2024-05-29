@@ -5,6 +5,7 @@ import fr.mspr_java_b3.dto.PropositionGetDTO;
 import fr.mspr_java_b3.dto.PropositionPatchDTO;
 import fr.mspr_java_b3.dto.PropositionPostDTO;
 import fr.mspr_java_b3.entities.Proposition;
+import fr.mspr_java_b3.entities.PropositionEnum;
 import fr.mspr_java_b3.repository.AnnonceRepository;
 import fr.mspr_java_b3.repository.PropositionRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
@@ -44,6 +45,7 @@ public class PropositionService {
         proposition.setDate(LocalDateTime.now());
         proposition.setAnnonce(annonceRepository.getReferenceById(annonce_id));
         proposition.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationHeader)));
+        proposition.setEtat(PropositionEnum.en_attente);
         proposition = propositionRepository.save(proposition);
         return propositionMapper.toPropositionGetDTO(proposition);
     }
