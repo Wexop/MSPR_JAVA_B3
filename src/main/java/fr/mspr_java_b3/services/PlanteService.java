@@ -36,9 +36,12 @@ public class PlanteService {
     }
 
     public PlanteGetDTO patchPlante(PlantePostDTO dto, Integer id) {
-        Plante plante = planteMapper.toPostPlante(dto);
-        plante.setId(id);
-        Plante saved = planteRepository.save(plante);
+
+        Plante originalPlante = this.planteRepository.getReferenceById(id);
+
+        Plante entity = planteMapper.toPatchPlante(dto, originalPlante);
+        entity.setId(id);
+        Plante saved = planteRepository.save(entity);
         return planteMapper.toGetPlanteDTO(saved);
     }
 }

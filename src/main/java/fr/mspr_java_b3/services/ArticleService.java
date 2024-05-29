@@ -42,7 +42,9 @@ public class ArticleService {
     }
 
     public ArticleGetDTO patchArticle(ArticlePostDTO dto, Integer id) {
-        Article entity = articleMapper.toPostArticle(dto);
+        Article originalArticle = this.articleRepository.getReferenceById(id);
+
+        Article entity = articleMapper.toPatchArticle(dto, originalArticle);
         entity.setId(id);
         Article saved = articleRepository.save(entity);
         return articleMapper.toArticleGetDTO(saved);

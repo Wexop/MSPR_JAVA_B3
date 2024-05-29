@@ -30,6 +30,16 @@ public class AnnonceMapper {
         return annonce;
     }
 
+    public Annonce toPatchAnnonce (AnnoncePostDTO dto, Annonce annonce) {
+        if (dto == null) {
+            return null;
+        }
+        if (dto.getTitre() != null) annonce.setTitre(dto.getTitre());
+        if (dto.getDescription() != null) annonce.setDescription(dto.getDescription());
+        if (dto.getPlante() != null) annonce.setPlante(dto.getPlante());
+        return annonce;
+    }
+
     public AnnonceGetDTO toAnnonceGetDTO(Annonce annonce) {
         if (annonce == null) {
             return null;

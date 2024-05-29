@@ -28,4 +28,6 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
     @Query("SELECT a FROM Annonce a JOIN FETCH Utilisateur u on u.id = a.utilisateur.id JOIN FETCH Plante p on p.id = a.plante.id WHERE a.id = ?1")
     Optional<Annonce> findById(int id);
 
+    @Query("SELECT a FROM Annonce a JOIN FETCH Utilisateur u ON u.id = a.utilisateur.id WHERE a.etat = ?2 AND a.utilisateur = ?1")
+    List<Annonce> findByUtilisateurAndByEtat(int id, AnnonceEnum etat);
 }

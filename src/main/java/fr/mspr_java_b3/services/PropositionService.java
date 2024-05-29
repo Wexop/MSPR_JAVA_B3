@@ -46,6 +46,7 @@ public class PropositionService {
         proposition.setDate(LocalDateTime.now());
         proposition.setAnnonce(annonceRepository.getReferenceById(annonce_id));
         proposition.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationHeader)));
+        proposition.setEtat(PropositionEnum.en_attente);
         proposition = propositionRepository.save(proposition);
         return propositionMapper.toPropositionGetDTO(proposition);
     }

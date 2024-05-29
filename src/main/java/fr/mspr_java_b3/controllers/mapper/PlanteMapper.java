@@ -28,6 +28,16 @@ public class PlanteMapper {
         return plante;
     }
 
+    public Plante toPatchPlante(PlantePostDTO dto, Plante plante) {
+        if (dto == null) {
+            return null;
+        }
+
+        if (dto.getEspece() != null) plante.setEspece(dto.getEspece());
+        if (dto.getImage_url() != null) plante.setImage_url(dto.getImage_url());
+        return plante;
+    }
+
     public PlanteGetDTO toGetPlanteDTO(Plante plante) {
         if (plante == null) {
             return null;
