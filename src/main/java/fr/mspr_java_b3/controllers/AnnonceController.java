@@ -48,6 +48,12 @@ public class AnnonceController {
         return annonceService.getMesGardes(authorizationValue);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/annonces_attente/me")
+    List<AnnonceGetDTO> getMesAnnoncesAttente(@RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
+        return annonceService.getMesAnnoncesAttente(authorizationValue);
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/annonces")
     AnnonceGetDTO postAnnonce(@RequestBody AnnoncePostDTO body,@RequestAttribute(value = "Utilisateur_id")String authorizationValue) {
