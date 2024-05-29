@@ -20,6 +20,7 @@ public class Annonce {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime date_creation;
 
+    @Enumerated(EnumType.STRING)
     private AnnonceEnum etat;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
