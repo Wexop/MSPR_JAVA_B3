@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -124,6 +123,26 @@ public class AnnonceControllerTest {
     }
 
     @Test
+    void getMesAnnoncesAttente() throws Exception {
+        String utilisateurId = "1";
+        final AnnonceGetDTO annonce = new AnnonceGetDTO();
+        annonce.setEtat(AnnonceEnum.en_attente);
+
+        final List<AnnonceGetDTO> annonces = List.of(annonce);
+
+        Mockito.when(annonceService.getMesAnnoncesAttente(utilisateurId)).thenReturn(annonces);
+
+        mvc.perform(get("/annonces_attente/me").header("Authorization", "Bearer " + token)
+                .header("Utilisateur_id", String.valueOf(utilisateurId))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(annonces.size())))
+                .andExpect(jsonPath("$[0].etat", is(annonce.getEtat().toString())));
+
+        verify(annonceService).getMesAnnoncesAttente(utilisateurId);
+    }
+
+    @Test
     void postAnnonce() throws Exception {
         AnnoncePostDTO annoncePostDTO = new AnnoncePostDTO();
         AnnonceGetDTO annonceGetDTO = new AnnonceGetDTO();
@@ -144,28 +163,28 @@ public class AnnonceControllerTest {
         verify(annonceService).postAnnonce(any(AnnoncePostDTO.class), anyInt());
     }
 
-    /*@Test
+    @Test
     void patchAnnonce() throws Exception {
         int annonceId = 1;
-        Annonce annonce = new Annonce();
-        annonce.setId(annonceId);
-        annonce.setBesoin_aide(true);
-        annonce.setEtat(termine);
-        annonce.setTitre("Test");
-        annonce.setDescription("test-description");
+        AnnoncePostDTO annoncePost = new AnnoncePostDTO();
+        AnnonceGetDTO annonceGet = new AnnonceGetDTO();
+        annonceGet.setId(annonceId);
+        annonceGet.setBesoin_aide(true);
+        annonceGet.setEtat(AnnonceEnum.termine);
+        annonceGet.setTitre("Test");
+        annonceGet.setDescription("test-description");
 
-        Mockito.when(repository.getReferenceById(annonceId)).thenReturn(annonce);
-        Mockito.when(repository.save(any(Annonce.class))).thenAnswer(e -> e.getArgument(0));
+        Mockito.when(annonceService.patchAnnonce(any(AnnoncePostDTO.class), eq(annonceId))).thenReturn(annonceGet);
 
-        this.mvc.perform(put("/annonce/{id}", annonceId).header("Authorization", "Bearer " + token)
-                .content(asJsonString(annonce))
+        this.mvc.perform(patch("/annonces/{id}", annonceId).header("Authorization", "Bearer " + token)
+                .content(asJsonString(annoncePost))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(annonceId));
+                .andExpect(jsonPath("$.id").value(annonceId))
+                .andExpect(jsonPath("$.description").value("test-description"));
 
-        verify(repository).getReferenceById(annonceId);
-        verify(repository).save(annonce);
-    }*/
+        verify(annonceService).patchAnnonce(any(AnnoncePostDTO.class), eq(annonceId));
+    }
 
     private static String asJsonString(final Object obj) {
         try {
