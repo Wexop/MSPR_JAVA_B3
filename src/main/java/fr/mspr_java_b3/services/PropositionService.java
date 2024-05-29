@@ -64,7 +64,7 @@ public class PropositionService {
         if (entity.getEtat() == PropositionEnum.valide) {
             int annonceId = entity.getAnnonce().getId();
             annonceService.SetAnnonceAccepted(annonceId);
-            propositionRepository.refusePropositionsFromAnnonce(annonceId);
+            propositionRepository.updatePropositionByAnnonceId(annonceId);
         }
 
         return propositionMapper.toPropositionGetDTO(saved);

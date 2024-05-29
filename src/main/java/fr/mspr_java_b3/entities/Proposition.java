@@ -16,6 +16,7 @@ public class Proposition {
 
     private String message;
 
+    @Enumerated(EnumType.STRING)
     private PropositionEnum etat;
 
     @ManyToOne

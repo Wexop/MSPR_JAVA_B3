@@ -10,14 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @RepositoryRestResource(path = "proposition")
-
 public interface PropositionRepository extends JpaRepository<Proposition, Integer> {
 
     List<Proposition> findPropositionByAnnonce_Id(int id);
 
     @Modifying
     @Transactional
-    @Query("UPDATE FROM Proposition p SET p.etat = 'refuse' WHERE p.annonce.id = ?1 AND p.etat != 'valide'")
-    void refusePropositionsFromAnnonce(int annonceId);
+    @Query("UPDATE Proposition p SET p.etat = fr.mspr_java_b3.entities.PropositionEnum.refuse WHERE p.annonce.id = ?1 AND p.etat != fr.mspr_java_b3.entities.PropositionEnum.valide")
+    void updatePropositionByAnnonceId(int annonceId);
 
 }
