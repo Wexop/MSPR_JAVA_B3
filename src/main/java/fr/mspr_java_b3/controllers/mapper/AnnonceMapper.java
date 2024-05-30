@@ -19,7 +19,7 @@ public class AnnonceMapper {
         return dto;
     }
 
-    public Annonce toPostAnnonce (AnnoncePostDTO annonceDTO) {
+    public Annonce toPostAnnonce(AnnoncePostDTO annonceDTO) {
         if (annonceDTO == null) {
             return null;
         }
@@ -30,7 +30,7 @@ public class AnnonceMapper {
         return annonce;
     }
 
-    public Annonce toPatchAnnonce (AnnoncePostDTO dto, Annonce annonce) {
+    public Annonce toPatchAnnonce(AnnoncePostDTO dto, Annonce annonce) {
         if (dto == null) {
             return null;
         }
@@ -55,6 +55,7 @@ public class AnnonceMapper {
         getDTO.setDate_creation(annonce.getDate_creation());
         getDTO.setDate_fin(annonce.getDate_fin());
         getDTO.setUtilisateur_nom(annonce.getUtilisateur().getNom());
+        getDTO.setUtilisateurGarde(new UtilisateurMapper().toUtilisateurGetDTO(annonce.getUtilisateurGarde()));
         getDTO.setPlante(new PlanteMapper().toGetPlanteDTO(annonce.getPlante()));
         return getDTO;
     }

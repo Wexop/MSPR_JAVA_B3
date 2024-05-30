@@ -5,6 +5,7 @@ import fr.mspr_java_b3.dto.AnnonceGetDTO;
 import fr.mspr_java_b3.dto.AnnoncePostDTO;
 import fr.mspr_java_b3.entities.Annonce;
 import fr.mspr_java_b3.entities.AnnonceEnum;
+import fr.mspr_java_b3.entities.Utilisateur;
 import fr.mspr_java_b3.repository.AnnonceMessageRepository;
 import fr.mspr_java_b3.repository.AnnonceRepository;
 import fr.mspr_java_b3.repository.UtilisateurRepository;
@@ -96,9 +97,10 @@ public class AnnonceService {
         annonceMessageRepository.deleteAnnonceMessageByDateBefore(dateToClean);
     }
 
-    public void SetAnnonceAccepted(int id) {
+    public void SetAnnonceAccepted(int id, Utilisateur utilisateur) {
         Annonce annonce = annonceRepository.getReferenceById(id);
         annonce.setEtat(AnnonceEnum.en_cours);
+        annonce.setUtilisateurGarde(utilisateur);
 
         annonceRepository.save(annonce);
     }

@@ -35,6 +35,10 @@ public class Annonce {
     @JoinColumn(name = "utilisateur_id")
     Utilisateur utilisateur;
 
+    @ManyToOne
+    @JoinColumn(name = "utilisateur_garde_id")
+    Utilisateur utilisateurGarde;
+
     @OneToMany(mappedBy = "annonce")
     Set<AnnonceMessage> annonceMessages;
 
@@ -68,6 +72,14 @@ public class Annonce {
         this.date_debut = date_debut;
         this.date_fin = date_fin;
         this.besoin_aide = besoin_aide;
+    }
+
+    public Utilisateur getUtilisateurGarde() {
+        return utilisateurGarde;
+    }
+
+    public void setUtilisateurGarde(Utilisateur utilisateurGarde) {
+        this.utilisateurGarde = utilisateurGarde;
     }
 
     public Utilisateur getUtilisateur() {

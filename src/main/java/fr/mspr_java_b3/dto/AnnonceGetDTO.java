@@ -27,4 +27,5 @@ public class AnnonceGetDTO {
     private LocalDateTime date_fin;
     private String utilisateur_nom;
     private PlanteGetDTO plante;
+    private UtilisateurGetDTO utilisateurGarde;
 }

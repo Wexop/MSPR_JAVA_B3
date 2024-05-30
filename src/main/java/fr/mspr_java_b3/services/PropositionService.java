@@ -58,12 +58,11 @@ public class PropositionService {
         Proposition entity = propositionMapper.toPropositionPatch(dto, originalProposition);
         entity.setId(proposition_id);
         entity.setAnnonce(annonceRepository.getReferenceById(entity.getAnnonce().getId()));
-        entity.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationHeader)));
         Proposition saved = propositionRepository.save(entity);
 
         if (entity.getEtat() == PropositionEnum.valide) {
             int annonceId = entity.getAnnonce().getId();
-            annonceService.SetAnnonceAccepted(annonceId);
+            annonceService.SetAnnonceAccepted(annonceId, originalProposition.getUtilisateur());
             propositionRepository.updatePropositionByAnnonceId(annonceId);
         }
 
