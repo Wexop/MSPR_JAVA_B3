@@ -13,6 +13,7 @@ public class UtilisateurMapper {
             return null;
         }
         UtilisateurGetDTO dto = new UtilisateurGetDTO();
+        dto.setId(utilisateur.getId());
         dto.setNom(utilisateur.getNom());
         dto.setImage_url(utilisateur.getImage_url());
         dto.setBotaniste(utilisateur.getBotaniste());

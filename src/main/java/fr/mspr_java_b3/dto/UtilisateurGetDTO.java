@@ -9,6 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UtilisateurGetDTO {
+    private int id;
     private String nom;
     private String image_url;
     private Boolean botaniste;
