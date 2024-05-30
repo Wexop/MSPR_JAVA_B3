@@ -59,6 +59,13 @@ public class AnnonceService {
                 .collect(Collectors.toList());
     }
 
+    public List<AnnonceGetDTO> getAnnonceEnCours(String authorizationValue) {
+        List<Annonce> annonceList = annonceRepository.findUtilisateurEnCours(Integer.parseInt(authorizationValue));
+        return annonceList.stream()
+                .map(annonceMapper::toAnnonceGetDTO)
+                .collect(Collectors.toList());
+    }
+
     public List<AnnonceGetDTO> getMesAnnoncesAttente(String authorizationValue) {
         List<Annonce> annonceList = annonceRepository.findByUtilisateurAndByEtat(Integer.parseInt(authorizationValue), AnnonceEnum.en_attente);
 

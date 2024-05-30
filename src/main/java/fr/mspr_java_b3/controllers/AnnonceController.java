@@ -44,8 +44,14 @@ public class AnnonceController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/annonces_garde/me")
-    List<AnnonceGetDTO> getMesGardes(@RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
+    List<AnnonceGetDTO> getAnnonceGardien(@RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
         return annonceService.getMesGardes(authorizationValue);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/annonces_en_cours/me")
+    List<AnnonceGetDTO> getMesGardes(@RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
+        return annonceService.getAnnonceEnCours(authorizationValue);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -56,7 +62,7 @@ public class AnnonceController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/annonces")
-    AnnonceGetDTO postAnnonce(@RequestBody AnnoncePostDTO body,@RequestAttribute(value = "Utilisateur_id")String authorizationValue) {
+    AnnonceGetDTO postAnnonce(@RequestBody AnnoncePostDTO body, @RequestAttribute(value = "Utilisateur_id") String authorizationValue) {
         return annonceService.postAnnonce(body, Integer.parseInt(authorizationValue));
     }
 
