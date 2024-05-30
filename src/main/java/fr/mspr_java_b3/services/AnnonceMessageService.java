@@ -41,9 +41,13 @@ public class AnnonceMessageService {
         annonceMessage.setAnnonce(annonceRepository.getReferenceById(id_annonce));
         annonceMessage.setUtilisateur(utilisateurRepository.getReferenceById(Integer.parseInt(authorizationValue)));
         annonceMessage = annonceMessageRepository.save(annonceMessage);
-        this.wsTemplate.convertAndSend("/newMessage/annonce/"+ id_annonce, annonceMessage);
-        return annonceMessageMapper.toAnnonceMessageGetDTO(annonceMessage);
+        System.out.println("**********************");
+        System.out.println(annonceMessage);
+        System.out.println("**********************");
 
+        AnnonceMessageGetDTO annonceMessageGetDTO = annonceMessageMapper.toAnnonceMessageGetDTO(annonceMessage);
+        this.wsTemplate.convertAndSend("/newMessage/annonce/" + id_annonce, annonceMessageGetDTO);
+        return annonceMessageGetDTO;
     }
 
 
